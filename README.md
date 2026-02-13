@@ -39,7 +39,7 @@ As the addon grows, a single 1800+ line file becomes unmaintainable. We've split
 2. Look for the **Blender MCP** tab.
 3. Click **Start MCP Server**.
 
-### Updating & Applying Changes
+### 2. Updating & Applying Changes
 If you modify the addon code or the MCP server logic, follow these steps to ensure changes are applied:
 1. **Reload Scripts**: In Blender, press `F3` and type **"Reload Scripts"** (or use the shortcut `Alt + R` if configured).
 2. **Restart Blender Server**: In the N-Panel, click **Stop MCP Server** and then **Start MCP Server** again.
@@ -242,9 +242,10 @@ Blender Scene (Persistent State)
 
 ## Acknowledgments
 
-This project was inspired by [blender-mcp](https://github.com/ahujasid/blender-mcp) by [Sid Ahuja], which demonstrated the potential of MCP servers for Blender automation.
+This project was inspired by [blender-mcp](https://github.com/ahujasid/blender-mcp) by [ahujasid], which demonstrated the potential of MCP servers for Blender automation.
 
 ## License
 
 MIT License - See LICENSE file for details
+
 
