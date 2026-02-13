@@ -27,13 +27,13 @@ class BlenderConnection:
         while True:
             try:
                 chunk = sock.recv(4096)
-                if not chunk:
+                if not chunk:  # Connection closed by server
                     break
                 data += chunk
-                if len(chunk) < 4096:
-                    break
             except socket.timeout:
-                sock.settimeout(0.5)
+                # If we have data, we might be done, but ideally we rely on close
+                if data:
+                    break
                 continue
             except Exception:
                 break
@@ -45,7 +45,7 @@ class BlenderConnection:
 
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(5.0)  # High stability timeout
+            sock.settimeout(120.0)  # Extended timeout for heavy assets (HDRIs)
             sock.connect((config.blender_host, config.blender_port))
 
             payload = {"type": command_type, "params": clean_params, "request_id": rid}
@@ -60,7 +60,8 @@ class BlenderConnection:
             logger.error(f"Blender Connection Error: {e}")
             return {"status": "error", "message": str(e)}
         finally:
-            sock.close()
+            if "sock" in locals():
+                sock.close()
 
 
 blender = BlenderConnection()

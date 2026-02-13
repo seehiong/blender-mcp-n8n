@@ -256,3 +256,54 @@ class MaterialTools:
             "success": True,
             "message": f"Assigned {texture_type} texture to '{material_name}'",
         }
+
+    def assign_texture_map(self, material_name, image_path, map_type="Base Color"):
+        """
+        Load an image and assign it to a material slot.
+        map_type options: 'Base Color', 'Roughness', 'Metallic', 'Normal', 'Emission', 'Alpha'
+        """
+        mat = bpy.data.materials.get(material_name)
+        if not mat:
+            raise ValueError(f"Material '{material_name}' not found")
+
+        if not mat.use_nodes:
+            mat.use_nodes = True
+
+        nodes = mat.node_tree.nodes
+        links = mat.node_tree.links
+        bsdf = nodes.get("Principled BSDF")
+
+        try:
+            img = bpy.data.images.load(image_path)
+        except Exception as e:
+            return {"success": False, "error": f"Failed to load image: {str(e)}"}
+
+        # Create Image Texture Node
+        tex_image = nodes.new(type="ShaderNodeTexImage")
+        tex_image.image = img
+        tex_image.location = (-600, 300)
+
+        # Set Color Space based on map type
+        if map_type in ["Base Color", "Emission"]:
+            tex_image.image.colorspace_settings.name = "sRGB"
+        else:
+            tex_image.image.colorspace_settings.name = "Non-Color"
+
+        # Special casing for Normal Map
+        if map_type == "Normal":
+            normal_map = nodes.new(type="ShaderNodeNormalMap")
+            normal_map.location = (-300, -200)
+            links.new(tex_image.outputs["Color"], normal_map.inputs["Color"])
+            links.new(normal_map.outputs["Normal"], bsdf.inputs["Normal"])
+        elif map_type in bsdf.inputs:
+            links.new(tex_image.outputs["Color"], bsdf.inputs[map_type])
+        else:
+            return {
+                "success": False,
+                "error": f"Map type '{map_type}' not found in Principled BSDF",
+            }
+
+        return {
+            "success": True,
+            "message": f"Assigned {map_type} map to '{material_name}' using {image_path}",
+        }

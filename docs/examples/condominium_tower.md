@@ -348,3 +348,13 @@ This example demonstrates how to use the Blender MCP server to create a procedur
 >
 > This setup creates a classic architectural cinematic look with warm golden hour light and a dynamic, dramatic camera angle that will make the tower look commanding and impressive!
 
+---
+
+**User:**
+> 20. Set the world background to 'kloofendal_48d_partly_cloudy_puresky_4k' HDRI for environmental lighting
+
+**Assistant:**
+> Perfect! I've successfully set the world background to the 'kloofendal_48d_partly_cloudy_puresky_4k' HDRI. This high-quality environment map will now provide realistic lighting and reflections for your scene, with partly cloudy sky conditions that will create natural-looking shadows and ambient lighting on your 3D models.
+
+![HDRI Background Result](assets/hdri_background.png)
+

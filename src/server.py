@@ -1,6 +1,9 @@
 import json
 import random
 import string
+import os
+from dotenv import load_dotenv
+
 from mcp.server import Server
 from mcp.server.sse import SseServerTransport
 import mcp.types as types
@@ -9,8 +12,52 @@ from .connection import blender, logger
 from .tools import get_mcp_tools
 from .tools.utils import sanitize_schema
 
+load_dotenv()
+
 # Initialize MCP Server
 app = Server("blender-mcp-n8n")
+
+ASSETS_DIR = os.getenv("BLENDER_ASSETS_DIR")
+
+
+def resolve_path(args):
+    """Resolve relative paths in arguments against ASSETS_DIR"""
+    if not ASSETS_DIR:
+        return args
+
+    print(f"[DEBUG] resolve_path called with args: {args}")
+    print(f"[DEBUG] ASSETS_DIR: {ASSETS_DIR}")
+
+    for key in ["image_path", "filepath"]:
+        if (
+            key in args
+            and args[key]
+            and isinstance(args[key], str)
+            and not os.path.isabs(args[key])
+        ):
+            base_path = os.path.join(ASSETS_DIR, args[key])
+            resolved_path = base_path
+            print(f"[DEBUG] Checking base path: {base_path}")
+
+            # If the exact file exists, use it
+            if os.path.exists(base_path):
+                print(f"[DEBUG] Found exact match: {base_path}")
+                resolved_path = base_path
+            else:
+                # Try extensions
+                print(f"[DEBUG] Exact match failed. Trying extensions...")
+                for ext in [".exr", ".hdr", ".png", ".jpg", ".jpeg", ".tiff", ".tga"]:
+                    test_path = base_path + ext
+                    # print(f"[DEBUG] Checking Extension: {test_path}")
+                    if os.path.exists(test_path):
+                        print(f"[DEBUG] Found match with extension: {test_path}")
+                        resolved_path = test_path
+                        break
+
+            # Normalize path for cross-platform compatibility
+            args[key] = os.path.normpath(resolved_path).replace("\\", "/")
+            print(f"[DEBUG] Final resolved path: {args[key]}")
+    return args
 
 
 @app.list_tools()
@@ -27,6 +74,9 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
     # Strip n8n-specific metadata
     meta = {"sessionId", "action", "chatInput", "toolCallId", "id"}
     clean_args = {k: v for k, v in arguments.items() if k not in meta}
+
+    # Resolve paths
+    clean_args = resolve_path(clean_args)
 
     logger.info(f"[{rid}] Tool Call: {name} with params: {clean_args}")
 
@@ -138,6 +188,9 @@ async def mcp_app(scope, receive, send):
 
                 meta = {"sessionId", "action", "chatInput", "toolCallId", "id"}
                 clean_args = {k: v for k, v in args.items() if k not in meta}
+
+                # Resolve paths
+                clean_args = resolve_path(clean_args)
 
                 logger.info(
                     f"[{call_rid}] Stateless Fallback Exec: {tool_name} with params: {clean_args}"

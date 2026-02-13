@@ -121,4 +121,32 @@ def get_material_tools() -> list[types.Tool]:
                 "required": ["material_name", "texture_type"],
             },
         ),
+        types.Tool(
+            name="assign_texture_map",
+            description="Load an image and assign it to a material slot (Base Color, Roughness, Normal, etc.). Supports auto-creation of Normal Map nodes.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "material_name": {"type": "string"},
+                    "image_path": {
+                        "type": "string",
+                        "description": "Path to the image file. Can be absolute, or relative if BLENDER_ASSETS_DIR is set in .env.",
+                    },
+                    "map_type": {
+                        "type": "string",
+                        "description": "Base Color, Roughness, Metallic, Normal, Emission, or Alpha",
+                        "default": "Base Color",
+                        "enum": [
+                            "Base Color",
+                            "Roughness",
+                            "Metallic",
+                            "Normal",
+                            "Emission",
+                            "Alpha",
+                        ],
+                    },
+                },
+                "required": ["material_name", "image_path"],
+            },
+        ),
     ]

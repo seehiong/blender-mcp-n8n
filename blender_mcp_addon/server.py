@@ -205,6 +205,7 @@ class BlenderMCPServer(
             "add_shader_node": self.add_shader_node,
             "connect_shader_nodes": self.connect_shader_nodes,
             "assign_builtin_texture": self.assign_builtin_texture,
+            "assign_texture_map": self.assign_texture_map,
             # Camera
             "create_camera": self.create_camera,
             "set_active_camera": self.set_active_camera,
@@ -212,6 +213,7 @@ class BlenderMCPServer(
             # Light
             "create_light": self.create_light,
             "configure_light": self.configure_light,
+            "set_world_background": self.set_world_background,
         }
 
         handler = methods.get(cmd_type)
