@@ -46,11 +46,11 @@ class BLENDERMCP_OT_StopServer(bpy.types.Operator):
 class BLENDERMCP_PT_Panel(bpy.types.Panel):
     """MCP Control Panel"""
 
-    bl_label = "Blender MCP"
+    bl_label = "Blender MCP (n8n)"
     bl_idname = "BLENDERMCP_PT_panel"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
-    bl_category = "Blender MCP"
+    bl_category = "Blender MCP (n8n)"
 
     def draw(self, context):
         global _server_instance
@@ -68,7 +68,7 @@ class BLENDERMCP_PT_Panel(bpy.types.Panel):
         layout.operator("blendermcp.start_server")
         layout.operator("blendermcp.stop_server")
         layout.separator()
-        layout.label(text="Port: 9877")
+        layout.label(text="Port: 8888")
         layout.label(text="45+ Structured Tools")
 
 

@@ -18,8 +18,9 @@ def get_object(name):
 
 
 def get_collection(name):
-    """Get collection by name with error handling"""
+    """Get collection by name, creating it if it doesn't exist"""
     coll = bpy.data.collections.get(name)
     if not coll:
-        raise ValueError(f"Collection '{name}' not found")
+        coll = bpy.data.collections.new(name)
+        bpy.context.scene.collection.children.link(coll)
     return coll

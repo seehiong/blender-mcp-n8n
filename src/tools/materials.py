@@ -5,7 +5,7 @@ def get_material_tools() -> list[types.Tool]:
     return [
         types.Tool(
             name="create_material",
-            description="Create a new material with Principled BSDF shader.",
+            description="POWER TIP: Use 'pattern' or 'collection' directly here to create AND assign in ONE TURN. This is much faster and avoids rate limits compared to sequential selection-assignment workflows.",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -40,6 +40,20 @@ def get_material_tools() -> list[types.Tool]:
                     "emission_strength": {"type": "number"},
                     "alpha": {"type": "number"},
                     "object_names": {"type": "array", "items": {"type": "string"}},
+                    "pattern": {
+                        "anyOf": [
+                            {"type": "string"},
+                            {"type": "array", "items": {"type": "string"}},
+                        ],
+                        "description": "Wildcard pattern(s) for objects (e.g. 'Wall_*' or ['Wall_*', 'Col_*'])",
+                    },
+                    "collection": {
+                        "anyOf": [
+                            {"type": "string"},
+                            {"type": "array", "items": {"type": "string"}},
+                        ],
+                        "description": "Assign to all objects in these collection(s)",
+                    },
                     "slot_index": {"type": "integer", "default": 0},
                 },
                 "required": ["name"],
@@ -47,12 +61,27 @@ def get_material_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="assign_material",
-            description="Assign an existing material to one or more objects. TIP: If 'object_names' is omitted, it applies to ALL currently selected objects. Best used after 'select_by_pattern' to handle many objects at once.",
+            description="Assign an existing material. RATE LIMIT WARNING: Use 'pattern' or 'collection' directly here to assign to many objects in ONE TURN. Avoid using 'select_by_pattern' first as it doubles the API calls.",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "object_names": {"type": "array", "items": {"type": "string"}},
                     "material_name": {"type": "string"},
+                    "object_names": {"type": "array", "items": {"type": "string"}},
+                    "pattern": {
+                        "anyOf": [
+                            {"type": "string"},
+                            {"type": "array", "items": {"type": "string"}},
+                        ],
+                        "description": "Wildcard pattern(s) for objects (e.g. 'Wall_*' or ['Wall_*', 'Col_*'])",
+                    },
+                    "collection": {
+                        "anyOf": [
+                            {"type": "string"},
+                            {"type": "array", "items": {"type": "string"}},
+                        ],
+                        "description": "Assign to all objects in these collection(s)",
+                    },
+                    "slot_index": {"type": "integer", "default": 0},
                 },
                 "required": ["material_name"],
             },

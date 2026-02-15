@@ -4,7 +4,7 @@ This example demonstrates how to use the Blender MCP server to create a procedur
 
 **Model Used:** Claude Haiku 4.5
 
-![Condominium Tower Result](assets/tower_preview.png)
+![Tower Preview](assets/tower_preview.png)
 
 ## Conversation Log
 
@@ -356,5 +356,5 @@ This example demonstrates how to use the Blender MCP server to create a procedur
 **Assistant:**
 > Perfect! I've successfully set the world background to the 'kloofendal_48d_partly_cloudy_puresky_4k' HDRI. This high-quality environment map will now provide realistic lighting and reflections for your scene, with partly cloudy sky conditions that will create natural-looking shadows and ambient lighting on your 3D models.
 
-![HDRI Background Result](assets/hdri_background.png)
+![Tower Background](assets/tower_background.png)
 

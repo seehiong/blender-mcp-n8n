@@ -18,10 +18,12 @@ class MaterialTools:
         ior=1.45,
         object_names=None,
         pattern=None,
+        collection=None,
         slot_index=0,
         **kwargs,
     ):
         """Create material with Principled BSDF"""
+        count = 0  # Initialize count
         PRESETS = {
             "glass": {
                 "base_color": "#FFFFFF",
@@ -122,14 +124,24 @@ class MaterialTools:
         if "IOR" in bsdf.inputs:
             bsdf.inputs["IOR"].default_value = ior
 
-        if object_names or pattern:
-            self.assign_material(
-                name, object_names=object_names, pattern=pattern, slot_index=slot_index
+        if object_names or pattern or collection:
+            assign_res = self.assign_material(
+                name,
+                object_names=object_names,
+                pattern=pattern,
+                collection=collection,
+                slot_index=slot_index,
             )
+            count = assign_res.get("count", 0)
+            msg = f"Material '{name}' {status} and assigned to {count} objects. ASSIGNMENT COMPLETE. No further calls needed."
+        else:
+            msg = f"Material '{name}' {status}."
+
         return {
             "success": True,
             "name": name,
-            "message": f"Material '{name}' {status}.",
+            "count": count if (object_names or pattern or collection) else 0,
+            "message": msg,
         }
 
     def set_material_properties(self, material_name, **kwargs):
@@ -168,7 +180,13 @@ class MaterialTools:
         }
 
     def assign_material(
-        self, material_name, object_names=None, pattern=None, slot_index=0, **kwargs
+        self,
+        material_name,
+        object_names=None,
+        pattern=None,
+        collection=None,
+        slot_index=0,
+        **kwargs,
     ):
         """Assign material to objects. Supports both names and patterns."""
         mat = (
@@ -182,8 +200,19 @@ class MaterialTools:
 
         # Process patterns
         if pattern:
-            matches = fnmatch.filter(bpy.data.objects.keys(), pattern)
-            target_names.update(matches)
+            patterns = [pattern] if isinstance(pattern, str) else pattern
+            for p in patterns:
+                matches = fnmatch.filter(bpy.data.objects.keys(), p)
+                target_names.update(matches)
+
+        # Process collection
+        if collection:
+            collections = [collection] if isinstance(collection, str) else collection
+            for c_name in collections:
+                coll = bpy.data.collections.get(c_name)
+                if coll:
+                    for obj in coll.all_objects:
+                        target_names.add(obj.name)
 
         # Process specific names
         if object_names:
@@ -211,9 +240,11 @@ class MaterialTools:
             else:
                 obj.data.materials[slot_index] = mat
 
+        count = len(target_names)
         return {
             "success": True,
-            "message": f"Material '{material_name}' assigned to {len(target_names)} objects",
+            "count": count,
+            "message": f"Material '{material_name}' assigned to {count} objects. TASK COMPLETE. Do not perform redundant steps.",
         }
 
     def add_shader_node(self, material_name, node_type, location, params=None):

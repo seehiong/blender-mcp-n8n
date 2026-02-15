@@ -7,8 +7,8 @@ class ModelingPrimitives:
     def create_cube(
         self,
         location,
-        scale=(1, 1, 1),
-        rotation=(0, 0, 0),
+        scale=None,
+        rotation=None,
         name=None,
         collection=None,
         **kwargs,
@@ -30,8 +30,8 @@ class ModelingPrimitives:
         radius=None,
         depth=None,
         vertices=32,
-        scale=(1, 1, 1),
-        rotation=(0, 0, 0),
+        scale=None,
+        rotation=None,
         name=None,
         collection=None,
         **kwargs,
@@ -56,8 +56,8 @@ class ModelingPrimitives:
         location,
         radius=1.0,
         subdivisions=2,
-        scale=(1, 1, 1),
-        rotation=(0, 0, 0),
+        scale=None,
+        rotation=None,
         name=None,
         collection=None,
         **kwargs,
@@ -79,8 +79,8 @@ class ModelingPrimitives:
         self,
         location,
         radius=1.0,
-        scale=(1, 1, 1),
-        rotation=(0, 0, 0),
+        scale=None,
+        rotation=None,
         name=None,
         collection=None,
     ):
@@ -102,8 +102,8 @@ class ModelingPrimitives:
         minor_radius=0.25,
         major_segments=48,
         minor_segments=12,
-        scale=(1, 1, 1),
-        rotation=(0, 0, 0),
+        scale=None,
+        rotation=None,
         name=None,
         collection=None,
     ):
@@ -125,8 +125,8 @@ class ModelingPrimitives:
         self,
         location,
         size=2.0,
-        scale=(1, 1, 1),
-        rotation=(0, 0, 0),
+        scale=None,
+        rotation=None,
         name=None,
         collection=None,
     ):
@@ -145,8 +145,8 @@ class ModelingPrimitives:
         self,
         type,
         location,
-        scale=(1, 1, 1),
-        rotation=(0, 0, 0),
+        scale=None,
+        rotation=None,
         name=None,
         collection=None,
         **kwargs,
@@ -191,9 +191,14 @@ class ModelingPrimitives:
             if "minor_segments" in kwargs:
                 params["minor_segments"] = kwargs["minor_segments"]
 
-        if name and name in bpy.data.objects:
+        is_update = bool(name and name in bpy.data.objects)
+        if is_update:
             obj = bpy.data.objects[name]
             obj.location = location
+            # Update specific mesh parameters if it's a mesh object
+            if obj.type == "MESH":
+                # Note: This is an approximation for existing objects without rebuilding mesh
+                pass
         else:
             existing_objects = {obj.name for obj in bpy.data.objects}
             op(**params)
@@ -205,8 +210,20 @@ class ModelingPrimitives:
         if not obj:
             raise RuntimeError("Failed to identify or update object")
 
-        obj.scale = scale
-        obj.rotation_euler = [math.radians(r) for r in rotation]
+        # Handle scale and rotation with defaults for NEW objects only
+        final_scale = (
+            scale if scale is not None else ((1, 1, 1) if not is_update else None)
+        )
+        final_rotation = (
+            rotation if rotation is not None else ((0, 0, 0) if not is_update else None)
+        )
+
+        if final_scale is not None:
+            obj.scale = final_scale
+
+        if final_rotation is not None:
+            obj.rotation_euler = [math.radians(r) for r in final_rotation]
+
         if "dimensions" in kwargs and kwargs["dimensions"]:
             obj.dimensions = kwargs["dimensions"]
         if collection:
@@ -214,7 +231,7 @@ class ModelingPrimitives:
         if name:
             obj.name = name
 
-        status = "updated" if name and name in bpy.data.objects else "created"
+        status = "updated" if is_update else "created"
         return {
             "success": True,
             "name": obj.name,

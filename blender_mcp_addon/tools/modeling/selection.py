@@ -24,7 +24,7 @@ class ModelingSelection:
             bpy.context.view_layer.objects.active = get_object(active_object)
         return {
             "success": True,
-            "message": f"Selected {len(expanded_names)} objects.",
+            "message": f"Selected {len(expanded_names)} objects. TIP: If your goal is material assignment, use 'create_material(..., pattern=\"*\")' instead to avoid rate limits.",
         }
 
     def select_by_pattern(self, pattern, extend=False, **kwargs):
@@ -60,5 +60,5 @@ class ModelingSelection:
             "count": len(selected),
             "names": selected,
             "active_object": active.name if active else None,
-            "message": f"Selected {len(selected)} object(s) matching '{pattern}': ({summary}){greedy_note}.",
+            "message": f"Selected {len(selected)} object(s) matching '{pattern}': ({summary}){greedy_note}. TIP: For materials, use the 'pattern' parameter inside the material tool directly.",
         }

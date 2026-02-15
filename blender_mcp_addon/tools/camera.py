@@ -5,19 +5,35 @@ from ..utils import get_object
 
 
 class CameraTools:
-    def create_camera(self, name, location, rotation, lens=50.0, type="PERSP"):
+    def create_camera(self, name, location, rotation=None, lens=50.0, type="PERSP"):
         """Create camera"""
-        bpy.ops.object.camera_add(
-            location=location, rotation=[math.radians(r) for r in rotation]
-        )
-        cam = bpy.context.active_object
-        cam.name = name
+        cam = bpy.data.objects.get(name)
+        is_update = bool(cam and cam.type == "CAMERA")
+
+        if is_update:
+            cam.location = location
+        else:
+            bpy.ops.object.camera_add(location=location)
+            cam = bpy.context.active_object
+            cam.name = name
+
+        # Update properties
         cam.data.lens = lens
         cam.data.type = type
+
+        # Handle rotation: default to 0,0,0 only for new objects if rotation is not provided
+        final_rotation = (
+            rotation if rotation is not None else ((0, 0, 0) if not is_update else None)
+        )
+        if final_rotation is not None:
+            cam.rotation_euler = [math.radians(r) for r in final_rotation]
+
+        status = "updated" if is_update else "created"
         return {
             "success": True,
             "name": name,
-            "message": f"Camera '{name}' created at {location}",
+            "status": status,
+            "message": f"Camera '{name}' {status} at {location}",
         }
 
     def set_active_camera(self, camera_name):

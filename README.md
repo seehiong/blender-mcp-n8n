@@ -165,6 +165,22 @@ Use natural language with the AI Agent:
 Check out our step-by-step examples to see the server in action:
 
 *   [**Condominium Tower**](docs/examples/condominium_tower.md): A complete guide to creating a procedural 20-story building with glass facade and balconies.
+*   [**Boolean Pavilion**](docs/examples/boolean_pavilion.md): Demonstrates boolean operations, unified structures, and advanced lighting/camera setup.
+
+## ⚡ POWER TIPS: Avoiding Rate Limits
+
+To prevent n8n or LLM "Too many requests" errors, follow these **Stateless Power Working** rules:
+
+### 1. Avoid Selection-Based Workflows
+❌ **Slow (4+ turns):** `select_by_pattern('Wall_*')` → `create_material('M_Gray')` → `assign_material()`
+✅ **Fast (1 turn):** `create_material(name='M_Gray', pattern='Wall_*')`
+
+### 2. Group by Collections
+❌ **Unreliable:** Selecting individual objects.
+✅ **Reliable:** `create_material(name='M_Glass', collection='Cutters')`
+
+### 3. Bulk creation
+If you need 10 objects, don't create them one-by-one. Use `create_and_array` or `duplicate_object` with `count`.
 
 ## Configuration
 
@@ -172,7 +188,7 @@ Set environment variables in `.env`:
 
 ```
 BLENDER_MCP_HOST=127.0.0.1
-BLENDER_MCP_PORT=9877
+BLENDER_MCP_PORT=8888
 BLENDER_ASSETS_DIR=C:/path/to/your/assets
 
 ```
@@ -236,7 +252,7 @@ Blender Scene (Persistent State)
 
 **Server won't start**: Install dependencies with `pip install -r requirements.txt`
 
-**Connection failed**: Ensure Blender MCP addon is running on port 9877.
+**Connection failed**: Ensure Blender MCP addon is running on port 8888.
 
 **Dependency Graph Error**: If you see this, ensure you have the latest `blender_mcp_addon` package which implements the main-thread command queue.
 

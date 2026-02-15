@@ -16,6 +16,18 @@ def get_lighting_tools() -> list[types.Tool]:
                     },
                     "location": {"type": "array", "items": {"type": "number"}},
                     "energy": {"type": "number"},
+                    "color": {
+                        "type": "string",
+                        "description": "Hex color string (e.g., '#FF9900')",
+                    },
+                    "angle": {
+                        "type": "number",
+                        "description": "For SUN: angular diameter in degrees",
+                    },
+                    "size": {
+                        "type": "number",
+                        "description": "For AREA: size of the light",
+                    },
                 },
                 "required": ["name", "type", "location"],
             },

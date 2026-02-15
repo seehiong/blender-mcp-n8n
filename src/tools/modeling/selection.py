@@ -5,7 +5,7 @@ def get_selection_tools() -> list[types.Tool]:
     return [
         types.Tool(
             name="select_objects",
-            description="Select multiple objects and optionally set one as active. Deselects all other objects first.",
+            description="[WORKFLOW WARNING] Avoid using this for sequential 'Select -> Assign' workflows as it increases API turns and hits rate limits. Many tools (like 'create_material') now accept object names directly.",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -24,7 +24,7 @@ def get_selection_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="select_by_pattern",
-            description="POWER TOOL: Select objects using a name pattern (wildcards). Perfect for selecting multiple repetitive objects like 'Facade_Fin*' or 'Window.*' in one go. Highly recommended before applying materials or transformations to groups.",
+            description="[WORKFLOW WARNING] Avoid using this for sequential 'Select -> Assign' workflows. Instead, use the 'pattern' parameter directly in tools like 'create_material', 'assign_material', or 'batch_transform' to complete the task in ONE TURN and avoid rate limits.",
             inputSchema={
                 "type": "object",
                 "properties": {

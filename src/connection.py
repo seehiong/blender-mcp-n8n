@@ -11,7 +11,7 @@ load_dotenv()
 @dataclass
 class Config:
     blender_host: str = os.getenv("BLENDER_MCP_HOST", "127.0.0.1")
-    blender_port: int = int(os.getenv("BLENDER_MCP_PORT", "9877"))
+    blender_port: int = int(os.getenv("BLENDER_MCP_PORT", "8888"))
 
 
 config = Config()

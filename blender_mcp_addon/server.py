@@ -35,7 +35,7 @@ class BlenderMCPServer(
         self.last_error = None
         self.timer_handle = None
 
-    def start_server(self, host="0.0.0.0", port=9877):
+    def start_server(self, host="0.0.0.0", port=8888):
         if self.running:
             return
         try:
@@ -189,6 +189,9 @@ class BlenderMCPServer(
             "set_object_dimensions": self.set_object_dimensions,
             "join_objects": self.join_objects,
             "random_distribute": self.random_distribute,
+            "extrude_mesh": self.extrude_mesh,
+            "inset_faces": self.inset_faces,
+            "shear_mesh": self.shear_mesh,
             # Animation
             "set_keyframe": self.set_keyframe,
             "get_keyframes": self.get_keyframes,

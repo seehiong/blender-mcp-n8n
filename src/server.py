@@ -25,9 +25,6 @@ def resolve_path(args):
     if not ASSETS_DIR:
         return args
 
-    print(f"[DEBUG] resolve_path called with args: {args}")
-    print(f"[DEBUG] ASSETS_DIR: {ASSETS_DIR}")
-
     for key in ["image_path", "filepath"]:
         if (
             key in args
@@ -45,7 +42,7 @@ def resolve_path(args):
                 resolved_path = base_path
             else:
                 # Try extensions
-                print(f"[DEBUG] Exact match failed. Trying extensions...")
+                print("Exact match failed. Trying extensions...")
                 for ext in [".exr", ".hdr", ".png", ".jpg", ".jpeg", ".tiff", ".tga"]:
                     test_path = base_path + ext
                     # print(f"[DEBUG] Checking Extension: {test_path}")
@@ -82,12 +79,25 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
 
     blender_res = blender.send_command(name, clean_args, rid)
 
+    # Flatten nested results from bridge
+    if (
+        isinstance(blender_res, dict)
+        and "result" in blender_res
+        and "status" in blender_res
+    ):
+        status_val = blender_res["status"]
+        blender_res = blender_res["result"]
+        if isinstance(blender_res, dict) and "status" not in blender_res:
+            blender_res["status"] = status_val
+
     # Add success indicator to the message
     log_status = "OK"
     if isinstance(blender_res, dict):
         if "message" in blender_res:
             pass  # Use message as is
-        elif "status" in blender_res and blender_res["status"] == "success":
+        elif "status" in blender_res and (
+            blender_res["status"] == "success" or blender_res.get("success") is True
+        ):
             blender_res["message"] = f"{name} completed successfully."
 
         if "error" in blender_res or blender_res.get("status") == "error":
@@ -124,115 +134,176 @@ async def mcp_app(scope, receive, send):
 
         elif path == "/sse" and method == "POST":
             # Pure Stateless Fallback for n8n/stateless clients
-            body_bytes = b""
-            while True:
-                message = await receive()
-                if message["type"] == "http.request":
-                    body_bytes += message.get("body", b"")
-                    if not message.get("more_body", False):
-                        break
+            try:
+                body_bytes = b""
+                while True:
+                    message = await receive()
+                    if message["type"] == "http.request":
+                        body_bytes += message.get("body", b"")
+                        if not message.get("more_body", False):
+                            break
 
-            body = json.loads(body_bytes.decode("utf-8"))
-            m = body.get("method")
-            rid = body.get("id")
+                if not body_bytes:
+                    logger.warning("Stateless POST: Empty body")
+                    return
 
-            if m in ["initialize", "notifications/initialized", "tools/list"]:
-                logger.debug(f"Stateless Lifecycle: {m}")
-            else:
-                logger.debug(f"Stateless Request: {m}")
+                body = json.loads(body_bytes.decode("utf-8"))
+                m = body.get("method")
+                rid = body.get("id")
 
-            # Send 200 OK headers
-            await send(
-                {
-                    "type": "http.response.start",
-                    "status": 200,
-                    "headers": [(b"content-type", b"application/json")],
-                }
-            )
+                # Only log noisy handshake methods if not in silenced list
+                if m not in [
+                    "initialize",
+                    "notifications/initialized",
+                    "tools/list",
+                    "tools/call",
+                ]:
+                    logger.info(f"Stateless Request: {m} (ID: {rid})")
 
-            res = None
-            if m == "initialize":
-                res = {
-                    "jsonrpc": "2.0",
-                    "id": rid,
-                    "result": {
-                        "protocolVersion": "2024-11-05",
-                        "capabilities": {"tools": {}},
-                        "serverInfo": {"name": "blender-mcp-n8n", "version": "0.1.0"},
-                    },
-                }
-            elif m == "notifications/initialized":
+                # Send 200 OK headers
+                await send(
+                    {
+                        "type": "http.response.start",
+                        "status": 200,
+                        "headers": [(b"content-type", b"application/json")],
+                    }
+                )
+
                 res = None
-            elif m == "tools/list":
-                res = {
-                    "jsonrpc": "2.0",
-                    "id": rid,
-                    "result": {
-                        "tools": [
-                            {
-                                "name": t.name,
-                                "description": t.description,
-                                "inputSchema": sanitize_schema(t.inputSchema),
-                            }
-                            for t in get_mcp_tools()
-                        ]
-                    },
-                }
-            elif m == "tools/call":
-                p = body.get("params", {})
-                tool_name = p.get("name")
-                args = p.get("arguments", {})
-                call_rid = "".join(
-                    random.choices(string.ascii_uppercase + string.digits, k=6)
-                )
+                if m == "initialize":
+                    res = {
+                        "jsonrpc": "2.0",
+                        "id": rid,
+                        "result": {
+                            "protocolVersion": "2024-11-05",
+                            "capabilities": {"tools": {}},
+                            "serverInfo": {
+                                "name": "blender-mcp-n8n",
+                                "version": "0.1.0",
+                            },
+                        },
+                    }
+                elif m == "notifications/initialized":
+                    res = None
+                elif m == "tools/list":
+                    res = {
+                        "jsonrpc": "2.0",
+                        "id": rid,
+                        "result": {
+                            "tools": [
+                                {
+                                    "name": t.name,
+                                    "description": t.description,
+                                    "inputSchema": sanitize_schema(t.inputSchema),
+                                }
+                                for t in get_mcp_tools()
+                            ]
+                        },
+                    }
+                elif m == "tools/call":
+                    p = body.get("params", {})
+                    tool_name = p.get("name")
+                    args = p.get("arguments", {})
+                    call_rid = "".join(
+                        random.choices(string.ascii_uppercase + string.digits, k=6)
+                    )
 
-                meta = {"sessionId", "action", "chatInput", "toolCallId", "id"}
-                clean_args = {k: v for k, v in args.items() if k not in meta}
+                    meta = {"sessionId", "action", "chatInput", "toolCallId", "id"}
+                    clean_args = {k: v for k, v in args.items() if k not in meta}
 
-                # Resolve paths
-                clean_args = resolve_path(clean_args)
+                    # Resolve paths
+                    clean_args = resolve_path(clean_args)
 
-                logger.info(
-                    f"[{call_rid}] Stateless Fallback Exec: {tool_name} with params: {clean_args}"
-                )
-                blender_res = blender.send_command(tool_name, clean_args, call_rid)
+                    logger.info(
+                        f"[{call_rid}] Stateless Fallback Exec: {tool_name} with params: {clean_args}"
+                    )
+                    blender_res = blender.send_command(tool_name, clean_args, call_rid)
 
-                log_status = "OK"
-                if isinstance(blender_res, dict):
-                    if "message" in blender_res:
-                        pass  # Use message as is
-                    elif "status" in blender_res and blender_res["status"] == "success":
-                        blender_res["message"] = f"{tool_name} completed successfully."
+                    # Flatten nested results from bridge
+                    if (
+                        isinstance(blender_res, dict)
+                        and "result" in blender_res
+                        and "status" in blender_res
+                    ):
+                        status_val = blender_res["status"]
+                        blender_res = blender_res["result"]
+                        if (
+                            isinstance(blender_res, dict)
+                            and "status" not in blender_res
+                        ):
+                            blender_res["status"] = status_val
 
-                    if "error" in blender_res or blender_res.get("status") == "error":
-                        log_status = "ERROR"
+                    log_status = "OK"
+                    if isinstance(blender_res, dict):
+                        if "message" in blender_res:
+                            pass  # Use message as is
+                        elif "status" in blender_res and (
+                            blender_res["status"] == "success"
+                            or blender_res.get("success") is True
+                        ):
+                            blender_res["message"] = (
+                                f"{tool_name} completed successfully."
+                            )
 
-                log_msg = blender_res.get("message", blender_res.get("status", "Done"))
-                if "error" in blender_res:
-                    log_msg = f"ERROR: {blender_res['error']}"
+                        if (
+                            "error" in blender_res
+                            or blender_res.get("status") == "error"
+                        ):
+                            log_status = "ERROR"
 
-                logger.info(f"[{call_rid}] [{log_status}] {log_msg}")
+                    log_msg = blender_res.get(
+                        "message", blender_res.get("status", "Done")
+                    )
+                    if isinstance(blender_res, dict) and "error" in blender_res:
+                        log_msg = f"ERROR: {blender_res['error']}"
 
-                res = {
-                    "jsonrpc": "2.0",
-                    "id": rid,
-                    "result": {
-                        "content": [
-                            {"type": "text", "text": json.dumps(blender_res, indent=2)}
-                        ],
-                        "isError": "error" in blender_res,
-                    },
-                }
+                    logger.info(f"[{call_rid}] [{log_status}] {log_msg}")
 
-            if res:
+                    res = {
+                        "jsonrpc": "2.0",
+                        "id": rid,
+                        "result": {
+                            "content": [
+                                {
+                                    "type": "text",
+                                    "text": json.dumps(blender_res, indent=2),
+                                }
+                            ],
+                            "isError": isinstance(blender_res, dict)
+                            and "error" in blender_res,
+                        },
+                    }
+
+                if res:
+                    await send(
+                        {
+                            "type": "http.response.body",
+                            "body": json.dumps(res).encode("utf-8"),
+                        }
+                    )
+                else:
+                    await send({"type": "http.response.body", "body": b""})
+            except Exception as e:
+                import traceback
+
+                logger.error(f"Stateless Handler Error: {str(e)}")
+                traceback.print_exc()
+                try:
+                    await send(
+                        {
+                            "type": "http.response.start",
+                            "status": 500,
+                            "headers": [(b"content-type", b"application/json")],
+                        }
+                    )
+                except Exception:
+                    pass
                 await send(
                     {
                         "type": "http.response.body",
-                        "body": json.dumps(res).encode("utf-8"),
+                        "body": json.dumps({"error": str(e)}).encode("utf-8"),
                     }
                 )
-            else:
-                await send({"type": "http.response.body", "body": b""})
         else:
             # 404 for other paths
             await send({"type": "http.response.start", "status": 404, "headers": []})

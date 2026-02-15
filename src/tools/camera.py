@@ -11,7 +11,21 @@ def get_camera_tools() -> list[types.Tool]:
                 "properties": {
                     "name": {"type": "string"},
                     "location": {"type": "array", "items": {"type": "number"}},
-                    "rotation": {"type": "array", "items": {"type": "number"}},
+                    "rotation": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "default": [0, 0, 0],
+                        "description": "Rotation in degrees",
+                    },
+                    "lens": {
+                        "type": "number",
+                        "description": "Camera focal length in mm",
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["PERSP", "ORTHO", "PANO"],
+                        "description": "Camera type",
+                    },
                 },
                 "required": ["name", "location"],
             },

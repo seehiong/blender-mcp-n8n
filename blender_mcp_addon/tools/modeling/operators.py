@@ -195,3 +195,53 @@ class ModelingOperators:
             "success": True,
             "message": f"Distributed {len(created)} copies.",
         }
+        return {
+            "success": True,
+            "message": f"Distributed {len(created)} copies.",
+        }
+
+    def extrude_mesh(self, object_name, mode="FACES", move=(0, 0, 0)):
+        obj = get_object(object_name)
+        bpy.context.view_layer.objects.active = obj
+        bpy.ops.object.mode_set(mode="EDIT")
+        bpy.ops.mesh.select_all(action="SELECT")
+
+        select_mode = (mode == "VERTS", mode == "EDGES", mode == "FACES")
+        bpy.context.tool_settings.mesh_select_mode = select_mode
+
+        bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value": move})
+        bpy.ops.object.mode_set(mode="OBJECT")
+        return {
+            "success": True,
+            "message": f"Extruded {mode.lower()} of '{object_name}' by {move}.",
+        }
+
+    def inset_faces(self, object_name, thickness, depth=0.0):
+        obj = get_object(object_name)
+        bpy.context.view_layer.objects.active = obj
+        bpy.ops.object.mode_set(mode="EDIT")
+        bpy.ops.mesh.select_all(action="SELECT")
+
+        bpy.ops.mesh.inset(thickness=thickness, depth=depth)
+
+        bpy.ops.object.mode_set(mode="OBJECT")
+        return {
+            "success": True,
+            "message": f"Inset faces of '{object_name}' by {thickness}.",
+        }
+
+    def shear_mesh(self, object_name, value, axis="X", orient_axis="Z"):
+        obj = get_object(object_name)
+        bpy.context.view_layer.objects.active = obj
+        bpy.ops.object.mode_set(mode="EDIT")
+        bpy.ops.mesh.select_all(action="SELECT")
+
+        bpy.ops.transform.shear(
+            value=value, orient_axis=orient_axis, orient_axis_ortho=axis
+        )
+
+        bpy.ops.object.mode_set(mode="OBJECT")
+        return {
+            "success": True,
+            "message": f"Sheared '{object_name}' on {axis} axis.",
+        }

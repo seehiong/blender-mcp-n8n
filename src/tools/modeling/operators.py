@@ -125,4 +125,67 @@ def get_operator_tools() -> list[types.Tool]:
                 "required": ["object_name", "count", "min_distance", "max_distance"],
             },
         ),
+        types.Tool(
+            name="extrude_mesh",
+            description="Extrude mesh geometry (vertices, edges, or faces).",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "Object to extrude",
+                    },
+                    "mode": {
+                        "type": "string",
+                        "enum": ["VERTS", "EDGES", "FACES"],
+                        "default": "FACES",
+                        "description": "Selection mode for extrusion",
+                    },
+                    "move": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "XYZ translation after extrusion",
+                    },
+                },
+                "required": ["object_name"],
+            },
+        ),
+        types.Tool(
+            name="inset_faces",
+            description="Inset faces of a mesh (great for creating walls from floors).",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "object_name": {"type": "string", "description": "Object to inset"},
+                    "thickness": {"type": "number", "description": "Inset amount"},
+                    "depth": {
+                        "type": "number",
+                        "description": "Optional extrude depth",
+                    },
+                },
+                "required": ["object_name", "thickness"],
+            },
+        ),
+        types.Tool(
+            name="shear_mesh",
+            description="Shear mesh geometry along an axis.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "object_name": {"type": "string"},
+                    "value": {"type": "number", "description": "Shear factor"},
+                    "axis": {
+                        "type": "string",
+                        "enum": ["X", "Y", "Z"],
+                        "description": "Axis to shear along (View axis)",
+                    },
+                    "orient_axis": {
+                        "type": "string",
+                        "enum": ["X", "Y", "Z"],
+                        "description": "Axis orthogonal to the shear plane",
+                    },
+                },
+                "required": ["object_name", "value"],
+            },
+        ),
     ]

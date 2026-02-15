@@ -100,15 +100,42 @@ def get_modifier_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="boolean_operation",
-            description="Perform a boolean operation between two objects.",
+            description="""Perform a boolean operation between objects or collections. 
+GUIDANCE:
+- Use 'SLICE' to cut a hole AND keep the resulting piece as a new object.
+- Use operand_type='COLLECTION' to use all objects in a collection as cutters at once.
+- CRITICAL: object_a must NOT be in collection object_b. Submitting an object's own collection as a cutter will result in self-subtraction (object disappearing).
+- 'EXACT' solver is recommended for most operations.
+- The cutter is automatically hidden from viewport and render by default.""",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "object_a": {"type": "string", "description": "Base object"},
-                    "object_b": {"type": "string", "description": "Operand object"},
+                    "object_a": {"type": "string", "description": "Base object name"},
+                    "object_b": {
+                        "type": "string",
+                        "description": "Operand name (Object or Collection name)",
+                    },
                     "operation": {
                         "type": "string",
-                        "enum": ["INTERSECT", "UNION", "DIFFERENCE"],
+                        "enum": ["INTERSECT", "UNION", "DIFFERENCE", "SLICE"],
+                        "description": "Operation type. SLICE is custom: Difference + Intersection result.",
+                    },
+                    "operand_type": {
+                        "type": "string",
+                        "enum": ["OBJECT", "COLLECTION"],
+                        "default": "OBJECT",
+                        "description": "Whether object_b is a single object or a collection of objects.",
+                    },
+                    "solver": {
+                        "type": "string",
+                        "enum": ["FLOAT", "EXACT", "MANIFOLD"],
+                        "default": "EXACT",
+                        "description": "Solver algorithm: FLOAT (legacy/fast), EXACT (reliable), MANIFOLD (mesh-safe)",
+                    },
+                    "hide_cutter": {
+                        "type": "boolean",
+                        "default": True,
+                        "description": "Hide the cutter object after operation",
                     },
                 },
                 "required": ["object_a", "object_b", "operation"],
