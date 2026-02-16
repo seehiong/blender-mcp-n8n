@@ -1,6 +1,6 @@
 # Blender MCP Server for n8n
 
-A Model Context Protocol (MCP) server that exposes Blender's 3D modeling capabilities to n8n workflows via HTTP SSE transport.
+A Model Context Protocol (MCP) server that exposes Blender's 3D modeling capabilities to n8n workflows via HTTP Streamable transport.
 
 ## Quick Start
 
@@ -31,42 +31,41 @@ As the addon grows, a single 1800+ line file becomes unmaintainable. We've split
 
 ## Usage
 
-### 1. Configure n8n Workflow
-
-![n8n Design](docs/images/blender-mcp-for-n8n.png)
+### 1. Start Blender Addon Server
 
 1. Open the **N Panel** (press `N` in the 3D Viewport).
 2. Look for the **Blender MCP** tab.
 3. Click **Start MCP Server**.
 
-### 2. Updating & Applying Changes
+### 2. Start the Python MCP Server
+
+```bash
+python -m src.main
+```
+
+The server will start on `http://localhost:8000` with HTTP Streamable endpoint at `/mcp`. It uses detailed logging to show exactly which tools are being called and their results.
+
+### 3. Configure n8n Workflow
+
+![n8n Design](docs/images/blender-mcp-for-n8n.png)
+
+1. Add **MCP Client Tool** node
+2. Configure:
+   - **HTTP Streamable Endpoint**: `http://localhost:8000/mcp`
+   - **Authentication**: None
+   - **Tools to Include**: All
+3. Connect to an **AI Agent** node
+
+### 4. Development: Updating & Applying Changes
+
 If you modify the addon code or the MCP server logic, follow these steps to ensure changes are applied:
+
 1. **Reload Scripts**: In Blender, press `F3` and type **"Reload Scripts"** (or use the shortcut `Alt + R` if configured).
 2. **Restart Blender Server**: In the N-Panel, click **Stop MCP Server** and then **Start MCP Server** again.
 3. **Restart Python Server**: Stop and restart the server with `python -m src.main`.
 
 > [!IMPORTANT]
 > All Blender operations now run on the main thread via a command queue, ensuring stability and preventing dependency graph errors.
-
-### 3. Start the MCP Server
-
-```bash
-python -m src.main
-```
-
-The server will start on `http://localhost:8000` with SSE endpoint at `/sse`. It uses detailed logging to show exactly which tools are being called and their results.
-
-### 4. Configure n8n
-
-In your n8n workflow:
-
-1. Add **MCP Client Tool** node
-2. Configure:
-   - **SSE Endpoint**: `http://localhost:8000/sse`
-   - **Authentication**: None
-   - **Tools to Include**: All
-
-3. Connect to an **AI Agent** node
 
 ## Available Tools
 
@@ -98,6 +97,7 @@ The server exposes **45+ Blender tools** across several categories:
 | `create_icosphere` | Create/update an Ico sphere mesh. |
 | `create_torus` | Create/update a torus mesh. |
 | `create_plane` | Create/update a plane mesh. |
+| `create_text` | Create/update a 3D text object. |
 | `duplicate_object` | Duplicate an object with optional transformations. |
 | `create_and_array` | Create a primitive and apply a linear array modifier in one step. |
 | `batch_transform` | Transform multiple existing objects at once. |
@@ -153,12 +153,38 @@ The server exposes **45+ Blender tools** across several categories:
 
 ## Example Usage in n8n
 
-Use natural language with the AI Agent:
+### Example Interaction
 
-- "Create a red metallic sphere at position [0, 0, 2]"
-- "Duplicate 'Base_Slab', move it to Z=80, and remove its Array modifier"
-- "Select both the glass and railing, then copy the Array modifier from the glass to the railing"
-- "Add a torus with minor_radius 0.1 and major_radius 25"
+**User:** "Create a red metallic sphere at position [0, 0, 2]"
+> **Assistant:** Perfect! I've successfully created a red metallic sphere at position [0, 0, 2]. Here's what was done:
+> - Created a sphere named "RedMetallicSphere" with a radius of 1 unit at coordinates [0, 0, 2]
+> - Applied a red metallic material using a polished metal preset with a red base color (#FF0000)
+> 
+> The sphere is now ready in your Blender scene with a shiny red metallic appearance.
+
+**User:** "Duplicate the red sphere, move it to [5, 0, 2], and change its color to blue"
+> **Assistant:** Perfect! I've successfully completed all the tasks:
+> - Duplicated the red sphere and created a new object named "BlueMetallicSphere"
+> - Moved it to position [5, 0, 2]
+> - Changed the material to blue metallic with a polished metal finish
+> 
+> You now have two metallic spheres in your scene: RedMetallicSphere at [0, 0, 2] (red) and BlueMetallicSphere at [5, 0, 2] (blue).
+
+**User:** "Select both the original red sphere and the duplicate, then add a Subdivision modifier to both"
+> **Assistant:** Excellent! I've successfully:
+> - Selected both spheres (RedMetallicSphere and BlueMetallicSphere)
+> - Added a Subdivision Surface modifier (SUBSURF) to both objects with 2 levels of subdivision
+> 
+> This modifier will smooth and refine the geometry of both spheres, giving them a more polished and rounded appearance.
+
+**User:** "Add a torus with minor_radius 0.1 and major_radius 25 at [2, 0, 0]"
+> **Assistant:** Perfect! I've successfully created a torus with the specifications you requested:
+> - **Name:** Torus
+> - **Position:** [2, 0, 0]
+> - **Major radius:** 25 (distance from center to center of the tube)
+> - **Minor radius:** 0.1 (thickness of the tube)
+> 
+> This creates a very thin, large torus - essentially a large ring with a thin profile. It's now in your Blender scene alongside the two metallic spheres!
 
 ## Examples
 
@@ -216,9 +242,7 @@ Although the MCP specification supports persistent SSE sessions, many clients (i
 
 for each interaction.
 
-The server therefore supports:
-- **SSE session mode**: For fully stateful MCP clients.
-- **Stateless JSON-RPC fallback**: For per-call execution clients like n8n.
+The server uses the official **HTTP Streamable** transport introduced in MCP SDK 1.8.0+, which supports both stateful sessions and stateless requests.
 
 ### The Stateless Fallback Mechanism
 
@@ -237,7 +261,7 @@ To ensure reliability across clients, the server implements a robust fallback st
 ```
 n8n AI Agent 
       ↓
-MCP Client (Stateless JSON-RPC)
+MCP Client (HTTP Streamable / JSON-RPC)
       ↓
 MCP Server (ASGI)
       ↓
@@ -256,7 +280,7 @@ Blender Scene (Persistent State)
 
 **Dependency Graph Error**: If you see this, ensure you have the latest `blender_mcp_addon` package which implements the main-thread command queue.
 
-**Tools not appearing in n8n**: Check the SSE endpoint URL is correct (`http://localhost:8000/sse`)
+**Tools not appearing in n8n**: Check the HTTP Streamable endpoint URL is correct (`http://localhost:8000/mcp`)
 
 ## Acknowledgments
 

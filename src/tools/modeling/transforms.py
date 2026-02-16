@@ -45,8 +45,49 @@ def get_transform_tools() -> list[types.Tool]:
                         "type": "boolean",
                         "description": "Create linked duplicate (shares data)",
                     },
+                    "hide_viewport": {
+                        "type": "boolean",
+                        "description": "Hide from viewport",
+                    },
+                    "hide_render": {
+                        "type": "boolean",
+                        "description": "Hide from render",
+                    },
                 },
                 "required": ["object_name"],
+            },
+        ),
+        types.Tool(
+            name="duplicate_selection",
+            description="Duplicate all currently selected objects with optional transformations. Useful for testing set_active_collection or batch duplication workflows.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "location_offset": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Optional: XYZ offset to apply to all duplicates",
+                    },
+                    "rotation_offset": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Optional: XYZ rotation offset in degrees",
+                    },
+                    "scale": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Optional: XYZ scale for duplicates",
+                    },
+                    "collection": {
+                        "type": "string",
+                        "description": "Optional: Move duplicates to this collection",
+                    },
+                    "remove_modifiers": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Optional: List of modifier names to remove from duplicates",
+                    },
+                },
             },
         ),
         types.Tool(
@@ -73,6 +114,14 @@ def get_transform_tools() -> list[types.Tool]:
                         "type": "array",
                         "items": {"type": "number"},
                         "description": "Absolute XYZ scale.",
+                    },
+                    "hide_viewport": {
+                        "type": "boolean",
+                        "description": "Hide from viewport",
+                    },
+                    "hide_render": {
+                        "type": "boolean",
+                        "description": "Hide from render",
                     },
                 },
                 "required": ["object_name"],

@@ -73,3 +73,47 @@ class CollectionTools:
             }
 
         return build_hierarchy(bpy.context.scene.collection)
+
+    def remove_collection(self, name=None, pattern=None, delete_objects=True, **kwargs):
+        """Remove collection(s) by name or pattern"""
+        import fnmatch
+
+        collections_to_remove = []
+        if pattern:
+            for coll in bpy.data.collections:
+                if fnmatch.fnmatch(coll.name, pattern):
+                    collections_to_remove.append(coll)
+        elif name:
+            coll = bpy.data.collections.get(name)
+            if coll:
+                collections_to_remove.append(coll)
+
+        if not collections_to_remove:
+            return {
+                "success": True,
+                "message": f"No collections found matching {f'pattern {pattern}' if pattern else f'name {name}'}",
+            }
+
+        count = 0
+        for coll in collections_to_remove:
+            if delete_objects:
+                # Delete all objects in this collection
+                for obj in list(coll.objects):
+                    bpy.data.objects.remove(obj, do_unlink=True)
+
+            # To remove a collection, we must unlink it from all its parents
+            for parent in bpy.data.collections:
+                if coll.name in parent.children:
+                    parent.children.unlink(coll)
+            if coll.name in bpy.context.scene.collection.children:
+                bpy.context.scene.collection.children.unlink(coll)
+
+            # Finally remove the collection from data
+            bpy.data.collections.remove(coll)
+            count += 1
+
+        return {
+            "success": True,
+            "count": count,
+            "message": f"Successfully removed {count} collection(s).",
+        }

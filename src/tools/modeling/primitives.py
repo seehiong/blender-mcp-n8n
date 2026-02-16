@@ -182,4 +182,38 @@ def get_primitive_tools() -> list[types.Tool]:
                 "required": ["location"],
             },
         ),
+        types.Tool(
+            name="create_text",
+            description="Create 3D text (FONT object) or update existing one. Used for legends and labels.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "text": {"type": "string", "description": "Text content"},
+                    "location": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "XYZ position",
+                    },
+                    "name": {"type": "string", "description": "Object name"},
+                    "size": {
+                        "type": "number",
+                        "description": "Font size (radius)",
+                        "default": 1.0,
+                    },
+                    "extrude": {
+                        "type": "number",
+                        "description": "3D thickness",
+                        "default": 0.05,
+                    },
+                    "align_x": {
+                        "type": "string",
+                        "enum": ["LEFT", "CENTER", "RIGHT", "JUSTIFY", "FLUSH"],
+                        "default": "LEFT",
+                        "description": "Horizontal alignment",
+                    },
+                    "collection": {"type": "string"},
+                },
+                "required": ["text", "location"],
+            },
+        ),
     ]

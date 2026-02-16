@@ -5,12 +5,11 @@ import os
 from dotenv import load_dotenv
 
 from mcp.server import Server
-from mcp.server.sse import SseServerTransport
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 import mcp.types as types
 
 from .connection import blender, logger
 from .tools import get_mcp_tools
-from .tools.utils import sanitize_schema
 
 load_dotenv()
 
@@ -43,8 +42,11 @@ def resolve_path(args):
             else:
                 # Try extensions
                 print("Exact match failed. Trying extensions...")
+                # Split off any existing extension to try others
+                root, _ = os.path.splitext(base_path)
+
                 for ext in [".exr", ".hdr", ".png", ".jpg", ".jpeg", ".tiff", ".tga"]:
-                    test_path = base_path + ext
+                    test_path = root + ext
                     # print(f"[DEBUG] Checking Extension: {test_path}")
                     if os.path.exists(test_path):
                         print(f"[DEBUG] Found match with extension: {test_path}")
@@ -113,201 +115,44 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
     return [types.TextContent(type="text", text=json.dumps(blender_res, indent=2))]
 
 
-# ASGI Application (Stateless Fallback + SSE)
-sse = SseServerTransport("/sse")
+# ASGI Application (HTTP Streamable Transport)
+session_manager = StreamableHTTPSessionManager(
+    app=app, json_response=True, stateless=True
+)
+
+# Track lifespan state
+_lifespan_context = None
 
 
 async def mcp_app(scope, receive, send):
     """The main ASGI application entry point"""
-    if scope["type"] == "http":
-        path = scope["path"]
-        method = scope["method"]
+    global _lifespan_context
 
-        if path == "/sse" and method == "GET":
-            async with sse.connect_sse(scope, receive, send) as (
-                read_stream,
-                write_stream,
-            ):
-                await app.run(
-                    read_stream, write_stream, app.create_initialization_options()
-                )
-
-        elif path == "/sse" and method == "POST":
-            # Pure Stateless Fallback for n8n/stateless clients
-            try:
-                body_bytes = b""
-                while True:
-                    message = await receive()
-                    if message["type"] == "http.request":
-                        body_bytes += message.get("body", b"")
-                        if not message.get("more_body", False):
-                            break
-
-                if not body_bytes:
-                    logger.warning("Stateless POST: Empty body")
-                    return
-
-                body = json.loads(body_bytes.decode("utf-8"))
-                m = body.get("method")
-                rid = body.get("id")
-
-                # Only log noisy handshake methods if not in silenced list
-                if m not in [
-                    "initialize",
-                    "notifications/initialized",
-                    "tools/list",
-                    "tools/call",
-                ]:
-                    logger.info(f"Stateless Request: {m} (ID: {rid})")
-
-                # Send 200 OK headers
-                await send(
-                    {
-                        "type": "http.response.start",
-                        "status": 200,
-                        "headers": [(b"content-type", b"application/json")],
-                    }
-                )
-
-                res = None
-                if m == "initialize":
-                    res = {
-                        "jsonrpc": "2.0",
-                        "id": rid,
-                        "result": {
-                            "protocolVersion": "2024-11-05",
-                            "capabilities": {"tools": {}},
-                            "serverInfo": {
-                                "name": "blender-mcp-n8n",
-                                "version": "0.1.0",
-                            },
-                        },
-                    }
-                elif m == "notifications/initialized":
-                    res = None
-                elif m == "tools/list":
-                    res = {
-                        "jsonrpc": "2.0",
-                        "id": rid,
-                        "result": {
-                            "tools": [
-                                {
-                                    "name": t.name,
-                                    "description": t.description,
-                                    "inputSchema": sanitize_schema(t.inputSchema),
-                                }
-                                for t in get_mcp_tools()
-                            ]
-                        },
-                    }
-                elif m == "tools/call":
-                    p = body.get("params", {})
-                    tool_name = p.get("name")
-                    args = p.get("arguments", {})
-                    call_rid = "".join(
-                        random.choices(string.ascii_uppercase + string.digits, k=6)
-                    )
-
-                    meta = {"sessionId", "action", "chatInput", "toolCallId", "id"}
-                    clean_args = {k: v for k, v in args.items() if k not in meta}
-
-                    # Resolve paths
-                    clean_args = resolve_path(clean_args)
-
-                    logger.info(
-                        f"[{call_rid}] Stateless Fallback Exec: {tool_name} with params: {clean_args}"
-                    )
-                    blender_res = blender.send_command(tool_name, clean_args, call_rid)
-
-                    # Flatten nested results from bridge
-                    if (
-                        isinstance(blender_res, dict)
-                        and "result" in blender_res
-                        and "status" in blender_res
-                    ):
-                        status_val = blender_res["status"]
-                        blender_res = blender_res["result"]
-                        if (
-                            isinstance(blender_res, dict)
-                            and "status" not in blender_res
-                        ):
-                            blender_res["status"] = status_val
-
-                    log_status = "OK"
-                    if isinstance(blender_res, dict):
-                        if "message" in blender_res:
-                            pass  # Use message as is
-                        elif "status" in blender_res and (
-                            blender_res["status"] == "success"
-                            or blender_res.get("success") is True
-                        ):
-                            blender_res["message"] = (
-                                f"{tool_name} completed successfully."
-                            )
-
-                        if (
-                            "error" in blender_res
-                            or blender_res.get("status") == "error"
-                        ):
-                            log_status = "ERROR"
-
-                    log_msg = blender_res.get(
-                        "message", blender_res.get("status", "Done")
-                    )
-                    if isinstance(blender_res, dict) and "error" in blender_res:
-                        log_msg = f"ERROR: {blender_res['error']}"
-
-                    logger.info(f"[{call_rid}] [{log_status}] {log_msg}")
-
-                    res = {
-                        "jsonrpc": "2.0",
-                        "id": rid,
-                        "result": {
-                            "content": [
-                                {
-                                    "type": "text",
-                                    "text": json.dumps(blender_res, indent=2),
-                                }
-                            ],
-                            "isError": isinstance(blender_res, dict)
-                            and "error" in blender_res,
-                        },
-                    }
-
-                if res:
-                    await send(
-                        {
-                            "type": "http.response.body",
-                            "body": json.dumps(res).encode("utf-8"),
-                        }
-                    )
-                else:
-                    await send({"type": "http.response.body", "body": b""})
-            except Exception as e:
-                import traceback
-
-                logger.error(f"Stateless Handler Error: {str(e)}")
-                traceback.print_exc()
+    if scope["type"] == "lifespan":
+        # Handle lifespan events to initialize session_manager
+        while True:
+            message = await receive()
+            if message["type"] == "lifespan.startup":
                 try:
-                    await send(
-                        {
-                            "type": "http.response.start",
-                            "status": 500,
-                            "headers": [(b"content-type", b"application/json")],
-                        }
-                    )
-                except Exception:
-                    pass
-                await send(
-                    {
-                        "type": "http.response.body",
-                        "body": json.dumps({"error": str(e)}).encode("utf-8"),
-                    }
-                )
-        else:
-            # 404 for other paths
-            await send({"type": "http.response.start", "status": 404, "headers": []})
-            await send({"type": "http.response.body", "body": b"Not Found"})
-    else:
-        # Not HTTP
-        pass
+                    # Start the session manager
+                    _lifespan_context = session_manager.run()
+                    await _lifespan_context.__aenter__()
+                    await send({"type": "lifespan.startup.complete"})
+                except Exception as e:
+                    await send({"type": "lifespan.startup.failed", "message": str(e)})
+                    raise
+            elif message["type"] == "lifespan.shutdown":
+                try:
+                    if _lifespan_context:
+                        await _lifespan_context.__aexit__(None, None, None)
+                    await send({"type": "lifespan.shutdown.complete"})
+                except Exception as e:
+                    await send({"type": "lifespan.shutdown.failed", "message": str(e)})
+                    raise
+                return
+    elif scope["type"] == "http" and scope["path"] == "/mcp":
+        await session_manager.handle_request(scope, receive, send)
+    elif scope["type"] == "http":
+        # 404 for other paths
+        await send({"type": "http.response.start", "status": 404, "headers": []})
+        await send({"type": "http.response.body", "body": b"Not Found"})

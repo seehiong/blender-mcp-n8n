@@ -49,4 +49,26 @@ def get_collection_tools() -> list[types.Tool]:
             description="Get hierarchy of all collections in the scene",
             inputSchema={"type": "object", "properties": {}},
         ),
+        types.Tool(
+            name="remove_collection",
+            description="Remove a collection and optionally its contents.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Specific collection to remove",
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Glob pattern for bulk removal (e.g. 'Test_*')",
+                    },
+                    "delete_objects": {
+                        "type": "boolean",
+                        "description": "Whether to also delete objects inside the collection(s)",
+                        "default": True,
+                    },
+                },
+            },
+        ),
     ]

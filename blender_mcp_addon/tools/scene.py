@@ -13,7 +13,7 @@ class SceneTools:
             "collections": [c.name for c in bpy.data.collections],
         }
 
-        for obj in bpy.context.scene.objects[:20]:
+        for obj in bpy.context.scene.objects[:100]:
             scene_info["objects"].append(
                 {
                     "name": obj.name,
@@ -44,6 +44,21 @@ class SceneTools:
         if obj.type == "MESH":
             info["vertices"] = len(obj.data.vertices)
             info["faces"] = len(obj.data.polygons)
+
+        info["modifiers"] = []
+        for mod in obj.modifiers:
+            mod_info = {
+                "name": mod.name,
+                "type": mod.type,
+                "show_viewport": mod.show_viewport,
+                "show_render": mod.show_render,
+            }
+            # Add type-specific info if needed
+            if mod.type == "MIRROR":
+                mod_info["use_axis"] = list(mod.use_axis)
+            elif mod.type == "ARRAY":
+                mod_info["count"] = mod.count
+            info["modifiers"].append(mod_info)
 
         info["success"] = True
         info["message"] = (

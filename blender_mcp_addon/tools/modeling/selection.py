@@ -29,6 +29,10 @@ class ModelingSelection:
 
     def select_by_pattern(self, pattern, extend=False, **kwargs):
         """Select objects matching a glob pattern (e.g. 'Facade_Fin*')"""
+        # Ensure we're in Object mode
+        if bpy.context.mode != "OBJECT":
+            bpy.ops.object.mode_set(mode="OBJECT")
+
         if not extend:
             bpy.ops.object.select_all(action="DESELECT")
 

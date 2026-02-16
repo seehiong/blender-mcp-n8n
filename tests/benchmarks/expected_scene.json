@@ -1,0 +1,2353 @@
+{
+  "scene_summary": {
+    "name": "Scene",
+    "object_count": 67,
+    "objects": [
+      {
+        "name": "Label_Primitives",
+        "type": "FONT",
+        "location": [
+          -5.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Primitive_Cube",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Primitive_Cylinder",
+        "type": "MESH",
+        "location": [
+          5.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Primitive_IcoSphere",
+        "type": "MESH",
+        "location": [
+          10.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Primitive_Sphere",
+        "type": "MESH",
+        "location": [
+          15.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Primitive_Torus",
+        "type": "MESH",
+        "location": [
+          20.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Primitive_Plane",
+        "type": "MESH",
+        "location": [
+          25.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Label_Modifiers",
+        "type": "FONT",
+        "location": [
+          -5.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_Array",
+        "type": "MESH",
+        "location": [
+          0.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_Solidify",
+        "type": "MESH",
+        "location": [
+          5.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_Bevel",
+        "type": "MESH",
+        "location": [
+          10.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_MirrorCenter_Y",
+        "type": "MESH",
+        "location": [
+          15.0,
+          12.5,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_Mirror",
+        "type": "MESH",
+        "location": [
+          15.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_Subdiv",
+        "type": "MESH",
+        "location": [
+          20.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_Wire",
+        "type": "MESH",
+        "location": [
+          25.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_Smooth",
+        "type": "MESH",
+        "location": [
+          30.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_BoolBasic_Base",
+        "type": "MESH",
+        "location": [
+          35.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_BoolBasic_Cutter",
+        "type": "MESH",
+        "location": [
+          35.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Intersect_Base",
+        "type": "MESH",
+        "location": [
+          45.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Intersect_Cutter",
+        "type": "MESH",
+        "location": [
+          45.0,
+          10.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Union_Base",
+        "type": "MESH",
+        "location": [
+          50.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Union_Cutter",
+        "type": "MESH",
+        "location": [
+          50.0,
+          10.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Diff_Base",
+        "type": "MESH",
+        "location": [
+          55.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Diff_Cutter",
+        "type": "MESH",
+        "location": [
+          55.0,
+          10.0,
+          1.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Slice_Base",
+        "type": "MESH",
+        "location": [
+          60.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Slice_Cutter",
+        "type": "MESH",
+        "location": [
+          60.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_BoolOp_Slice_Base_slice",
+        "type": "MESH",
+        "location": [
+          60.0,
+          10.0,
+          2.5
+        ]
+      },
+      {
+        "name": "Label_Collections",
+        "type": "FONT",
+        "location": [
+          -5.0,
+          20.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_RemoveVerify_1",
+        "type": "MESH",
+        "location": [
+          40.0,
+          10.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Mod_RemoveVerify_2",
+        "type": "MESH",
+        "location": [
+          40.0,
+          15.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Col_Cube",
+        "type": "MESH",
+        "location": [
+          0.0,
+          20.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Col_Sphere",
+        "type": "MESH",
+        "location": [
+          5.0,
+          20.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Col_Cube.001",
+        "type": "MESH",
+        "location": [
+          0.0,
+          25.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Col_Sphere.001",
+        "type": "MESH",
+        "location": [
+          5.0,
+          25.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Label_Operators",
+        "type": "FONT",
+        "location": [
+          -5.0,
+          30.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Circ_Base",
+        "type": "MESH",
+        "location": [
+          2.0,
+          30.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Circ_Base.001",
+        "type": "MESH",
+        "location": [
+          1.0,
+          31.7320499420166,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Circ_Base.002",
+        "type": "MESH",
+        "location": [
+          -1.0,
+          31.7320499420166,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Circ_Base.003",
+        "type": "MESH",
+        "location": [
+          -2.0,
+          30.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Circ_Base.004",
+        "type": "MESH",
+        "location": [
+          -1.0,
+          28.2679500579834,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Circ_Base.005",
+        "type": "MESH",
+        "location": [
+          1.0,
+          28.2679500579834,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Joined_Result",
+        "type": "MESH",
+        "location": [
+          6.400000095367432,
+          30.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_CreateArray",
+        "type": "MESH",
+        "location": [
+          10.0,
+          30.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base",
+        "type": "MESH",
+        "location": [
+          15.0,
+          30.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.001",
+        "type": "MESH",
+        "location": [
+          15.73199462890625,
+          29.287715911865234,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.002",
+        "type": "MESH",
+        "location": [
+          15.016340255737305,
+          28.60739517211914,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.003",
+        "type": "MESH",
+        "location": [
+          16.316974639892578,
+          31.41486930847168,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.004",
+        "type": "MESH",
+        "location": [
+          13.845317840576172,
+          31.459930419921875,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.005",
+        "type": "MESH",
+        "location": [
+          13.895755767822266,
+          30.06205940246582,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.006",
+        "type": "MESH",
+        "location": [
+          15.910517692565918,
+          30.432687759399414,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.007",
+        "type": "MESH",
+        "location": [
+          15.365558624267578,
+          31.505239486694336,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.008",
+        "type": "MESH",
+        "location": [
+          14.598315238952637,
+          31.76961898803711,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.009",
+        "type": "MESH",
+        "location": [
+          13.823223114013672,
+          31.569547653198242,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Rand_Base.010",
+        "type": "MESH",
+        "location": [
+          15.424155235290527,
+          31.035131454467773,
+          0.0
+        ]
+      },
+      {
+        "name": "Test_Op_Extrude",
+        "type": "MESH",
+        "location": [
+          20.0,
+          30.0,
+          0.5
+        ]
+      },
+      {
+        "name": "Test_Op_Inset",
+        "type": "MESH",
+        "location": [
+          25.0,
+          30.0,
+          0.5
+        ]
+      },
+      {
+        "name": "Test_Op_Shear_Cylinder",
+        "type": "MESH",
+        "location": [
+          30.0,
+          30.0,
+          1.5
+        ]
+      },
+      {
+        "name": "Test_Op_Delete_Torus_Survivor",
+        "type": "MESH",
+        "location": [
+          35.0,
+          30.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Label_Transforms",
+        "type": "FONT",
+        "location": [
+          -5.0,
+          40.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Transform_Source_Cube",
+        "type": "MESH",
+        "location": [
+          0.0,
+          40.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Transform_Dup_Cube",
+        "type": "MESH",
+        "location": [
+          0.0,
+          43.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Transform_Move_Cube",
+        "type": "MESH",
+        "location": [
+          5.0,
+          40.0,
+          2.0
+        ]
+      },
+      {
+        "name": "Transform_Dim_Cube",
+        "type": "MESH",
+        "location": [
+          10.0,
+          40.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Transform_Batch_1",
+        "type": "MESH",
+        "location": [
+          15.0,
+          42.0,
+          2.0
+        ]
+      },
+      {
+        "name": "Transform_Batch_2",
+        "type": "MESH",
+        "location": [
+          15.0,
+          42.0,
+          -2.0
+        ]
+      },
+      {
+        "name": "Transform_Batch_1.001",
+        "type": "MESH",
+        "location": [
+          20.0,
+          42.0,
+          2.0
+        ]
+      },
+      {
+        "name": "Transform_Batch_2.001",
+        "type": "MESH",
+        "location": [
+          20.0,
+          42.0,
+          -2.0
+        ]
+      }
+    ],
+    "collections": [
+      "Collection",
+      "Collection_CopyRemove",
+      "Test_Integration_Collection"
+    ],
+    "success": true,
+    "message": "[5KYYN4] Retrieved scene info for 'Scene'. Found 67 objects across 3 collections.",
+    "status": "success"
+  },
+  "detailed_objects": {
+    "Test_Primitive_Cube": {
+      "name": "Test_Primitive_Cube",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[RJ0RNN] Retrieved detailed info for object 'Test_Primitive_Cube' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Primitive_Cylinder": {
+      "name": "Test_Primitive_Cylinder",
+      "type": "MESH",
+      "location": [
+        5.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[NITKP6] Retrieved detailed info for object 'Test_Primitive_Cylinder' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Primitive_IcoSphere": {
+      "name": "Test_Primitive_IcoSphere",
+      "type": "MESH",
+      "location": [
+        10.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.9021157026290894,
+        1.9999998807907104,
+        2.0
+      ],
+      "vertices": 42,
+      "faces": 80,
+      "modifiers": [],
+      "success": true,
+      "message": "[31DCKP] Retrieved detailed info for object 'Test_Primitive_IcoSphere' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Primitive_Sphere": {
+      "name": "Test_Primitive_Sphere",
+      "type": "MESH",
+      "location": [
+        15.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.9999988079071045,
+        1.9999992847442627,
+        2.0
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[N4WD9Z] Retrieved detailed info for object 'Test_Primitive_Sphere' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Primitive_Torus": {
+      "name": "Test_Primitive_Torus",
+      "type": "MESH",
+      "location": [
+        20.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.5,
+        2.5,
+        0.5
+      ],
+      "vertices": 576,
+      "faces": 576,
+      "modifiers": [],
+      "success": true,
+      "message": "[BITI5P] Retrieved detailed info for object 'Test_Primitive_Torus' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Primitive_Plane": {
+      "name": "Test_Primitive_Plane",
+      "type": "MESH",
+      "location": [
+        25.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        0.0
+      ],
+      "vertices": 4,
+      "faces": 1,
+      "modifiers": [],
+      "success": true,
+      "message": "[LSEQE7] Retrieved detailed info for object 'Test_Primitive_Plane' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_Array": {
+      "name": "Test_Mod_Array",
+      "type": "MESH",
+      "location": [
+        0.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        0.5,
+        0.5
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "TestArray",
+          "type": "ARRAY",
+          "show_viewport": true,
+          "show_render": true,
+          "count": 3
+        }
+      ],
+      "success": true,
+      "message": "[INC5Q9] Retrieved detailed info for object 'Test_Mod_Array' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_Solidify": {
+      "name": "Test_Mod_Solidify",
+      "type": "MESH",
+      "location": [
+        5.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        0.30000001192092896
+      ],
+      "vertices": 4,
+      "faces": 1,
+      "modifiers": [
+        {
+          "name": "TestSolidify",
+          "type": "SOLIDIFY",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[YQRVOF] Retrieved detailed info for object 'Test_Mod_Solidify' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_Bevel": {
+      "name": "Test_Mod_Bevel",
+      "type": "MESH",
+      "location": [
+        10.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "TestBevel",
+          "type": "BEVEL",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[61JKVV] Retrieved detailed info for object 'Test_Mod_Bevel' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_MirrorCenter_Y": {
+      "name": "Test_MirrorCenter_Y",
+      "type": "MESH",
+      "location": [
+        15.0,
+        12.5,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.10000000149011612,
+        0.10000000149011612,
+        0.10000000149011612
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[PES7VO] Retrieved detailed info for object 'Test_MirrorCenter_Y' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_Mirror": {
+      "name": "Test_Mod_Mirror",
+      "type": "MESH",
+      "location": [
+        15.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.5,
+        5.5,
+        0.5
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "TestMirror",
+          "type": "MIRROR",
+          "show_viewport": true,
+          "show_render": true,
+          "use_axis": [
+            false,
+            true,
+            false
+          ]
+        }
+      ],
+      "success": true,
+      "message": "[WT3E1E] Retrieved detailed info for object 'Test_Mod_Mirror' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_Subdiv": {
+      "name": "Test_Mod_Subdiv",
+      "type": "MESH",
+      "location": [
+        20.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "TestSubsurf",
+          "type": "SUBSURF",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[CFRYJT] Retrieved detailed info for object 'Test_Mod_Subdiv' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_Wire": {
+      "name": "Test_Mod_Wire",
+      "type": "MESH",
+      "location": [
+        25.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.028867483139038,
+        2.028867483139038,
+        2.028867483139038
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "TestWire",
+          "type": "WIREFRAME",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[DP8PS5] Retrieved detailed info for object 'Test_Mod_Wire' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_Smooth": {
+      "name": "Test_Mod_Smooth",
+      "type": "MESH",
+      "location": [
+        30.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.8159500360488892,
+        1.8159500360488892,
+        1.8780927658081055
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [
+        {
+          "name": "TestSmooth",
+          "type": "SMOOTH",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[57Q5XU] Retrieved detailed info for object 'Test_Mod_Smooth' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_BoolBasic_Base": {
+      "name": "Test_Mod_BoolBasic_Base",
+      "type": "MESH",
+      "location": [
+        35.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "TestBoolBasic",
+          "type": "BOOLEAN",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[WHKGOM] Retrieved detailed info for object 'Test_Mod_BoolBasic_Base' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_BoolBasic_Cutter": {
+      "name": "Test_Mod_BoolBasic_Cutter",
+      "type": "MESH",
+      "location": [
+        35.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.399999976158142,
+        1.399999976158142,
+        3.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[NTP503] Retrieved detailed info for object 'Test_Mod_BoolBasic_Cutter' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Intersect_Base": {
+      "name": "Test_BoolOp_Intersect_Base",
+      "type": "MESH",
+      "location": [
+        45.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        1.2000000476837158
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "Bool_INTERSECT_Test_BoolOp_Intersect_Cutter",
+          "type": "BOOLEAN",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[8I527F] Retrieved detailed info for object 'Test_BoolOp_Intersect_Base' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Intersect_Cutter": {
+      "name": "Test_BoolOp_Intersect_Cutter",
+      "type": "MESH",
+      "location": [
+        45.0,
+        10.0,
+        1.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.399998664855957,
+        2.3999996185302734,
+        2.4000000953674316
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[1D5CQK] Retrieved detailed info for object 'Test_BoolOp_Intersect_Cutter' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Union_Base": {
+      "name": "Test_BoolOp_Union_Base",
+      "type": "MESH",
+      "location": [
+        50.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.399998664855957,
+        2.3999996185302734,
+        3.200000047683716
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "Bool_UNION_Test_BoolOp_Union_Cutter",
+          "type": "BOOLEAN",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[NPQEUN] Retrieved detailed info for object 'Test_BoolOp_Union_Base' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Union_Cutter": {
+      "name": "Test_BoolOp_Union_Cutter",
+      "type": "MESH",
+      "location": [
+        50.0,
+        10.0,
+        1.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.399998664855957,
+        2.3999996185302734,
+        2.4000000953674316
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[MD9O9P] Retrieved detailed info for object 'Test_BoolOp_Union_Cutter' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Diff_Base": {
+      "name": "Test_BoolOp_Diff_Base",
+      "type": "MESH",
+      "location": [
+        55.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "Bool_DIFFERENCE_Test_BoolOp_Diff_Cutter",
+          "type": "BOOLEAN",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[MWQ68H] Retrieved detailed info for object 'Test_BoolOp_Diff_Base' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Diff_Cutter": {
+      "name": "Test_BoolOp_Diff_Cutter",
+      "type": "MESH",
+      "location": [
+        55.0,
+        10.0,
+        1.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.399998664855957,
+        2.3999996185302734,
+        2.4000000953674316
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[BI4555] Retrieved detailed info for object 'Test_BoolOp_Diff_Cutter' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Slice_Base": {
+      "name": "Test_BoolOp_Slice_Base",
+      "type": "MESH",
+      "location": [
+        60.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.980299949645996,
+        2.9999990463256836,
+        2.98030161857605
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [
+        {
+          "name": "Bool_DIFFERENCE_Test_BoolOp_Slice_Cutter",
+          "type": "BOOLEAN",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[RT2H44] Retrieved detailed info for object 'Test_BoolOp_Slice_Base' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Slice_Cutter": {
+      "name": "Test_BoolOp_Slice_Cutter",
+      "type": "MESH",
+      "location": [
+        60.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        3.0,
+        0.20000000298023224,
+        3.0
+      ],
+      "dimensions": [
+        3.0,
+        0.20000000298023224,
+        3.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[U942MY] Retrieved detailed info for object 'Test_BoolOp_Slice_Cutter' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_BoolOp_Slice_Base_slice": {
+      "name": "Test_BoolOp_Slice_Base_slice",
+      "type": "MESH",
+      "location": [
+        60.0,
+        10.0,
+        2.5
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.2208847999572754,
+        0.20000000298023224,
+        0.5
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [
+        {
+          "name": "Bool_INTERSECT_Test_BoolOp_Slice_Cutter",
+          "type": "BOOLEAN",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[ZA7WSR] Retrieved detailed info for object 'Test_BoolOp_Slice_Base_slice' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_RemoveVerify_1": {
+      "name": "Test_Mod_RemoveVerify_1",
+      "type": "MESH",
+      "location": [
+        40.0,
+        10.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.028867483139038,
+        1.028867483139038,
+        1.028867483139038
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "TestWire",
+          "type": "WIREFRAME",
+          "show_viewport": true,
+          "show_render": true
+        }
+      ],
+      "success": true,
+      "message": "[3WELHC] Retrieved detailed info for object 'Test_Mod_RemoveVerify_1' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Mod_RemoveVerify_2": {
+      "name": "Test_Mod_RemoveVerify_2",
+      "type": "MESH",
+      "location": [
+        40.0,
+        15.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[3YL8DZ] Retrieved detailed info for object 'Test_Mod_RemoveVerify_2' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Col_Cube": {
+      "name": "Test_Col_Cube",
+      "type": "MESH",
+      "location": [
+        0.0,
+        20.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[KR737P] Retrieved detailed info for object 'Test_Col_Cube' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Col_Sphere": {
+      "name": "Test_Col_Sphere",
+      "type": "MESH",
+      "location": [
+        5.0,
+        20.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.9999988079071045,
+        1.9999992847442627,
+        2.0
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[J3H0FB] Retrieved detailed info for object 'Test_Col_Sphere' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Col_Cube.001": {
+      "name": "Test_Col_Cube.001",
+      "type": "MESH",
+      "location": [
+        0.0,
+        25.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[N60OD2] Retrieved detailed info for object 'Test_Col_Cube.001' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Col_Sphere.001": {
+      "name": "Test_Col_Sphere.001",
+      "type": "MESH",
+      "location": [
+        5.0,
+        25.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.9999988079071045,
+        1.9999992847442627,
+        2.0
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[NXIJZG] Retrieved detailed info for object 'Test_Col_Sphere.001' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Circ_Base": {
+      "name": "Test_Op_Circ_Base",
+      "type": "MESH",
+      "location": [
+        2.0,
+        30.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4000000059604645,
+        0.4000000059604645,
+        1.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[MEPM1G] Retrieved detailed info for object 'Test_Op_Circ_Base' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Circ_Base.001": {
+      "name": "Test_Op_Circ_Base.001",
+      "type": "MESH",
+      "location": [
+        1.0,
+        31.7320499420166,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        1.0471975803375244
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4000000059604645,
+        0.4000000059604645,
+        1.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[V5W2IR] Retrieved detailed info for object 'Test_Op_Circ_Base.001' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Circ_Base.002": {
+      "name": "Test_Op_Circ_Base.002",
+      "type": "MESH",
+      "location": [
+        -1.0,
+        31.7320499420166,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        2.094395160675049
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4000000059604645,
+        0.4000000059604645,
+        1.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[BK7INZ] Retrieved detailed info for object 'Test_Op_Circ_Base.002' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Circ_Base.003": {
+      "name": "Test_Op_Circ_Base.003",
+      "type": "MESH",
+      "location": [
+        -2.0,
+        30.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        3.1415927410125732
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4000000059604645,
+        0.4000000059604645,
+        1.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[KIGIYD] Retrieved detailed info for object 'Test_Op_Circ_Base.003' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Circ_Base.004": {
+      "name": "Test_Op_Circ_Base.004",
+      "type": "MESH",
+      "location": [
+        -1.0,
+        28.2679500579834,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        4.188790321350098
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4000000059604645,
+        0.4000000059604645,
+        1.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[VFFZUK] Retrieved detailed info for object 'Test_Op_Circ_Base.004' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Circ_Base.005": {
+      "name": "Test_Op_Circ_Base.005",
+      "type": "MESH",
+      "location": [
+        1.0,
+        28.2679500579834,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        5.235987663269043
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.4000000059604645,
+        0.4000000059604645,
+        1.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[RFTZNF] Retrieved detailed info for object 'Test_Op_Circ_Base.005' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Joined_Result": {
+      "name": "Test_Op_Joined_Result",
+      "type": "MESH",
+      "location": [
+        6.400000095367432,
+        30.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.9000000953674316,
+        0.5,
+        0.5
+      ],
+      "vertices": 24,
+      "faces": 18,
+      "modifiers": [],
+      "success": true,
+      "message": "[HJL3LA] Retrieved detailed info for object 'Test_Op_Joined_Result' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_CreateArray": {
+      "name": "Test_Op_CreateArray",
+      "type": "MESH",
+      "location": [
+        10.0,
+        30.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "dimensions": [
+        2.5,
+        0.5,
+        0.5
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [
+        {
+          "name": "ARRAY",
+          "type": "ARRAY",
+          "show_viewport": true,
+          "show_render": true,
+          "count": 5
+        }
+      ],
+      "success": true,
+      "message": "[4961FM] Retrieved detailed info for object 'Test_Op_CreateArray' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base": {
+      "name": "Test_Op_Rand_Base",
+      "type": "MESH",
+      "location": [
+        15.0,
+        30.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[QVDTAF] Retrieved detailed info for object 'Test_Op_Rand_Base' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.001": {
+      "name": "Test_Op_Rand_Base.001",
+      "type": "MESH",
+      "location": [
+        15.73199462890625,
+        29.287715911865234,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[G2GSH1] Retrieved detailed info for object 'Test_Op_Rand_Base.001' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.002": {
+      "name": "Test_Op_Rand_Base.002",
+      "type": "MESH",
+      "location": [
+        15.016340255737305,
+        28.60739517211914,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[O68PIG] Retrieved detailed info for object 'Test_Op_Rand_Base.002' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.003": {
+      "name": "Test_Op_Rand_Base.003",
+      "type": "MESH",
+      "location": [
+        16.316974639892578,
+        31.41486930847168,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[CYQ07U] Retrieved detailed info for object 'Test_Op_Rand_Base.003' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.004": {
+      "name": "Test_Op_Rand_Base.004",
+      "type": "MESH",
+      "location": [
+        13.845317840576172,
+        31.459930419921875,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[7S8BQD] Retrieved detailed info for object 'Test_Op_Rand_Base.004' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.005": {
+      "name": "Test_Op_Rand_Base.005",
+      "type": "MESH",
+      "location": [
+        13.895755767822266,
+        30.06205940246582,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[SRA5AC] Retrieved detailed info for object 'Test_Op_Rand_Base.005' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.006": {
+      "name": "Test_Op_Rand_Base.006",
+      "type": "MESH",
+      "location": [
+        15.910517692565918,
+        30.432687759399414,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[75E5GF] Retrieved detailed info for object 'Test_Op_Rand_Base.006' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.007": {
+      "name": "Test_Op_Rand_Base.007",
+      "type": "MESH",
+      "location": [
+        15.365558624267578,
+        31.505239486694336,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[TX7JIK] Retrieved detailed info for object 'Test_Op_Rand_Base.007' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.008": {
+      "name": "Test_Op_Rand_Base.008",
+      "type": "MESH",
+      "location": [
+        14.598315238952637,
+        31.76961898803711,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[ZNPV7N] Retrieved detailed info for object 'Test_Op_Rand_Base.008' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.009": {
+      "name": "Test_Op_Rand_Base.009",
+      "type": "MESH",
+      "location": [
+        13.823223114013672,
+        31.569547653198242,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[VEIIEU] Retrieved detailed info for object 'Test_Op_Rand_Base.009' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Rand_Base.010": {
+      "name": "Test_Op_Rand_Base.010",
+      "type": "MESH",
+      "location": [
+        15.424155235290527,
+        31.035131454467773,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.399999737739563,
+        0.39999985694885254,
+        0.4000000059604645
+      ],
+      "vertices": 482,
+      "faces": 512,
+      "modifiers": [],
+      "success": true,
+      "message": "[Q91R5K] Retrieved detailed info for object 'Test_Op_Rand_Base.010' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Extrude": {
+      "name": "Test_Op_Extrude",
+      "type": "MESH",
+      "location": [
+        20.0,
+        30.0,
+        0.5
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "vertices": 96,
+      "faces": 66,
+      "modifiers": [],
+      "success": true,
+      "message": "[D0WDHR] Retrieved detailed info for object 'Test_Op_Extrude' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Inset": {
+      "name": "Test_Op_Inset",
+      "type": "MESH",
+      "location": [
+        25.0,
+        30.0,
+        0.5
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "vertices": 12,
+      "faces": 10,
+      "modifiers": [],
+      "success": true,
+      "message": "[SS4PZP] Retrieved detailed info for object 'Test_Op_Inset' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Shear_Cylinder": {
+      "name": "Test_Op_Shear_Cylinder",
+      "type": "MESH",
+      "location": [
+        30.0,
+        30.0,
+        1.5
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.0,
+        3.25,
+        3.0
+      ],
+      "vertices": 64,
+      "faces": 34,
+      "modifiers": [],
+      "success": true,
+      "message": "[IL8KBC] Retrieved detailed info for object 'Test_Op_Shear_Cylinder' (Type: MESH).",
+      "status": "success"
+    },
+    "Test_Op_Delete_Torus_Survivor": {
+      "name": "Test_Op_Delete_Torus_Survivor",
+      "type": "MESH",
+      "location": [
+        35.0,
+        30.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.399999976158142,
+        1.399999976158142,
+        0.4000000059604645
+      ],
+      "vertices": 576,
+      "faces": 576,
+      "modifiers": [],
+      "success": true,
+      "message": "[YVAAF2] Retrieved detailed info for object 'Test_Op_Delete_Torus_Survivor' (Type: MESH).",
+      "status": "success"
+    }
+  }
+}

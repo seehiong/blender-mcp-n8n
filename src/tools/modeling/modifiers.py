@@ -15,7 +15,7 @@ def get_modifier_tools() -> list[types.Tool]:
                     },
                     "modifier_type": {
                         "type": "string",
-                        "description": "ARRAY, SOLIDIFY, BEVEL, MIRROR, SUBSURF, etc.",
+                        "description": "ARRAY, SOLIDIFY, BEVEL, MIRROR, SUBSURF, WIREFRAME, SMOOTH, BOOLEAN, etc.",
                     },
                     "name": {
                         "type": "string",
@@ -43,6 +43,11 @@ def get_modifier_tools() -> list[types.Tool]:
                         "items": {"type": "number"},
                         "description": "For ARRAY: XYZ offset",
                     },
+                    "relative_offset_displace": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "For ARRAY: Relative XYZ offset",
+                    },
                     "thickness": {"type": "number", "description": "For SOLIDIFY"},
                     "offset": {"type": "number", "description": "For SOLIDIFY"},
                     "width": {"type": "number", "description": "For BEVEL"},
@@ -53,6 +58,40 @@ def get_modifier_tools() -> list[types.Tool]:
                     },
                     "levels": {"type": "integer", "description": "For SUBSURF"},
                     "render_levels": {"type": "integer", "description": "For SUBSURF"},
+                    "use_axis": {
+                        "type": "array",
+                        "items": {"type": "boolean"},
+                        "description": "For MIRROR: List of 3 booleans [X, Y, Z]",
+                    },
+                    "mirror_object": {
+                        "type": "string",
+                        "description": "For MIRROR: Object to use as mirror center",
+                    },
+                    "use_replace_original": {
+                        "type": "boolean",
+                        "description": "For WIREFRAME",
+                    },
+                    "factor": {"type": "number", "description": "For SMOOTH"},
+                    "iterations": {"type": "integer", "description": "For SMOOTH"},
+                    "object_b": {
+                        "type": "string",
+                        "description": "For BOOLEAN: Cutter object",
+                    },
+                    "operation": {
+                        "type": "string",
+                        "enum": ["INTERSECT", "UNION", "DIFFERENCE"],
+                        "description": "For BOOLEAN",
+                    },
+                    "solver": {
+                        "type": "string",
+                        "enum": ["FLOAT", "EXACT"],
+                        "description": "For BOOLEAN",
+                    },
+                    "hide_cutter": {
+                        "type": "boolean",
+                        "default": True,
+                        "description": "For BOOLEAN: Hide the cutter object",
+                    },
                 },
                 "required": ["object_name", "modifier_type"],
             },
@@ -90,12 +129,16 @@ def get_modifier_tools() -> list[types.Tool]:
                         "items": {"type": "string"},
                         "description": "List of object names to copy to",
                     },
+                    "target_collection": {
+                        "type": "string",
+                        "description": "Name of collection. All objects in it will be targets.",
+                    },
                     "modifier_name": {
                         "type": "string",
                         "description": "Exact name of the modifier to copy.",
                     },
                 },
-                "required": ["source_object", "target_objects", "modifier_name"],
+                "required": ["source_object", "modifier_name"],
             },
         ),
         types.Tool(

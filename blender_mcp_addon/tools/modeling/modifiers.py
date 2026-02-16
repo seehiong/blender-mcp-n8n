@@ -4,7 +4,13 @@ from ...utils import get_object
 
 class ModelingModifiers:
     def apply_modifier(
-        self, object_name, modifier_type, name=None, target_objects=None, **kwargs
+        self,
+        object_name,
+        modifier_type,
+        name=None,
+        target_objects=None,
+        hide_cutter=True,
+        **kwargs,
     ):
         """Add and configure modifier"""
         obj = get_object(object_name)
@@ -23,6 +29,8 @@ class ModelingModifiers:
                 mod.count = kwargs["count"]
             if "use_relative_offset" in kwargs:
                 mod.use_relative_offset = kwargs["use_relative_offset"]
+            if "relative_offset_displace" in kwargs:
+                mod.relative_offset_displace = kwargs["relative_offset_displace"]
             if "use_constant_offset" in kwargs:
                 mod.use_constant_offset = kwargs["use_constant_offset"]
             if "constant_offset_displace" in kwargs:
@@ -30,9 +38,52 @@ class ModelingModifiers:
         elif modifier_type == "MIRROR":
             if "use_axis" in kwargs:
                 mod.use_axis = kwargs["use_axis"]
+            if "mirror_object" in kwargs:
+                mod.mirror_object = get_object(kwargs["mirror_object"])
         elif modifier_type == "SUBSURF":
             if "levels" in kwargs:
                 mod.levels = kwargs["levels"]
+            if "render_levels" in kwargs:
+                mod.render_levels = kwargs["render_levels"]
+        elif modifier_type == "BEVEL":
+            if "width" in kwargs:
+                mod.width = kwargs["width"]
+            if "segments" in kwargs:
+                mod.segments = kwargs["segments"]
+            if "use_clamp_overlap" in kwargs:
+                mod.use_clamp_overlap = kwargs["use_clamp_overlap"]
+        elif modifier_type == "SOLIDIFY":
+            if "thickness" in kwargs:
+                mod.thickness = kwargs["thickness"]
+            if "offset" in kwargs:
+                mod.offset = kwargs["offset"]
+        elif modifier_type == "WIREFRAME":
+            if "thickness" in kwargs:
+                mod.thickness = kwargs["thickness"]
+            if "use_replace_original" in kwargs:
+                mod.use_replace_original = kwargs["use_replace_original"]
+        elif modifier_type == "SMOOTH":
+            if "factor" in kwargs:
+                mod.factor = kwargs["factor"]
+            if "iterations" in kwargs:
+                mod.iterations = kwargs["iterations"]
+        elif modifier_type == "BOOLEAN":
+            if "object_b" in kwargs or "operand" in kwargs:
+                operand_name = kwargs.get("object_b") or kwargs.get("operand")
+                mod.object = get_object(operand_name)
+            if "operation" in kwargs:
+                mod.operation = kwargs["operation"]
+            if "solver" in kwargs:
+                mod.solver = kwargs["solver"]
+            if hide_cutter:
+                operand_name = kwargs.get("object_b") or kwargs.get("operand")
+                if operand_name:
+                    cutter = get_object(operand_name)
+                    if cutter:
+                        cutter.display_type = "WIRE"
+                        cutter.hide_viewport = True
+                        cutter.hide_render = True
+                        cutter.hide_set(True)
 
         if not target_objects:
             selected = [
@@ -51,7 +102,13 @@ class ModelingModifiers:
             "message": f"Applied modifier '{mod.name}' to '{object_name}'.",
         }
 
-    def copy_modifier(self, source_object, target_objects, modifier_name):
+    def copy_modifier(
+        self,
+        source_object,
+        target_objects=None,
+        modifier_name=None,
+        target_collection=None,
+    ):
         """Copy modifier from source to target objects"""
         source = get_object(source_object)
         source_mod = source.modifiers.get(modifier_name)
@@ -59,6 +116,23 @@ class ModelingModifiers:
             raise ValueError(
                 f"Modifier '{modifier_name}' not found on '{source_object}'"
             )
+
+        if target_collection:
+            from ...utils import get_collection
+
+            coll = get_collection(target_collection)
+            if coll:
+                coll_objects = [o.name for o in coll.objects]
+                if target_objects:
+                    target_objects = list(set(target_objects).union(coll_objects))
+                else:
+                    target_objects = coll_objects
+
+        if not target_objects:
+            return {
+                "success": False,
+                "message": "No target objects or collection specified.",
+            }
 
         count = 0
         for target_name in target_objects:
@@ -157,10 +231,39 @@ class ModelingModifiers:
             else:
                 slice_obj = bpy.data.objects[slice_name]
 
+            # CRITICAL: Clear inherited modifiers (like the DIFFERENCE we just applied to A)
+            slice_obj.modifiers.clear()
+
             # Apply Intersect to slice
             self.boolean_operation(
                 slice_name, object_b, "INTERSECT", solver, False, operand_type
             )
+
+            # Ensure cutter and slice piece are hidden if requested
+            if hide_cutter:
+                # 1. Hide the slice piece (the "unwanted" intersection result)
+                slice_obj.display_type = "WIRE"
+                slice_obj.hide_viewport = True
+                slice_obj.hide_render = True
+                slice_obj.hide_set(True)
+
+                # 2. Hide the cutter(s)
+                if operand_type == "COLLECTION":
+                    coll = bpy.data.collections.get(object_b)
+                    if coll:
+                        for o in coll.objects:
+                            o.display_type = "WIRE"
+                            o.hide_viewport = True
+                            o.hide_render = True
+                            o.hide_set(True)
+                else:
+                    c_obj = get_object(object_b)
+                    if c_obj:
+                        c_obj.display_type = "WIRE"
+                        c_obj.hide_viewport = True
+                        c_obj.hide_render = True
+                        c_obj.hide_set(True)
+
             return {
                 "success": True,
                 "message": f"Sliced '{object_a}' using '{object_b}'. Created '{slice_name}'.",

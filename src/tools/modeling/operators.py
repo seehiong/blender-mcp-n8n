@@ -111,7 +111,7 @@ def get_operator_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="random_distribute",
-            description="Randomly distribute copies of an object with distance constraints.",
+            description="Randomly distribute copies of an object within a ring or volume. PRO TIP: Distribution occurs around the 'center' parameter or the source object's location if center is omitted (not necessarily the world origin).",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -119,6 +119,11 @@ def get_operator_tools() -> list[types.Tool]:
                     "count": {"type": "integer"},
                     "min_distance": {"type": "number"},
                     "max_distance": {"type": "number"},
+                    "center": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Optional: XYZ center of distribution. Defaults to object location.",
+                    },
                     "z_position": {"type": "number", "default": 0.0},
                     "seed": {"type": "integer"},
                 },
@@ -127,7 +132,7 @@ def get_operator_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="extrude_mesh",
-            description="Extrude mesh geometry (vertices, edges, or faces).",
+            description="Extrude mesh geometry (vertices, edges, or faces). PRO TIP: Use 'filter_normal' (e.g. [0,0,1] for top) to extrude specific parts of an object instead of the whole thing.",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -146,13 +151,23 @@ def get_operator_tools() -> list[types.Tool]:
                         "items": {"type": "number"},
                         "description": "XYZ translation after extrusion",
                     },
+                    "filter_normal": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Optional: Only extrude faces pointing in this direction (XYZ normal)",
+                    },
+                    "angle_threshold": {
+                        "type": "number",
+                        "default": 1.0,
+                        "description": "Angle threshold in degrees for normal filtering",
+                    },
                 },
                 "required": ["object_name"],
             },
         ),
         types.Tool(
             name="inset_faces",
-            description="Inset faces of a mesh (great for creating walls from floors).",
+            description="Inset faces of a mesh (great for creating walls from floors). PRO TIP: Use 'filter_normal' to only inset specific faces (like the top face).",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -162,13 +177,23 @@ def get_operator_tools() -> list[types.Tool]:
                         "type": "number",
                         "description": "Optional extrude depth",
                     },
+                    "filter_normal": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Optional: Only inset faces pointing in this direction (XYZ normal)",
+                    },
+                    "angle_threshold": {
+                        "type": "number",
+                        "default": 1.0,
+                        "description": "Angle threshold in degrees for normal filtering",
+                    },
                 },
                 "required": ["object_name", "thickness"],
             },
         ),
         types.Tool(
             name="shear_mesh",
-            description="Shear mesh geometry along an axis.",
+            description="Shear mesh geometry along an axis (useful for sloped roofs). PRO TIP: Use 'filter_normal' (e.g. [0,0,1]) to shear only the top faces.",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -184,8 +209,35 @@ def get_operator_tools() -> list[types.Tool]:
                         "enum": ["X", "Y", "Z"],
                         "description": "Axis orthogonal to the shear plane",
                     },
+                    "filter_normal": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Optional: Only shear faces pointing in this direction (XYZ normal)",
+                    },
+                    "angle_threshold": {
+                        "type": "number",
+                        "default": 1.0,
+                        "description": "Angle threshold in degrees for normal filtering",
+                    },
                 },
                 "required": ["object_name", "value"],
+            },
+        ),
+        types.Tool(
+            name="delete_object",
+            description="Delete object(s) by name or pattern (e.g. 'Test_*').",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "Specific object to delete",
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Glob pattern for bulk deletion (e.g. 'Test_*')",
+                    },
+                },
             },
         ),
     ]

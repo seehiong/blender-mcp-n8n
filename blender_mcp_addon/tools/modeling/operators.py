@@ -109,6 +109,8 @@ class ModelingOperators:
                 created.append(new_obj.name)
 
         # AUTO-SELECT ALL CREATED OBJECTS
+        if bpy.context.mode != "OBJECT":
+            bpy.ops.object.mode_set(mode="OBJECT")
         bpy.ops.object.select_all(action="DESELECT")
         for name in created:
             o = bpy.data.objects.get(name)
@@ -147,6 +149,10 @@ class ModelingOperators:
         **kwargs,
     ):
         """Join objects. If pattern is provided, it selects matching objects first."""
+        # Ensure we're in Object mode
+        if bpy.context.mode != "OBJECT":
+            bpy.ops.object.mode_set(mode="OBJECT")
+
         if pattern:
             self.select_by_pattern(pattern)
             object_names = [o.name for o in bpy.context.selected_objects]
@@ -172,76 +178,260 @@ class ModelingOperators:
         }
 
     def random_distribute(
-        self, object_name, count, min_distance, max_distance, z_position=0.0, seed=None
+        self,
+        object_name,
+        count,
+        min_distance,
+        max_distance,
+        center=None,
+        z_position=0.0,
+        seed=None,
     ):
         if seed is not None:
             random.seed(seed)
         obj = get_object(object_name)
+        dist_center = center if center else obj.location
         created = []
         for _ in range(count):
             while True:
-                x, y = (
+                # Calculate relative offset
+                off_x, off_y = (
                     random.uniform(-max_distance, max_distance),
                     random.uniform(-max_distance, max_distance),
                 )
-                if min_distance <= math.sqrt(x**2 + y**2) <= max_distance:
+                if min_distance <= math.sqrt(off_x**2 + off_y**2) <= max_distance:
                     break
             new_obj = obj.copy()
             new_obj.data = obj.data.copy()
-            bpy.context.collection.objects.link(new_obj)
-            new_obj.location = (x, y, z_position)
+            # Link to the same collection as source
+            coll = (
+                obj.users_collection[0]
+                if obj.users_collection
+                else bpy.context.collection
+            )
+            coll.objects.link(new_obj)
+            new_obj.location = (
+                dist_center[0] + off_x,
+                dist_center[1] + off_y,
+                z_position if center else dist_center[2],
+            )
             created.append(new_obj.name)
         return {
             "success": True,
-            "message": f"Distributed {len(created)} copies.",
-        }
-        return {
-            "success": True,
-            "message": f"Distributed {len(created)} copies.",
+            "message": f"Distributed {len(created)} copies around {dist_center}.",
         }
 
-    def extrude_mesh(self, object_name, mode="FACES", move=(0, 0, 0)):
+    def _select_faces_by_normal(self, obj, target_normal, angle_threshold_deg=1.0):
+        """Select faces whose normal is within threshold of target_normal (world space)"""
+        import bmesh
+        import mathutils
+
+        # Ensure we are in object mode
+        if bpy.context.mode != "OBJECT":
+            bpy.ops.object.mode_set(mode="OBJECT")
+
+        bm = bmesh.new()
+        bm.from_mesh(obj.data)
+        bm.faces.ensure_lookup_table()
+
+        target = mathutils.Vector(target_normal).normalized()
+        threshold = math.radians(angle_threshold_deg)
+
+        # Get object world matrix to convert local normals to world normals
+        matrix_world = obj.matrix_world.to_3x3().inverted().transposed()
+
+        selected_count = 0
+        for face in bm.faces:
+            # Convert local normal to world normal
+            world_normal = (matrix_world @ face.normal).normalized()
+            angle = world_normal.angle(target)
+
+            if angle <= threshold:
+                face.select = True
+                selected_count += 1
+            else:
+                face.select = False
+
+        # Write selection back to mesh
+        bm.to_mesh(obj.data)
+        bm.free()
+
+        # Update mesh to ensure selection is visible
+        obj.data.update()
+
+        return selected_count
+
+    def extrude_mesh(
+        self,
+        object_name,
+        mode="FACES",
+        move=(0, 0, 0),
+        filter_normal=None,
+        angle_threshold=1.0,
+    ):
         obj = get_object(object_name)
         bpy.context.view_layer.objects.active = obj
-        bpy.ops.object.mode_set(mode="EDIT")
-        bpy.ops.mesh.select_all(action="SELECT")
 
+        if filter_normal:
+            # Select faces by normal in Object mode
+            self._select_faces_by_normal(obj, filter_normal, angle_threshold)
+        else:
+            # Select all faces
+            if bpy.context.mode != "OBJECT":
+                bpy.ops.object.mode_set(mode="OBJECT")
+            # Select all faces in mesh data
+            for poly in obj.data.polygons:
+                poly.select = True
+            obj.data.update()
+
+        # Now enter Edit mode - selections will be preserved
+        bpy.ops.object.mode_set(mode="EDIT")
         select_mode = (mode == "VERTS", mode == "EDGES", mode == "FACES")
         bpy.context.tool_settings.mesh_select_mode = select_mode
 
         bpy.ops.mesh.extrude_region_move(TRANSFORM_OT_translate={"value": move})
+
+        # Return to Object mode
         bpy.ops.object.mode_set(mode="OBJECT")
         return {
             "success": True,
             "message": f"Extruded {mode.lower()} of '{object_name}' by {move}.",
         }
 
-    def inset_faces(self, object_name, thickness, depth=0.0):
+    def inset_faces(
+        self, object_name, thickness, depth=0.0, filter_normal=None, angle_threshold=1.0
+    ):
         obj = get_object(object_name)
         bpy.context.view_layer.objects.active = obj
-        bpy.ops.object.mode_set(mode="EDIT")
-        bpy.ops.mesh.select_all(action="SELECT")
 
+        if filter_normal:
+            # Select faces by normal in Object mode
+            self._select_faces_by_normal(obj, filter_normal, angle_threshold)
+        else:
+            # Select all faces
+            if bpy.context.mode != "OBJECT":
+                bpy.ops.object.mode_set(mode="OBJECT")
+            for poly in obj.data.polygons:
+                poly.select = True
+            obj.data.update()
+
+        # Enter Edit mode - selections will be preserved
+        bpy.ops.object.mode_set(mode="EDIT")
         bpy.ops.mesh.inset(thickness=thickness, depth=depth)
 
+        # Return to Object mode
         bpy.ops.object.mode_set(mode="OBJECT")
         return {
             "success": True,
             "message": f"Inset faces of '{object_name}' by {thickness}.",
         }
 
-    def shear_mesh(self, object_name, value, axis="X", orient_axis="Z"):
+    def shear_mesh(
+        self,
+        object_name,
+        value,
+        axis="X",
+        orient_axis="Z",
+        filter_normal=None,
+        angle_threshold=1.0,
+    ):
+        import bmesh
+        import mathutils
+
         obj = get_object(object_name)
         bpy.context.view_layer.objects.active = obj
-        bpy.ops.object.mode_set(mode="EDIT")
-        bpy.ops.mesh.select_all(action="SELECT")
 
-        bpy.ops.transform.shear(
-            value=value, orient_axis=orient_axis, orient_axis_ortho=axis
-        )
+        # Work in Object mode
+        if bpy.context.mode != "OBJECT":
+            bpy.ops.object.mode_set(mode="OBJECT")
 
-        bpy.ops.object.mode_set(mode="OBJECT")
+        # Get bmesh
+        bm = bmesh.new()
+        bm.from_mesh(obj.data)
+        bm.faces.ensure_lookup_table()
+        bm.verts.ensure_lookup_table()
+
+        # Determine which faces to shear
+        faces_to_shear = []
+        if filter_normal:
+            target = mathutils.Vector(filter_normal).normalized()
+            threshold = math.radians(angle_threshold)
+            matrix_world = obj.matrix_world.to_3x3().inverted().transposed()
+
+            for face in bm.faces:
+                world_normal = (matrix_world @ face.normal).normalized()
+                angle = world_normal.angle(target)
+                if angle <= threshold:
+                    faces_to_shear.append(face)
+        else:
+            faces_to_shear = list(bm.faces)
+
+        # Get all vertices from selected faces
+        verts_to_shear = set()
+        for face in faces_to_shear:
+            for vert in face.verts:
+                verts_to_shear.add(vert)
+
+        # Apply shear transformation manually
+        # Shear formula: new_pos = old_pos + shear_value * (old_pos[orient_axis]) * axis_vector
+        axis_map = {"X": 0, "Y": 1, "Z": 2}
+        shear_axis_idx = axis_map[axis]
+        orient_axis_idx = axis_map[orient_axis]
+
+        for vert in verts_to_shear:
+            offset = value * vert.co[orient_axis_idx]
+            vert.co[shear_axis_idx] += offset
+
+        # Write back to mesh
+        bm.to_mesh(obj.data)
+        bm.free()
+        obj.data.update()
+
         return {
             "success": True,
-            "message": f"Sheared '{object_name}' on {axis} axis.",
+            "message": f"Sheared '{object_name}' on {axis} axis by {value}.",
         }
+
+    def delete_object(self, object_name=None, pattern=None, **kwargs):
+        """Delete object(s) by name or pattern"""
+        import bpy
+
+        # Ensure we're in Object mode
+        if bpy.context.mode != "OBJECT":
+            bpy.ops.object.mode_set(mode="OBJECT")
+
+        if pattern:
+            import fnmatch
+
+            # 1. Delete matching objects
+            bpy.ops.object.select_all(action="DESELECT")
+            bpy.ops.object.select_pattern(pattern=pattern)
+            if bpy.context.selected_objects:
+                bpy.ops.object.delete()
+
+            # 2. Delete matching collections (New behavior)
+            collections_to_remove = []
+            for coll in bpy.data.collections:
+                if fnmatch.fnmatch(coll.name, pattern):
+                    collections_to_remove.append(coll)
+
+            for coll in collections_to_remove:
+                # Unlink from parents
+                for parent in bpy.data.collections:
+                    if coll.name in parent.children:
+                        parent.children.unlink(coll)
+                if coll.name in bpy.context.scene.collection.children:
+                    bpy.context.scene.collection.children.unlink(coll)
+                # Remove data
+                bpy.data.collections.remove(coll)
+
+            return {
+                "success": True,
+                "message": f"Deleted objects and collections matching pattern '{pattern}'",
+            }
+
+        obj = get_object(object_name)
+        bpy.ops.object.select_all(action="DESELECT")
+        obj.select_set(True)
+        bpy.ops.object.delete()
+        return {"success": True, "message": f"Deleted object '{object_name}'"}

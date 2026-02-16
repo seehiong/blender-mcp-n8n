@@ -121,6 +121,47 @@ class ModelingPrimitives:
             minor_segments=minor_segments,
         )
 
+    def create_text(
+        self,
+        text,
+        location,
+        name=None,
+        size=1.0,
+        extrude=0.05,
+        align_x="LEFT",
+        collection=None,
+        **kwargs,
+    ):
+        """Create 3D text (FONT object)"""
+        is_update = bool(name and name in bpy.data.objects)
+        if is_update:
+            obj = bpy.data.objects[name]
+            if obj.type != "FONT":
+                raise ValueError(f"Object '{name}' is not a text object")
+            obj.location = location
+        else:
+            bpy.ops.object.text_add(location=location)
+            obj = bpy.context.active_object
+            if name:
+                obj.name = name
+
+        # Update text data
+        obj.data.body = text
+        obj.data.size = size
+        obj.data.extrude = extrude
+        obj.data.align_x = align_x
+
+        if collection:
+            self._move_to_collection_helper(obj, collection)
+
+        status = "updated" if is_update else "created"
+        return {
+            "success": True,
+            "name": obj.name,
+            "status": status,
+            "message": f"Text object '{obj.name}' {status} successfully.",
+        }
+
     def create_plane(
         self,
         location,
