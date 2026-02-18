@@ -70,6 +70,7 @@ def test_random_distribute(client: MCPClient, x_start: float, y: float):
             "max_distance": 2.0,
             "center": [x_start, y, 0.0],
             "z_position": 0.0,
+            "seed": 42,
         },
     )
 

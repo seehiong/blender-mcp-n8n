@@ -1,0 +1,287 @@
+{
+  "metadata": {
+    "name": "boolean_pavilion",
+    "model": "gpt-5-nano",
+    "description": "Pavilion created using boolean logic and unified structures",
+    "documentation_url": "https://github.com/seehiong/blender-mcp-n8n/tree/main/community/boolean_pavilion",
+    "created_at": "2026-02-17T20:16:11.262555"
+  },
+  "commands": [
+    {
+      "tool": "create_collection",
+      "arguments": {
+        "name": "Boolean_Pavilion"
+      },
+      "description": "Done. The top-level collection 'Boolean_Pavilion' has been created and...",
+      "timestamp": 1771330595.3423734
+    },
+    {
+      "tool": "set_active_collection",
+      "arguments": {
+        "collection_name": "Boolean_Pavilion"
+      },
+      "description": "is now the active collection for new objects.",
+      "timestamp": 1771330600.9595673
+    },
+    {
+      "tool": "create_torus",
+      "arguments": {
+        "location": [
+          0,
+          0,
+          8.5
+        ],
+        "major_radius": 8.6,
+        "minor_radius": 1.5,
+        "name": "Dome",
+        "collection": "Boolean_Pavilion"
+      },
+      "description": "Done. The torus named 'Dome' has been created in the Boolean_Pavilion collection at location (0, 0, 8.5) with:\n- Major radius: 8.6\n- Minor radius: 1.5",
+      "timestamp": 1771330654.9994082
+    },
+    {
+      "tool": "create_cylinder",
+      "arguments": {
+        "location": [
+          0,
+          0,
+          0.5
+        ],
+        "radius": 14,
+        "depth": 1,
+        "name": "Base_Slab",
+        "collection": "Boolean_Pavilion"
+      },
+      "description": "Base_Slab cylinder created successfully in the Boolean_Pavilion collection. Details:\n- Type: cylinder\n- Name: Base_Slab\n- Location: (0, 0, 0.5)\n- Radius: 14\n- Height (depth): 1\n- Status: created, geometry verified",
+      "timestamp": 1771330717.7971063
+    },
+    {
+      "tool": "create_cylinder",
+      "arguments": {
+        "location": [
+          0,
+          8,
+          5
+        ],
+        "radius": 1,
+        "depth": 10,
+        "name": "Pillar_North",
+        "collection": "Boolean_Pavilion"
+      },
+      "description": "All four cylindrical pillars have been created in the Boolean_Pavilion collection:\n- Pillar_North: location (0, 8, 5), radius 1, height 10",
+      "timestamp": 1771330924.8061311
+    },
+    {
+      "tool": "create_cylinder",
+      "arguments": {
+        "location": [
+          0,
+          -8,
+          5
+        ],
+        "radius": 1,
+        "depth": 10,
+        "name": "Pillar_South",
+        "collection": "Boolean_Pavilion"
+      },
+      "description": "- Pillar_South: location (0, -8, 5), radius 1, height 10",
+      "timestamp": 1771330924.564551
+    },
+    {
+      "tool": "create_cylinder",
+      "arguments": {
+        "location": [
+          8,
+          0,
+          5
+        ],
+        "radius": 1,
+        "depth": 10,
+        "name": "Pillar_East",
+        "collection": "Boolean_Pavilion"
+      },
+      "description": "- Pillar_East: location (8, 0, 5), radius 1, height 10",
+      "timestamp": 1771330924.423771
+    },
+    {
+      "tool": "create_cylinder",
+      "arguments": {
+        "location": [
+          -8,
+          0,
+          5
+        ],
+        "radius": 1,
+        "depth": 10,
+        "name": "Pillar_West",
+        "collection": "Boolean_Pavilion"
+      },
+      "description": "- Pillar_West: location (-8, 0, 5), radius 1, height 10",
+      "timestamp": 1771330924.3044748
+    },
+    {
+      "tool": "shear_mesh",
+      "arguments": {
+        "object_name": "Pillar_North",
+        "value": -0.15,
+        "axis": "Y",
+        "orient_axis": "Z"
+      },
+      "description": "All four pillars have been leaned toward the pavilion center as requested:\n- Pillar_North: lean on Y by -0.15 (toward -Y)",
+      "timestamp": 1771331036.915935
+    },
+    {
+      "tool": "shear_mesh",
+      "arguments": {
+        "object_name": "Pillar_South",
+        "value": 0.15,
+        "axis": "Y",
+        "orient_axis": "Z"
+      },
+      "description": "- Pillar_South: lean on Y by +0.15 (toward +Y)",
+      "timestamp": 1771331036.7568505
+    },
+    {
+      "tool": "shear_mesh",
+      "arguments": {
+        "object_name": "Pillar_East",
+        "value": -0.15,
+        "axis": "X",
+        "orient_axis": "Z"
+      },
+      "description": "- Pillar_East: lean on X by -0.15 (toward -X)",
+      "timestamp": 1771331036.5864823
+    },
+    {
+      "tool": "shear_mesh",
+      "arguments": {
+        "object_name": "Pillar_West",
+        "value": 0.15,
+        "axis": "X",
+        "orient_axis": "Z"
+      },
+      "description": "- Pillar_West: lean on X by +0.15 (toward +X)",
+      "timestamp": 1771331036.424291
+    },
+    {
+      "tool": "join_objects",
+      "arguments": {
+        "object_names": [
+          "Dome",
+          "Pillar_North",
+          "Pillar_South",
+          "Pillar_East",
+          "Pillar_West"
+        ],
+        "new_name": "Unified_Structure"
+      },
+      "description": "Done. The geometry of the torus (Dome) and all four pillars (Pillar_North, Pillar_South, Pillar_East, Pillar_West) has been fused into a single object named Unified_Structure.\n\nNotes:\n- Original components are merged into one mesh in the current active collection (Boolean_Pavilion).",
+      "timestamp": 1771331403.4778402
+    },
+    {
+      "tool": "create_material",
+      "arguments": {
+        "name": "Architectural_Glass",
+        "preset": "glass_frosted",
+        "base_color": "#E0F7FF",
+        "roughness": 0.1,
+        "metallic": 0,
+        "transmission": 1,
+        "ior": 1.52
+      },
+      "description": "All set. The material 'Architectural_Glass' (glass_frosted preset) was created with:\n- Base color: #E0F7FF\n- Roughness: 0.1\n- Metallic: 0\n- Transmission: 1\n- Index of refraction (IOR): 1.52",
+      "timestamp": 1771331540.7556753
+    },
+    {
+      "tool": "assign_material",
+      "arguments": {
+        "material_name": "Architectural_Glass",
+        "object_names": [
+          "Unified_Structure"
+        ],
+        "slot_index": 0
+      },
+      "description": "It has been assigned to Unified_Structure (slot 0).",
+      "timestamp": 1771331542.7293866
+    },
+    {
+      "tool": "create_material",
+      "arguments": {
+        "name": "Premium_Base",
+        "preset": "metal_gold",
+        "roughness": 0.2
+      },
+      "description": "All set. The material is created and assigned.\n- Material: Premium_Base\n- Preset: metal_gold\n- Roughness: 0.2",
+      "timestamp": 1771331645.352836
+    },
+    {
+      "tool": "assign_material",
+      "arguments": {
+        "material_name": "Premium_Base",
+        "object_names": [
+          "Base_Slab"
+        ]
+      },
+      "description": "- Assigned to: Base_Slab (in Boolean_Pavilion)",
+      "timestamp": 1771331647.2705774
+    },
+    {
+      "tool": "create_light",
+      "arguments": {
+        "name": "Primary_Sun",
+        "type": "SUN",
+        "location": [
+          18,
+          -18,
+          22
+        ],
+        "energy": 3,
+        "color": "#FFD27A"
+      },
+      "description": "Done. Created a SUN light named Primary_Sun with:\n- Location: (18, -18, 22)\n- Energy: 3.0\n- Color: #FFD27A (warm golden)\n \nNote: In Blender, a SUN's direction is determined by its rotation. I can rotate it to point toward the pavilion center or toward Unified_Structure if youd like. ",
+      "timestamp": 1771331752.8726208
+    },
+    {
+      "tool": "create_light",
+      "arguments": {
+        "name": "Interior_Light",
+        "type": "AREA",
+        "location": [
+          0,
+          0,
+          12
+        ],
+        "energy": 2,
+        "color": "#66CCFF"
+      },
+      "description": "Interior_Light has been created as an AREA light. Details:\n- Name: Interior_Light\n- Type: AREA\n- Location: (0, 0, 12)\n- Energy (strength): 2.0\n- Color: #66CCFF (cool blue)",
+      "timestamp": 1771331908.5079923
+    },
+    {
+      "tool": "create_camera",
+      "arguments": {
+        "name": "Main_View",
+        "location": [
+          22,
+          -22,
+          16
+        ]
+      },
+      "description": "Camera 'Main_View' has been created at location (22, -22, 16) and...",
+      "timestamp": 1771332085.4232178
+    },
+    {
+      "tool": "camera_look_at",
+      "arguments": {
+        "camera_name": "Main_View",
+        "target_location": [
+          0,
+          0,
+          9
+        ]
+      },
+      "description": "is oriented to look at (0, 0, 9)",
+      "timestamp": 1771332091.1987548
+    }
+  ]
+}

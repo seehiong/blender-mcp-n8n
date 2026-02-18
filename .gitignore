@@ -29,4 +29,8 @@ ENV/
 env.bak/
 venv.bak/
 /assets/
-tests/benchmarks/last_run.json
+
+# Ignore all JSON files
+*.json
+!tests/benchmarks/expected_scene.json
+!community/**/*.json

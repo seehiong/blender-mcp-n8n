@@ -7,6 +7,7 @@ from .lighting import get_lighting_tools
 from .camera import get_camera_tools
 from .animation import get_animation_tools
 from .rendering import get_rendering_tools
+from .history import get_history_tools
 
 
 def get_mcp_tools() -> list[types.Tool]:
@@ -20,4 +21,5 @@ def get_mcp_tools() -> list[types.Tool]:
     tools.extend(get_camera_tools())
     tools.extend(get_animation_tools())
     tools.extend(get_rendering_tools())
+    tools.extend(get_history_tools())
     return tools

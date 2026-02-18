@@ -13,6 +13,7 @@ from .tools.animation import AnimationTools
 from .tools.rendering import RenderingTools
 from .tools.camera import CameraTools
 from .tools.lighting import LightTools
+from .tools.history import HistoryTools
 
 
 class BlenderMCPServer(
@@ -24,6 +25,7 @@ class BlenderMCPServer(
     RenderingTools,
     CameraTools,
     LightTools,
+    HistoryTools,
 ):
     """Blender MCP Server for n8n with componentized tools"""
 
@@ -134,6 +136,20 @@ class BlenderMCPServer(
                 cmd, event, res = item["command"], item["event"], item["container"]
                 try:
                     res["result"] = self.execute_command(cmd)
+
+                    # Push to Undo Stack if it's a state-changing command
+                    cmd_type = cmd.get("type", "")
+                    if (
+                        cmd_type
+                        and not cmd_type.startswith("get_")
+                        and cmd_type
+                        not in ["undo", "redo", "render_frame", "render_animation"]
+                    ):
+                        try:
+                            bpy.ops.ed.undo_push(message=f"MCP: {cmd_type}")
+                        except Exception as e:
+                            print(f"[MCP] Warning: Failed to push undo step: {e}")
+
                 except Exception as e:
                     traceback.print_exc()
                     res["result"] = {
@@ -221,6 +237,9 @@ class BlenderMCPServer(
             "create_light": self.create_light,
             "configure_light": self.configure_light,
             "set_world_background": self.set_world_background,
+            # History
+            "undo": self.undo_action,
+            "redo": self.redo_action,
         }
 
         handler = methods.get(cmd_type)

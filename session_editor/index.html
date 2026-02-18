@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blender MCP - Session Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+    <div class="app-container">
+        <header>
+            <div class="logo-section">
+                <h1>Session<span>Editor</span></h1>
+                <p class="subtitle">Blender MCP Recording Editor</p>
+            </div>
+            <div class="actions">
+                <div id="connectionStatus" class="status-indicator" title="Server Connection Status">
+                    <span class="dot"></span> <span class="status-text">Disconnected</span>
+                </div>
+                <button id="themeToggle" class="btn btn-secondary">Theme</button>
+                <input type="file" id="fileInput" accept=".json" hidden>
+                <button id="loadBtn" class="btn btn-primary">Load Session</button>
+                <button id="saveBtn" class="btn btn-secondary" disabled>Export JSON</button>
+            </div>
+        </header>
+
+        <main>
+            <section id="metadataSection" class="card glass">
+                <h2>Session Metadata</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="sessionName">Name</label>
+                        <input type="text" id="sessionName" placeholder="Session Name" spellcheck="false">
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionModel">AI Model</label>
+                        <input type="text" id="sessionModel" placeholder="e.g. GPT-4o, Claude 3.5 Sonnet"
+                            spellcheck="false">
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionCreatedAt">Created At</label>
+                        <input type="text" id="sessionCreatedAt" readonly>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="sessionDescription">Description</label>
+                        <textarea id="sessionDescription" rows="2" placeholder="Describe this recording..."
+                            spellcheck="false"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="command-list-header">
+                <div class="header-left">
+                    <h2>Commands <span id="commandCount" class="badge">0</span></h2>
+                </div>
+                <div class="playback-controls">
+                    <div class="control-group main-controls">
+                        <button id="undoBtn" class="btn btn-secondary" title="Undo Last Command">↶ Undo</button>
+                        <button id="redoBtn" class="btn btn-secondary" title="Redo Last Command">↷ Redo</button>
+                        <div class="vr"></div>
+                        <button id="playBtn" class="btn btn-success" disabled>▶ Play</button>
+                        <button id="stopBtn" class="btn btn-danger" disabled>⏹ Stop</button>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="control-group secondary-controls">
+                        <button id="resetStateBtn" class="btn btn-secondary btn-sm" title="Re-enable all Run buttons">↺
+                            Reset</button>
+                        <button id="clearSceneBtn" class="btn btn-danger btn-sm"
+                            title="Delete all objects in Blender scene">🗑 Clear</button>
+                    </div>
+                    <div class="vr"></div>
+                    <div class="playback-delay-group">
+                        <label for="playbackDelay">Delay (ms)</label>
+                        <input type="number" id="playbackDelay" value="500" min="0" step="100">
+                    </div>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="commandFilter" placeholder="Filter tools...">
+                </div>
+            </section>
+
+            <div id="commandList" class="command-list">
+                <div class="empty-state">
+                    <p>No session loaded. Start by clicking "Load Session".</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Blender MCP &bull; n8n Powered</p>
+        </footer>
+    </div>
+
+    <!-- Template for Command Item -->
+    <template id="commandTemplate">
+        <div class="command-card glass">
+            <div class="command-header">
+                <div class="command-info">
+                    <span class="index">#1</span>
+                    <span class="tool-name">create_cube</span>
+                    <span class="timestamp">12:34:56</span>
+                </div>
+                <div class="command-actions">
+                    <button class="btn btn-sm btn-run run-cmd" title="Execute in Blender">▶ Run</button>
+                    <button class="btn-icon move-up" title="Move up">↑</button>
+                    <button class="btn-icon move-down" title="Move down">↓</button>
+                    <button class="btn-icon delete-cmd" title="Remove command">×</button>
+                </div>
+            </div>
+            <div class="command-body">
+                <div class="command-description-section">
+                    <label>Description / Reasoning</label>
+                    <textarea class="cmd-description" placeholder="Why was this tool called?"
+                        spellcheck="false"></textarea>
+                </div>
+                <div class="editor-container">
+                    <label>Arguments (JSON)</label>
+                    <div id="argsEditor" class="args-editor"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Custom Modal Component -->
+    <div id="modalOverlay" class="modal-overlay" hidden>
+        <div class="modal card glass">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button id="modalClose" class="btn-icon">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="modalCancel" class="btn btn-secondary">Cancel</button>
+                <button id="modalConfirm" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

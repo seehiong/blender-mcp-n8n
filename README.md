@@ -1,6 +1,20 @@
 # Blender MCP Server for n8n
 
-A Model Context Protocol (MCP) server that exposes Blender's 3D modeling capabilities to n8n workflows via HTTP Streamable transport.
+A Model Context Protocol (MCP) server that exposes Blender's 3D modeling capabilities to n8n workflows.
+
+## System Architecture
+
+To avoid confusion, this project consists of two core components:
+
+1.  **Blender MCP Addon**: A plugin installed *inside* Blender. It acts as the local execution engine, receiving commands and manipulating the 3D scene.
+2.  **MCP Bridge Server**: A standalone Python server (`src/`) that acts as the gateway. Clients like **n8n** connect to this Bridge, which then forwards commands to the active Blender Addon.
+
+```mermaid
+graph LR
+    n8n[n8n / AI Agent] -- "MCP (HTTP Streamable)" --> Bridge[MCP Bridge Server]
+    Bridge -- "Local WebSockets" --> Addon[Blender MCP Addon]
+    Addon -- "Python API" --> Blender[Blender Engine]
+```
 
 ## Quick Start
 
@@ -31,19 +45,62 @@ As the addon grows, a single 1800+ line file becomes unmaintainable. We've split
 
 ## Usage
 
-### 1. Start Blender Addon Server
+### 1. Start Blender MCP Addon
 
 1. Open the **N Panel** (press `N` in the 3D Viewport).
 2. Look for the **Blender MCP** tab.
 3. Click **Start MCP Server**.
 
-### 2. Start the Python MCP Server
+### 2. Start the MCP Bridge Server
 
 ```bash
-python -m src.main
+# Standard mode
+python -m src.main serve
+
+# Recording mode (Save all commands to a file)
+python -m src.main serve --record my_session.json --name "Building My House"
 ```
 
 The server will start on `http://localhost:8000` with HTTP Streamable endpoint at `/mcp`. It uses detailed logging to show exactly which tools are being called and their results.
+
+## Bridge Sessions (Record & Playback)
+
+The **Bridge Sessions** feature allows you to record yours or an AI's tool calls and replay them later. This is useful for macros, versioning your creations, or setting up complex scenes consistently.
+
+### Recording a Session
+To record all tool calls made to the bridge while the server is running:
+```bash
+python -m src.main serve --record path/to/session.json --name "My Project" --description "Optional description"
+```
+Any tool calls made by n8n or other clients will be automatically saved to the JSON file.
+
+### Replaying a Session
+
+To playback a previously recorded session:
+```bash
+# Default (Stateful - HTTP Streamable) - Recommended for speed
+python -m src.main play path/to/session.json
+
+# Stateless mode (Standard HTTP) - Slower due to handshake overhead
+python -m src.main play path/to/session.json --transport stateless
+```
+
+> [!TIP]
+> **Performance Note**: Stateful mode is significantly faster for playback because it maintains a persistent connection. Stateless mode requires a full MCP handshake (Initialize/Discover) for *every* individual tool call in the recording, leading to noticeable overhead.
+
+### Session Format
+Sessions are stored as JSON files containing metadata (name, description, timestamp) and a list of command objects (tool name, arguments, timestamp).
+
+### Session Editor (Visual Inspector)
+We provide a built-in static web editor to inspect and edit your recordings:
+1. Open `session_editor/index.html` in your web browser.
+2. Click **Load Session** and select your `session.json`.
+3. You can:
+   - Edit metadata (Session Name, Description).
+   - Filter commands by tool name.
+   - Edit tool arguments directly in the JSON editor cards.
+   - Delete unnecessary commands.
+   - **Export JSON** to save your changes to a new file.
 
 ### 3. Configure n8n Workflow
 
@@ -62,7 +119,7 @@ If you modify the addon code or the MCP server logic, follow these steps to ensu
 
 1. **Reload Scripts**: In Blender, press `F3` and type **"Reload Scripts"** (or use the shortcut `Alt + R` if configured).
 2. **Restart Blender Server**: In the N-Panel, click **Stop MCP Server** and then **Start MCP Server** again.
-3. **Restart Python Server**: Stop and restart the server with `python -m src.main`.
+3. **Restart Python Server**: Stop and restart the server with `python -m src.main serve`.
 
 > [!IMPORTANT]
 > All Blender operations now run on the main thread via a command queue, ensuring stability and preventing dependency graph errors.
@@ -186,12 +243,16 @@ The server exposes **45+ Blender tools** across several categories:
 > 
 > This creates a very thin, large torus - essentially a large ring with a thin profile. It's now in your Blender scene alongside the two metallic spheres!
 
-## Examples
+## Community Showcase
 
-Check out our step-by-step examples to see the server in action:
+This project is powered by its community! Explore recorded sessions and documentation created by users to see what's possible with the Blender MCP:
 
-*   [**Condominium Tower**](docs/examples/condominium_tower.md): A complete guide to creating a procedural 20-story building with glass facade and balconies.
-*   [**Boolean Pavilion**](docs/examples/boolean_pavilion.md): Demonstrates boolean operations, unified structures, and advanced lighting/camera setup.
+*   [**Community Gallery**](community/README.md): Browse all user-submitted projects and learn how to contribute your own recordings.
+*   [**Condominium Tower**](community/condominium_tower/README.md): A complete guide to creating a procedural 20-story building with glass facade and balconies.
+*   [**Boolean Pavilion**](community/boolean_pavilion/README.md): Demonstrates boolean operations, unified structures, and advanced lighting/camera setup.
+
+> [!TIP]
+> **Share Your Work**: Have you built something cool? Check out our [**Contribution Guide**](community/README.md) to learn how to record, clean, and share your session with the community!
 
 ## ⚡ POWER TIPS: Avoiding Rate Limits
 
@@ -231,12 +292,13 @@ graph TD
     C --> E[scene.py]
     C --> F[materials.py]
     B --> G[connection.py]
+    B --> I[sessions.py]
     G --> H[Blender]
 ```
 
 ### Transport Model
 
-Although the MCP specification supports persistent SSE sessions, many clients (including n8n) currently operate in a stateless execution model, performing:
+Although the MCP specification supports persistent HTTP Streamable sessions, many clients (including n8n) currently operate in a stateless execution model, performing:
 
 `Initialize` → `Discover Tools` → `Call Tool` → `Close`
 
@@ -248,7 +310,7 @@ The server uses the official **HTTP Streamable** transport introduced in MCP SDK
 
 To ensure reliability across clients, the server implements a robust fallback strategy:
 
-1. **Protocol Resilience**: If no active SSE session exists, the server transparently handles standard JSON-RPC requests over HTTP.
+1. **Protocol Resilience**: If no active HTTP Streamable session exists, the server transparently handles standard JSON-RPC requests over HTTP.
 2. **Execution Isolation**: Each tool call is processed independently, preventing session corruption or deadlocks.
 3. **Visual Success Indicators**: Tool responses are prefixed with `✓` when successful. This helps the AI Agent’s conversational memory confirm task completion and avoid unintended re-execution loops.
 4. **Clear State Boundaries**: Persistent state is intentionally separated:

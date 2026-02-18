@@ -403,8 +403,8 @@
         "name": "Test_Op_Rand_Base.001",
         "type": "MESH",
         "location": [
-          15.73199462890625,
-          29.287715911865234,
+          15.557706832885742,
+          28.10004234313965,
           0.0
         ]
       },
@@ -412,8 +412,8 @@
         "name": "Test_Op_Rand_Base.002",
         "type": "MESH",
         "location": [
-          15.016340255737305,
-          28.60739517211914,
+          14.100117683410645,
+          28.89284324645996,
           0.0
         ]
       },
@@ -421,8 +421,8 @@
         "name": "Test_Op_Rand_Base.003",
         "type": "MESH",
         "location": [
-          16.316974639892578,
-          31.41486930847168,
+          15.945884704589844,
+          30.706798553466797,
           0.0
         ]
       },
@@ -430,8 +430,8 @@
         "name": "Test_Op_Rand_Base.004",
         "type": "MESH",
         "location": [
-          13.845317840576172,
-          31.459930419921875,
+          14.687686920166016,
+          28.11918830871582,
           0.0
         ]
       },
@@ -439,8 +439,8 @@
         "name": "Test_Op_Rand_Base.005",
         "type": "MESH",
         "location": [
-          13.895755767822266,
-          30.06205940246582,
+          13.874551773071289,
+          30.021421432495117,
           0.0
         ]
       },
@@ -448,8 +448,8 @@
         "name": "Test_Op_Rand_Base.006",
         "type": "MESH",
         "location": [
-          15.910517692565918,
-          30.432687759399414,
+          13.881762504577637,
+          30.35706329345703,
           0.0
         ]
       },
@@ -457,8 +457,8 @@
         "name": "Test_Op_Rand_Base.007",
         "type": "MESH",
         "location": [
-          15.365558624267578,
-          31.505239486694336,
+          16.223276138305664,
+          30.792556762695312,
           0.0
         ]
       },
@@ -466,8 +466,8 @@
         "name": "Test_Op_Rand_Base.008",
         "type": "MESH",
         "location": [
-          14.598315238952637,
-          31.76961898803711,
+          14.361001968383789,
+          28.621917724609375,
           0.0
         ]
       },
@@ -475,8 +475,8 @@
         "name": "Test_Op_Rand_Base.009",
         "type": "MESH",
         "location": [
-          13.823223114013672,
-          31.569547653198242,
+          16.8288516998291,
+          29.346378326416016,
           0.0
         ]
       },
@@ -484,8 +484,8 @@
         "name": "Test_Op_Rand_Base.010",
         "type": "MESH",
         "location": [
-          15.424155235290527,
-          31.035131454467773,
+          16.389978408813477,
+          30.41490364074707,
           0.0
         ]
       },
@@ -613,7 +613,7 @@
       "Test_Integration_Collection"
     ],
     "success": true,
-    "message": "[5KYYN4] Retrieved scene info for 'Scene'. Found 67 objects across 3 collections.",
+    "message": "[XZ4F4L] Retrieved scene info for 'Scene'. Found 67 objects across 3 collections.",
     "status": "success"
   },
   "detailed_objects": {
@@ -644,7 +644,7 @@
       "faces": 6,
       "modifiers": [],
       "success": true,
-      "message": "[RJ0RNN] Retrieved detailed info for object 'Test_Primitive_Cube' (Type: MESH).",
+      "message": "[EE61M2] Retrieved detailed info for object 'Test_Primitive_Cube' (Type: MESH).",
       "status": "success"
     },
     "Test_Primitive_Cylinder": {
@@ -674,7 +674,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[NITKP6] Retrieved detailed info for object 'Test_Primitive_Cylinder' (Type: MESH).",
+      "message": "[1CQKV6] Retrieved detailed info for object 'Test_Primitive_Cylinder' (Type: MESH).",
       "status": "success"
     },
     "Test_Primitive_IcoSphere": {
@@ -704,7 +704,7 @@
       "faces": 80,
       "modifiers": [],
       "success": true,
-      "message": "[31DCKP] Retrieved detailed info for object 'Test_Primitive_IcoSphere' (Type: MESH).",
+      "message": "[7XHA0E] Retrieved detailed info for object 'Test_Primitive_IcoSphere' (Type: MESH).",
       "status": "success"
     },
     "Test_Primitive_Sphere": {
@@ -734,7 +734,7 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[N4WD9Z] Retrieved detailed info for object 'Test_Primitive_Sphere' (Type: MESH).",
+      "message": "[C04PG5] Retrieved detailed info for object 'Test_Primitive_Sphere' (Type: MESH).",
       "status": "success"
     },
     "Test_Primitive_Torus": {
@@ -764,7 +764,7 @@
       "faces": 576,
       "modifiers": [],
       "success": true,
-      "message": "[BITI5P] Retrieved detailed info for object 'Test_Primitive_Torus' (Type: MESH).",
+      "message": "[TYYTO2] Retrieved detailed info for object 'Test_Primitive_Torus' (Type: MESH).",
       "status": "success"
     },
     "Test_Primitive_Plane": {
@@ -794,7 +794,7 @@
       "faces": 1,
       "modifiers": [],
       "success": true,
-      "message": "[LSEQE7] Retrieved detailed info for object 'Test_Primitive_Plane' (Type: MESH).",
+      "message": "[ZWLP2F] Retrieved detailed info for object 'Test_Primitive_Plane' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_Array": {
@@ -832,7 +832,7 @@
         }
       ],
       "success": true,
-      "message": "[INC5Q9] Retrieved detailed info for object 'Test_Mod_Array' (Type: MESH).",
+      "message": "[MZB0EZ] Retrieved detailed info for object 'Test_Mod_Array' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_Solidify": {
@@ -869,7 +869,7 @@
         }
       ],
       "success": true,
-      "message": "[YQRVOF] Retrieved detailed info for object 'Test_Mod_Solidify' (Type: MESH).",
+      "message": "[IKB8Q3] Retrieved detailed info for object 'Test_Mod_Solidify' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_Bevel": {
@@ -906,7 +906,7 @@
         }
       ],
       "success": true,
-      "message": "[61JKVV] Retrieved detailed info for object 'Test_Mod_Bevel' (Type: MESH).",
+      "message": "[TG371B] Retrieved detailed info for object 'Test_Mod_Bevel' (Type: MESH).",
       "status": "success"
     },
     "Test_MirrorCenter_Y": {
@@ -936,7 +936,7 @@
       "faces": 6,
       "modifiers": [],
       "success": true,
-      "message": "[PES7VO] Retrieved detailed info for object 'Test_MirrorCenter_Y' (Type: MESH).",
+      "message": "[V7XN3L] Retrieved detailed info for object 'Test_MirrorCenter_Y' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_Mirror": {
@@ -978,7 +978,7 @@
         }
       ],
       "success": true,
-      "message": "[WT3E1E] Retrieved detailed info for object 'Test_Mod_Mirror' (Type: MESH).",
+      "message": "[2MBA9R] Retrieved detailed info for object 'Test_Mod_Mirror' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_Subdiv": {
@@ -1015,7 +1015,7 @@
         }
       ],
       "success": true,
-      "message": "[CFRYJT] Retrieved detailed info for object 'Test_Mod_Subdiv' (Type: MESH).",
+      "message": "[FGUINE] Retrieved detailed info for object 'Test_Mod_Subdiv' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_Wire": {
@@ -1052,7 +1052,7 @@
         }
       ],
       "success": true,
-      "message": "[DP8PS5] Retrieved detailed info for object 'Test_Mod_Wire' (Type: MESH).",
+      "message": "[FBMIJD] Retrieved detailed info for object 'Test_Mod_Wire' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_Smooth": {
@@ -1089,7 +1089,7 @@
         }
       ],
       "success": true,
-      "message": "[57Q5XU] Retrieved detailed info for object 'Test_Mod_Smooth' (Type: MESH).",
+      "message": "[3AZ3PF] Retrieved detailed info for object 'Test_Mod_Smooth' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_BoolBasic_Base": {
@@ -1126,7 +1126,7 @@
         }
       ],
       "success": true,
-      "message": "[WHKGOM] Retrieved detailed info for object 'Test_Mod_BoolBasic_Base' (Type: MESH).",
+      "message": "[14SBVQ] Retrieved detailed info for object 'Test_Mod_BoolBasic_Base' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_BoolBasic_Cutter": {
@@ -1156,7 +1156,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[NTP503] Retrieved detailed info for object 'Test_Mod_BoolBasic_Cutter' (Type: MESH).",
+      "message": "[JE89ZA] Retrieved detailed info for object 'Test_Mod_BoolBasic_Cutter' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Intersect_Base": {
@@ -1193,7 +1193,7 @@
         }
       ],
       "success": true,
-      "message": "[8I527F] Retrieved detailed info for object 'Test_BoolOp_Intersect_Base' (Type: MESH).",
+      "message": "[VEJMNC] Retrieved detailed info for object 'Test_BoolOp_Intersect_Base' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Intersect_Cutter": {
@@ -1223,7 +1223,7 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[1D5CQK] Retrieved detailed info for object 'Test_BoolOp_Intersect_Cutter' (Type: MESH).",
+      "message": "[4GS7E2] Retrieved detailed info for object 'Test_BoolOp_Intersect_Cutter' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Union_Base": {
@@ -1260,7 +1260,7 @@
         }
       ],
       "success": true,
-      "message": "[NPQEUN] Retrieved detailed info for object 'Test_BoolOp_Union_Base' (Type: MESH).",
+      "message": "[CKLVED] Retrieved detailed info for object 'Test_BoolOp_Union_Base' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Union_Cutter": {
@@ -1290,7 +1290,7 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[MD9O9P] Retrieved detailed info for object 'Test_BoolOp_Union_Cutter' (Type: MESH).",
+      "message": "[5VSHHZ] Retrieved detailed info for object 'Test_BoolOp_Union_Cutter' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Diff_Base": {
@@ -1327,7 +1327,7 @@
         }
       ],
       "success": true,
-      "message": "[MWQ68H] Retrieved detailed info for object 'Test_BoolOp_Diff_Base' (Type: MESH).",
+      "message": "[CD1UOE] Retrieved detailed info for object 'Test_BoolOp_Diff_Base' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Diff_Cutter": {
@@ -1357,7 +1357,7 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[BI4555] Retrieved detailed info for object 'Test_BoolOp_Diff_Cutter' (Type: MESH).",
+      "message": "[RR82G8] Retrieved detailed info for object 'Test_BoolOp_Diff_Cutter' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Slice_Base": {
@@ -1394,7 +1394,7 @@
         }
       ],
       "success": true,
-      "message": "[RT2H44] Retrieved detailed info for object 'Test_BoolOp_Slice_Base' (Type: MESH).",
+      "message": "[3PQIHS] Retrieved detailed info for object 'Test_BoolOp_Slice_Base' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Slice_Cutter": {
@@ -1424,7 +1424,7 @@
       "faces": 6,
       "modifiers": [],
       "success": true,
-      "message": "[U942MY] Retrieved detailed info for object 'Test_BoolOp_Slice_Cutter' (Type: MESH).",
+      "message": "[J5OKKL] Retrieved detailed info for object 'Test_BoolOp_Slice_Cutter' (Type: MESH).",
       "status": "success"
     },
     "Test_BoolOp_Slice_Base_slice": {
@@ -1461,7 +1461,7 @@
         }
       ],
       "success": true,
-      "message": "[ZA7WSR] Retrieved detailed info for object 'Test_BoolOp_Slice_Base_slice' (Type: MESH).",
+      "message": "[8JUX2G] Retrieved detailed info for object 'Test_BoolOp_Slice_Base_slice' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_RemoveVerify_1": {
@@ -1498,7 +1498,7 @@
         }
       ],
       "success": true,
-      "message": "[3WELHC] Retrieved detailed info for object 'Test_Mod_RemoveVerify_1' (Type: MESH).",
+      "message": "[8ZFF4V] Retrieved detailed info for object 'Test_Mod_RemoveVerify_1' (Type: MESH).",
       "status": "success"
     },
     "Test_Mod_RemoveVerify_2": {
@@ -1528,7 +1528,7 @@
       "faces": 6,
       "modifiers": [],
       "success": true,
-      "message": "[3YL8DZ] Retrieved detailed info for object 'Test_Mod_RemoveVerify_2' (Type: MESH).",
+      "message": "[750UNZ] Retrieved detailed info for object 'Test_Mod_RemoveVerify_2' (Type: MESH).",
       "status": "success"
     },
     "Test_Col_Cube": {
@@ -1558,7 +1558,7 @@
       "faces": 6,
       "modifiers": [],
       "success": true,
-      "message": "[KR737P] Retrieved detailed info for object 'Test_Col_Cube' (Type: MESH).",
+      "message": "[H9NB08] Retrieved detailed info for object 'Test_Col_Cube' (Type: MESH).",
       "status": "success"
     },
     "Test_Col_Sphere": {
@@ -1588,7 +1588,7 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[J3H0FB] Retrieved detailed info for object 'Test_Col_Sphere' (Type: MESH).",
+      "message": "[RZ55SX] Retrieved detailed info for object 'Test_Col_Sphere' (Type: MESH).",
       "status": "success"
     },
     "Test_Col_Cube.001": {
@@ -1618,7 +1618,7 @@
       "faces": 6,
       "modifiers": [],
       "success": true,
-      "message": "[N60OD2] Retrieved detailed info for object 'Test_Col_Cube.001' (Type: MESH).",
+      "message": "[8FMBBN] Retrieved detailed info for object 'Test_Col_Cube.001' (Type: MESH).",
       "status": "success"
     },
     "Test_Col_Sphere.001": {
@@ -1648,7 +1648,7 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[NXIJZG] Retrieved detailed info for object 'Test_Col_Sphere.001' (Type: MESH).",
+      "message": "[I8KHEO] Retrieved detailed info for object 'Test_Col_Sphere.001' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Circ_Base": {
@@ -1678,7 +1678,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[MEPM1G] Retrieved detailed info for object 'Test_Op_Circ_Base' (Type: MESH).",
+      "message": "[C3G8YD] Retrieved detailed info for object 'Test_Op_Circ_Base' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Circ_Base.001": {
@@ -1708,7 +1708,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[V5W2IR] Retrieved detailed info for object 'Test_Op_Circ_Base.001' (Type: MESH).",
+      "message": "[NFZL54] Retrieved detailed info for object 'Test_Op_Circ_Base.001' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Circ_Base.002": {
@@ -1738,7 +1738,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[BK7INZ] Retrieved detailed info for object 'Test_Op_Circ_Base.002' (Type: MESH).",
+      "message": "[BYCZEU] Retrieved detailed info for object 'Test_Op_Circ_Base.002' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Circ_Base.003": {
@@ -1768,7 +1768,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[KIGIYD] Retrieved detailed info for object 'Test_Op_Circ_Base.003' (Type: MESH).",
+      "message": "[GTNE7Q] Retrieved detailed info for object 'Test_Op_Circ_Base.003' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Circ_Base.004": {
@@ -1798,7 +1798,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[VFFZUK] Retrieved detailed info for object 'Test_Op_Circ_Base.004' (Type: MESH).",
+      "message": "[N13N0M] Retrieved detailed info for object 'Test_Op_Circ_Base.004' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Circ_Base.005": {
@@ -1828,7 +1828,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[RFTZNF] Retrieved detailed info for object 'Test_Op_Circ_Base.005' (Type: MESH).",
+      "message": "[YRHOTW] Retrieved detailed info for object 'Test_Op_Circ_Base.005' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Joined_Result": {
@@ -1858,7 +1858,7 @@
       "faces": 18,
       "modifiers": [],
       "success": true,
-      "message": "[HJL3LA] Retrieved detailed info for object 'Test_Op_Joined_Result' (Type: MESH).",
+      "message": "[6RU7EU] Retrieved detailed info for object 'Test_Op_Joined_Result' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_CreateArray": {
@@ -1896,7 +1896,7 @@
         }
       ],
       "success": true,
-      "message": "[4961FM] Retrieved detailed info for object 'Test_Op_CreateArray' (Type: MESH).",
+      "message": "[ZVZXCG] Retrieved detailed info for object 'Test_Op_CreateArray' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base": {
@@ -1926,15 +1926,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[QVDTAF] Retrieved detailed info for object 'Test_Op_Rand_Base' (Type: MESH).",
+      "message": "[4YY97K] Retrieved detailed info for object 'Test_Op_Rand_Base' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.001": {
       "name": "Test_Op_Rand_Base.001",
       "type": "MESH",
       "location": [
-        15.73199462890625,
-        29.287715911865234,
+        15.557706832885742,
+        28.10004234313965,
         0.0
       ],
       "rotation": [
@@ -1956,15 +1956,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[G2GSH1] Retrieved detailed info for object 'Test_Op_Rand_Base.001' (Type: MESH).",
+      "message": "[BJU30S] Retrieved detailed info for object 'Test_Op_Rand_Base.001' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.002": {
       "name": "Test_Op_Rand_Base.002",
       "type": "MESH",
       "location": [
-        15.016340255737305,
-        28.60739517211914,
+        14.100117683410645,
+        28.89284324645996,
         0.0
       ],
       "rotation": [
@@ -1986,15 +1986,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[O68PIG] Retrieved detailed info for object 'Test_Op_Rand_Base.002' (Type: MESH).",
+      "message": "[9ZQ5RA] Retrieved detailed info for object 'Test_Op_Rand_Base.002' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.003": {
       "name": "Test_Op_Rand_Base.003",
       "type": "MESH",
       "location": [
-        16.316974639892578,
-        31.41486930847168,
+        15.945884704589844,
+        30.706798553466797,
         0.0
       ],
       "rotation": [
@@ -2016,15 +2016,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[CYQ07U] Retrieved detailed info for object 'Test_Op_Rand_Base.003' (Type: MESH).",
+      "message": "[TLDC9I] Retrieved detailed info for object 'Test_Op_Rand_Base.003' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.004": {
       "name": "Test_Op_Rand_Base.004",
       "type": "MESH",
       "location": [
-        13.845317840576172,
-        31.459930419921875,
+        14.687686920166016,
+        28.11918830871582,
         0.0
       ],
       "rotation": [
@@ -2046,15 +2046,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[7S8BQD] Retrieved detailed info for object 'Test_Op_Rand_Base.004' (Type: MESH).",
+      "message": "[5ZJC9D] Retrieved detailed info for object 'Test_Op_Rand_Base.004' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.005": {
       "name": "Test_Op_Rand_Base.005",
       "type": "MESH",
       "location": [
-        13.895755767822266,
-        30.06205940246582,
+        13.874551773071289,
+        30.021421432495117,
         0.0
       ],
       "rotation": [
@@ -2076,15 +2076,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[SRA5AC] Retrieved detailed info for object 'Test_Op_Rand_Base.005' (Type: MESH).",
+      "message": "[JPRLSS] Retrieved detailed info for object 'Test_Op_Rand_Base.005' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.006": {
       "name": "Test_Op_Rand_Base.006",
       "type": "MESH",
       "location": [
-        15.910517692565918,
-        30.432687759399414,
+        13.881762504577637,
+        30.35706329345703,
         0.0
       ],
       "rotation": [
@@ -2106,15 +2106,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[75E5GF] Retrieved detailed info for object 'Test_Op_Rand_Base.006' (Type: MESH).",
+      "message": "[REQTM8] Retrieved detailed info for object 'Test_Op_Rand_Base.006' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.007": {
       "name": "Test_Op_Rand_Base.007",
       "type": "MESH",
       "location": [
-        15.365558624267578,
-        31.505239486694336,
+        16.223276138305664,
+        30.792556762695312,
         0.0
       ],
       "rotation": [
@@ -2136,15 +2136,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[TX7JIK] Retrieved detailed info for object 'Test_Op_Rand_Base.007' (Type: MESH).",
+      "message": "[AGGQJH] Retrieved detailed info for object 'Test_Op_Rand_Base.007' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.008": {
       "name": "Test_Op_Rand_Base.008",
       "type": "MESH",
       "location": [
-        14.598315238952637,
-        31.76961898803711,
+        14.361001968383789,
+        28.621917724609375,
         0.0
       ],
       "rotation": [
@@ -2166,15 +2166,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[ZNPV7N] Retrieved detailed info for object 'Test_Op_Rand_Base.008' (Type: MESH).",
+      "message": "[IGGCXT] Retrieved detailed info for object 'Test_Op_Rand_Base.008' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.009": {
       "name": "Test_Op_Rand_Base.009",
       "type": "MESH",
       "location": [
-        13.823223114013672,
-        31.569547653198242,
+        16.8288516998291,
+        29.346378326416016,
         0.0
       ],
       "rotation": [
@@ -2196,15 +2196,15 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[VEIIEU] Retrieved detailed info for object 'Test_Op_Rand_Base.009' (Type: MESH).",
+      "message": "[8C1F3L] Retrieved detailed info for object 'Test_Op_Rand_Base.009' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Rand_Base.010": {
       "name": "Test_Op_Rand_Base.010",
       "type": "MESH",
       "location": [
-        15.424155235290527,
-        31.035131454467773,
+        16.389978408813477,
+        30.41490364074707,
         0.0
       ],
       "rotation": [
@@ -2226,7 +2226,7 @@
       "faces": 512,
       "modifiers": [],
       "success": true,
-      "message": "[Q91R5K] Retrieved detailed info for object 'Test_Op_Rand_Base.010' (Type: MESH).",
+      "message": "[5RUKYK] Retrieved detailed info for object 'Test_Op_Rand_Base.010' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Extrude": {
@@ -2256,7 +2256,7 @@
       "faces": 66,
       "modifiers": [],
       "success": true,
-      "message": "[D0WDHR] Retrieved detailed info for object 'Test_Op_Extrude' (Type: MESH).",
+      "message": "[Y7OIIW] Retrieved detailed info for object 'Test_Op_Extrude' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Inset": {
@@ -2286,7 +2286,7 @@
       "faces": 10,
       "modifiers": [],
       "success": true,
-      "message": "[SS4PZP] Retrieved detailed info for object 'Test_Op_Inset' (Type: MESH).",
+      "message": "[K3D64H] Retrieved detailed info for object 'Test_Op_Inset' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Shear_Cylinder": {
@@ -2316,7 +2316,7 @@
       "faces": 34,
       "modifiers": [],
       "success": true,
-      "message": "[IL8KBC] Retrieved detailed info for object 'Test_Op_Shear_Cylinder' (Type: MESH).",
+      "message": "[KWFZS3] Retrieved detailed info for object 'Test_Op_Shear_Cylinder' (Type: MESH).",
       "status": "success"
     },
     "Test_Op_Delete_Torus_Survivor": {
@@ -2346,7 +2346,7 @@
       "faces": 576,
       "modifiers": [],
       "success": true,
-      "message": "[YVAAF2] Retrieved detailed info for object 'Test_Op_Delete_Torus_Survivor' (Type: MESH).",
+      "message": "[AJT4LQ] Retrieved detailed info for object 'Test_Op_Delete_Torus_Survivor' (Type: MESH).",
       "status": "success"
     }
   }

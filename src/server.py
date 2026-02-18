@@ -2,6 +2,8 @@ import json
 import random
 import string
 import os
+from typing import Optional
+from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 
 from mcp.server import Server
@@ -10,8 +12,18 @@ import mcp.types as types
 
 from .connection import blender, logger
 from .tools import get_mcp_tools
+from .sessions import SessionRecorder
+
+from starlette.applications import Starlette
+from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
+from starlette.responses import Response
+from starlette.routing import Route, Mount
 
 load_dotenv()
+
+# Lifecycle / Recording State
+recorder: Optional[SessionRecorder] = None
 
 # Initialize MCP Server
 app = Server("blender-mcp-n8n")
@@ -79,6 +91,9 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
 
     logger.info(f"[{rid}] Tool Call: {name} with params: {clean_args}")
 
+    if recorder:
+        recorder.record_command(name, clean_args)
+
     blender_res = blender.send_command(name, clean_args, rid)
 
     # Flatten nested results from bridge
@@ -115,44 +130,60 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
     return [types.TextContent(type="text", text=json.dumps(blender_res, indent=2))]
 
 
-# ASGI Application (HTTP Streamable Transport)
+# MCP Application Logic (Streamable Transport)
+# Lines below set up the Starlette/MCP integration
 session_manager = StreamableHTTPSessionManager(
     app=app, json_response=True, stateless=True
 )
 
-# Track lifespan state
-_lifespan_context = None
+
+@asynccontextmanager
+async def lifespan(app: Starlette):
+    """Manage the lifecycle of the MCP session manager"""
+    print("[DEBUG] Starlette lifespan starting...")
+    async with session_manager.run():
+        print("[DEBUG] MCP Session Manager active.")
+        yield
+    print("[DEBUG] Starlette lifespan shutting down...")
 
 
-async def mcp_app(scope, receive, send):
-    """The main ASGI application entry point"""
-    global _lifespan_context
+async def mcp_asgi(scope, receive, send):
+    """Raw ASGI bridge to MCP session manager. Handles OPTIONS for CORS preflight."""
+    if scope["type"] == "http" and scope.get("method") == "OPTIONS":
+        # Return 200 for CORS preflight — middleware will add the headers
+        await send({"type": "http.response.start", "status": 200, "headers": []})
+        await send({"type": "http.response.body", "body": b""})
+        return
+    await session_manager.handle_request(scope, receive, send)
 
-    if scope["type"] == "lifespan":
-        # Handle lifespan events to initialize session_manager
-        while True:
-            message = await receive()
-            if message["type"] == "lifespan.startup":
-                try:
-                    # Start the session manager
-                    _lifespan_context = session_manager.run()
-                    await _lifespan_context.__aenter__()
-                    await send({"type": "lifespan.startup.complete"})
-                except Exception as e:
-                    await send({"type": "lifespan.startup.failed", "message": str(e)})
-                    raise
-            elif message["type"] == "lifespan.shutdown":
-                try:
-                    if _lifespan_context:
-                        await _lifespan_context.__aexit__(None, None, None)
-                    await send({"type": "lifespan.shutdown.complete"})
-                except Exception as e:
-                    await send({"type": "lifespan.shutdown.failed", "message": str(e)})
-                    raise
-                return
-    elif scope["type"] == "http" and scope["path"] == "/mcp":
-        await session_manager.handle_request(scope, receive, send)
-    elif scope["type"] == "http":
-        # 404 for other paths
-        await send({"type": "http.response.start", "status": 404, "headers": []})
-        await send({"type": "http.response.body", "body": b"Not Found"})
+
+async def root_redirect(request):
+    return Response(
+        "Blender MCP Server is running. Access /editor/ for the Session Editor.",
+        media_type="text/plain",
+    )
+
+
+# Create the Starlette app
+starlette_app = Starlette(
+    routes=[
+        Route("/", root_redirect),
+        Mount("/mcp", app=mcp_asgi),
+        Mount(
+            "/editor", StaticFiles(directory="session_editor", html=True), name="editor"
+        ),
+    ],
+    lifespan=lifespan,
+)
+
+# Add CORS middleware
+starlette_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Replace the mcp_app with starlette_app for the final entry point
+# Note: Keep variable name as 'app' for uvicorn compatibility in main.py
+app = starlette_app

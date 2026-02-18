@@ -37,29 +37,19 @@ def cli():
 )
 def run(host, verify, module, transport):
     """Run the integration test scenario"""
-    if transport == "stateful":
-        print(f"Connecting to {host} in STATEFUL mode...")
-        client = StatefulMCPClient(base_url=host)
-    else:
+    if transport == "stateless":
         print(f"Connecting to {host} in STATELESS mode...")
         client = MCPClient(base_url=host)
+    else:
+        print(f"Connecting to {host} in STATEFUL mode...")
+        client = StatefulMCPClient(base_url=host)
 
-    # 1. Clear Scene (Optional but recommended)
-    print("Clearing scene of test objects...")
-    cleanup_patterns = [
-        "Test_*",
-        "Test_Integration_Collection*",
-        "Collection_CopyRemove*",
-        "MirrorCenter*",
-        "Transform_*",
-        "Text*",
-        "Label_*",
-    ]
-    for pattern in cleanup_patterns:
-        try:
-            client.call_tool("delete_object", {"pattern": pattern})
-        except Exception as e:
-            print(f"Cleanup failed for pattern {pattern}: {e}")
+    # 1. Clear Scene
+    print("Clearing scene...")
+    try:
+        client.call_tool("delete_object", {"pattern": "*"})
+    except Exception as e:
+        print(f"Cleanup failed: {e}")
 
     # 2. Run Scenario
     scenario = GridLayoutScenario(client)
@@ -142,9 +132,6 @@ def verify_results():
 
     # Check 2: Basic Property Matching (Location)
     for name in expected_objs.intersection(actual_objs):
-        if name.startswith("Test_Op_Rand_Base"):
-            continue
-
         exp_data = expected["detailed_objects"][name]
         act_data = actual["detailed_objects"][name]
 

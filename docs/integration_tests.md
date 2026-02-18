@@ -4,8 +4,8 @@ This guide explains how to run the integration test suite for the Blender MCP ad
 
 ## Prerequisites
 
-1.  **Running Blender**: Ensure Blender is open and the **Blender MCP (n8n)** addon server is started (Check the N-Panel > Blender MCP (n8n) > Start Server).
-2.  **Running MCP Bridge**: Ensure the Python MCP Server is running (`python -m src.main`).
+1.  **Blender MCP Addon**: Ensure Blender is open and the addon server is started (N-Panel > Blender MCP > Start Server).
+2.  **MCP Bridge Server**: Ensure the Python bridge is running (`python -m src.main`).
 3.  **Dependencies**: Install the required Python packages:
     ```bash
     pip install -r requirements.txt
@@ -15,15 +15,15 @@ This guide explains how to run the integration test suite for the Blender MCP ad
 
 The test runner supports two transport modes for communicating with the MCP server:
 
--   **Stateless (Default)**: Uses simple HTTP POST requests with a session ID. This emulates how n8n and other stateless clients interact with the server.
--   **Stateful**: Uses the official MCP SDK to perform a standard SSE handshake and long-running session.
+-   **Stateless**: Uses simple HTTP POST requests with a session ID. This emulates how n8n and other stateless clients interact with the server.
+-   **Stateful (Default)**: Uses the official MCP SDK to perform a standard HTTP Streamable handshake and long-running session.
 
 ```bash
-# Run in stateless mode (default)
-python -m tests.run_integration run --transport stateless
-
-# Run in stateful mode
+# Run in stateful mode (default)
 python -m tests.run_integration run --transport stateful
+
+# Run in stateless mode
+python -m tests.run_integration run --transport stateless
 ```
 
 ## Running Tests
