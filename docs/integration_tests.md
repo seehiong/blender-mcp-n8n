@@ -20,49 +20,66 @@ The test runner supports two transport modes for communicating with the MCP serv
 
 ```bash
 # Run in stateful mode (default)
-python -m tests.run_integration run --transport stateful
+python tests/run_integration.py run --transport stateful
 
 # Run in stateless mode
-python -m tests.run_integration run --transport stateless
+python tests/run_integration.py run --transport stateless
 ```
 
 ## Running Tests
 
 The test runner is a CLI tool located at `tests/run_integration.py`.
 
-### 1. Run Standard Test
+### 1. Run Scenario
 
-To run the standard grid layout scenario:
+The runner now supports multiple scenarios via the `--scenario` (or `-s`) flag.
 
+#### Standard Grid Test
+To run the standard grid layout scenario (primitives, modifiers, etc.):
 ```bash
-python -m tests.run_integration run
+python tests/run_integration.py run --scenario grid
 ```
 
-**What this does:**
+#### Arch Layout Test
+To run the architectural layout scenario (synced with fine-tuned session values):
+```bash
+python tests/run_integration.py run --scenario arch
+```
 
-![Integration Test Result](images/integration_test_result.png)
+**What each scenario validates:**
 
-1.  Connects to the MCP server.
-2.  Generates a grid of objects in Blender:
-    -   **Row 1 (Y=0, Primitives)**: Cube, Sphere, Cylinder, Torus, Plane, IcoSphere.
-    -   **Row 2 (Y=10, Modifiers)**: Bevel, Array, Subdivision Surface.
-    -   **Row 3 (Y=20, Collections)**: Collection hierarchies and visibility.
-    -   **Row 4 (Y=30, Operators)**: Boolean operations (Union, Difference, Intersect).
-    -   **Row 5 (Y=40, Transforms)**: Move, Rotate, Scale, Duplicate, Batch operations.
-3.  Captures the scene state to `tests/benchmarks/last_run.json`.
+#### Grid Scenario
+![Grid Scenario Result](images/grid_scenario_result.png)
+1.  **Connects** to the MCP server.
+2.  **Generates a grid of objects** in Blender to verify tool categories:
+    -   **Row 1 (Primitives)**: Cube, Sphere, Cylinder, Torus, Plane, IcoSphere.
+    -   **Row 2 (Modifiers)**: Bevel, Array, Subdivision Surface.
+    -   **Row 3 (Collections)**: Collection hierarchies and visibility.
+    -   **Row 4 (Operators)**: Boolean operations (Union, Difference, Intersect).
+    -   **Row 5 (Transforms)**: Move, Rotate, Scale, Duplicate, Batch operations.
+3.  **Captures** the scene state to `tests/benchmarks/grid_last_run.json`.
+
+#### Arch Scenario
+![Arch Scenario Result](images/arch_scenario_result.png)
+1.  **Connects** to the MCP server.
+2.  **Constructs a complete 3D floor plan** based on architectural layout dimensions:
+    -   **Outer Shell**: Floor slab, walls (0.2m), and hidden ceiling.
+    -   **Architectural Features**: Structural columns merged with walls via Boolean Union.
+    -   **Sub-divisions**: Bedroom partitions with door and window cutouts.
+    -   **Annotation**: 3D labels for rooms (Bedroom, Bath, Kitchen, etc.) with rotation support.
+3.  **Captures** the scene state to `tests/benchmarks/arch_last_run.json`.
 
 ### Advanced Run Options
 
 ```bash
-# Run all tests
-set PYTHONPATH=. && python -m tests.run_integration run
+# Run all tests (Grid only support for modules)
+python tests/run_integration.py run -s grid
 
-# Run specific module (faster)
-set PYTHONPATH=. && python -m tests.run_integration run --module modifiers
-# Options: primitives, modifiers, collections
+# Run specific module (Grid scenario only)
+python tests/run_integration.py run -s grid --module modifiers
 
 # Verify against benchmark
-set PYTHONPATH=. && python -m tests.run_integration verify
+python tests/run_integration.py verify -s arch
 ```
 
 If the scene matches the expected state, you will see `✅ Verification Passed!`. If not, it will report missing or unexpected objects and property mismatches.
@@ -72,7 +89,7 @@ If the scene matches the expected state, you will see `✅ Verification Passed!`
 You can run and verify in a single command:
 
 ```bash
-python -m tests.run_integration run --verify
+python tests/run_integration.py run -s grid --verify
 ```
 
 ## Updating Baselines
@@ -80,10 +97,10 @@ python -m tests.run_integration run --verify
 If you make intentional changes to the test scenario or addon logic that affect the output, you can update the benchmark to reflect the new expected state:
 
 ```bash
-python -m tests.run_integration approve
+python tests/run_integration.py approve -s arch
 ```
 
-This copies `tests/benchmarks/last_run.json` to `tests/benchmarks/expected_scene.json`.
+This copies `tests/benchmarks/<scenario>_last_run.json` to `tests/benchmarks/<scenario>_expected.json`.
 
 ## Extending the Test Suite
 

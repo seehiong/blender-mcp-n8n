@@ -128,6 +128,7 @@ class ModelingPrimitives:
         name=None,
         size=1.0,
         extrude=0.05,
+        rotation=None,
         align_x="LEFT",
         collection=None,
         **kwargs,
@@ -150,6 +151,9 @@ class ModelingPrimitives:
         obj.data.size = size
         obj.data.extrude = extrude
         obj.data.align_x = align_x
+
+        if rotation is not None:
+            obj.rotation_euler = [math.radians(r) for r in rotation]
 
         if collection:
             self._move_to_collection_helper(obj, collection)

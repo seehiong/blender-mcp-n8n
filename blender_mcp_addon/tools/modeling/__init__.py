@@ -3,6 +3,7 @@ from .modifiers import ModelingModifiers
 from .transforms import ModelingTransforms
 from .selection import ModelingSelection
 from .operators import ModelingOperators
+from .architectural import ModelingArchitectural
 
 
 class ModelingTools(
@@ -11,6 +12,7 @@ class ModelingTools(
     ModelingTransforms,
     ModelingSelection,
     ModelingOperators,
+    ModelingArchitectural,
 ):
     """Refactored Modeling Tools for Blender MCP"""
 

@@ -130,36 +130,44 @@ class BlenderMCPServer(
     def _process_queue(self):
         if not self.running:
             return None
-        while not self.command_queue.empty():
-            try:
-                item = self.command_queue.get_nowait()
-                cmd, event, res = item["command"], item["event"], item["container"]
+        try:
+            while not self.command_queue.empty():
                 try:
-                    res["result"] = self.execute_command(cmd)
+                    item = self.command_queue.get_nowait()
+                    if not item:
+                        continue
+                    cmd, event, res = item["command"], item["event"], item["container"]
+                    try:
+                        res["result"] = self.execute_command(cmd)
 
-                    # Push to Undo Stack if it's a state-changing command
-                    cmd_type = cmd.get("type", "")
-                    if (
-                        cmd_type
-                        and not cmd_type.startswith("get_")
-                        and cmd_type
-                        not in ["undo", "redo", "render_frame", "render_animation"]
-                    ):
-                        try:
-                            bpy.ops.ed.undo_push(message=f"MCP: {cmd_type}")
-                        except Exception as e:
-                            print(f"[MCP] Warning: Failed to push undo step: {e}")
+                        # Push to Undo Stack if it's a state-changing command
+                        cmd_type = cmd.get("type", "")
+                        if (
+                            cmd_type
+                            and not cmd_type.startswith("get_")
+                            and cmd_type
+                            not in ["undo", "redo", "render_frame", "render_animation"]
+                        ):
+                            try:
+                                bpy.ops.ed.undo_push(message=f"MCP: {cmd_type}")
+                            except Exception as e:
+                                print(f"[MCP] Warning: Failed to push undo step: {e}")
 
+                    except Exception as e:
+                        traceback.print_exc()
+                        res["result"] = {
+                            "status": "error",
+                            "message": f"Execution error: {e}",
+                        }
+                    finally:
+                        event.set()
                 except Exception as e:
+                    print(f"[MCP] Queue processing error: {e}")
                     traceback.print_exc()
-                    res["result"] = {
-                        "status": "error",
-                        "message": f"Execution error: {e}",
-                    }
-                finally:
-                    event.set()
-            except queue.Empty:
-                break
+        except Exception as e:
+            print(f"[MCP] Critical Timer Error: {e}")
+            traceback.print_exc()
+
         return 0.005
 
     def execute_command(self, command):
@@ -212,6 +220,14 @@ class BlenderMCPServer(
             "extrude_mesh": self.extrude_mesh,
             "inset_faces": self.inset_faces,
             "shear_mesh": self.shear_mesh,
+            "invert_mesh_selection": self.invert_mesh_selection,
+            # Architectural (ArchBuilder)
+            "build_room_shell": self.build_room_shell,
+            "build_wall_segment": self.build_wall_segment,
+            "build_wall_with_door": self.build_wall_with_door,
+            "build_column": self.build_column,
+            "toggle_ceiling": self.toggle_ceiling,
+            "set_view": self.set_view,
             # Animation
             "set_keyframe": self.set_keyframe,
             "get_keyframes": self.get_keyframes,

@@ -211,6 +211,11 @@ def get_primitive_tools() -> list[types.Tool]:
                         "default": "LEFT",
                         "description": "Horizontal alignment",
                     },
+                    "rotation": {
+                        "type": "array",
+                        "items": {"type": "number"},
+                        "description": "Euler rotation in degrees [X, Y, Z]",
+                    },
                     "collection": {"type": "string"},
                 },
                 "required": ["text", "location"],

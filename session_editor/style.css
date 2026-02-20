@@ -262,10 +262,27 @@ textarea:focus {
 /* Command List Header */
 .command-list-header {
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.header-top {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
+
+.header-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--glass-border);
+}
+
 
 .playback-controls {
     display: flex;
@@ -318,10 +335,18 @@ textarea:focus {
     margin-left: 0.5rem;
 }
 
-.search-bar input {
-    width: 250px;
-    padding: 0.5rem 0.8rem;
+.search-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
 }
+
+.search-bar input {
+    width: 300px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+}
+
 
 .command-list {
     display: flex;

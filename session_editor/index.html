@@ -56,33 +56,40 @@
                 </div>
             </section>
 
-            <section class="command-list-header">
-                <div class="header-left">
-                    <h2>Commands <span id="commandCount" class="badge">0</span></h2>
-                </div>
-                <div class="playback-controls">
-                    <div class="control-group main-controls">
-                        <button id="undoBtn" class="btn btn-secondary" title="Undo Last Command">↶ Undo</button>
-                        <button id="redoBtn" class="btn btn-secondary" title="Redo Last Command">↷ Redo</button>
+            <section class="command-list-header card glass">
+                <div class="header-top">
+                    <div class="header-left">
+                        <h2>Commands <span id="commandCount" class="badge">0</span></h2>
+                    </div>
+                    <div class="playback-controls">
+                        <div class="control-group main-controls">
+                            <button id="undoBtn" class="btn btn-secondary" title="Undo Last Command (Ctrl+Z)">↶
+                                Undo</button>
+                            <button id="redoBtn" class="btn btn-secondary" title="Redo Last Command (Ctrl+Y)">↷
+                                Redo</button>
+                            <div class="vr"></div>
+                            <button id="playBtn" class="btn btn-success" disabled
+                                title="Play Session (Space or Ctrl+Enter)">▶ Play</button>
+                            <button id="stopBtn" class="btn btn-danger" disabled title="Stop Playback (Esc)">⏹
+                                Stop</button>
+                        </div>
                         <div class="vr"></div>
-                        <button id="playBtn" class="btn btn-success" disabled>▶ Play</button>
-                        <button id="stopBtn" class="btn btn-danger" disabled>⏹ Stop</button>
+                        <div class="control-group secondary-controls">
+                            <button id="resetStateBtn" class="btn btn-secondary btn-sm"
+                                title="Re-enable all Run buttons (Alt+R)">↺ Reset</button>
+                            <button id="clearSceneBtn" class="btn btn-danger btn-sm"
+                                title="Delete all objects in Blender scene">🗑 Clear</button>
+                        </div>
                     </div>
-                    <div class="vr"></div>
-                    <div class="control-group secondary-controls">
-                        <button id="resetStateBtn" class="btn btn-secondary btn-sm" title="Re-enable all Run buttons">↺
-                            Reset</button>
-                        <button id="clearSceneBtn" class="btn btn-danger btn-sm"
-                            title="Delete all objects in Blender scene">🗑 Clear</button>
-                    </div>
-                    <div class="vr"></div>
+                </div>
+                <div class="header-bottom">
                     <div class="playback-delay-group">
                         <label for="playbackDelay">Delay (ms)</label>
                         <input type="number" id="playbackDelay" value="500" min="0" step="100">
                     </div>
-                </div>
-                <div class="search-bar">
-                    <input type="text" id="commandFilter" placeholder="Filter tools...">
+                    <div class="search-bar">
+                        <input type="text" id="commandFilter" placeholder="Filter tools...">
+                    </div>
                 </div>
             </section>
 

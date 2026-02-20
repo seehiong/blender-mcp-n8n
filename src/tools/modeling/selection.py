@@ -41,4 +41,18 @@ def get_selection_tools() -> list[types.Tool]:
                 "required": ["pattern"],
             },
         ),
+        types.Tool(
+            name="invert_mesh_selection",
+            description="Invert selection of mesh components (verts/edges/faces) inside an object.",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "object_name": {
+                        "type": "string",
+                        "description": "Object to invert selection in",
+                    },
+                },
+                "required": ["object_name"],
+            },
+        ),
     ]

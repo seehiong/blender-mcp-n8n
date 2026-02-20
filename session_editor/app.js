@@ -505,4 +505,42 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     });
+
+    // --- Keyboard Shortcuts ---
+    document.addEventListener('keydown', (e) => {
+        // Ignore shortcuts if focusing an input or textarea
+        if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+            // Special case: Esc should still stop playback even if in input
+            if (e.key === 'Escape' && isPlaying) {
+                stopPlayback();
+            }
+            return;
+        }
+
+        const isCtrl = e.ctrlKey || e.metaKey;
+
+        if (isCtrl && e.key.toLowerCase() === 'z') {
+            e.preventDefault();
+            if (e.shiftKey) {
+                redoBtn.click();
+            } else {
+                undoBtn.click();
+            }
+        } else if (isCtrl && e.key.toLowerCase() === 'y') {
+            e.preventDefault();
+            redoBtn.click();
+        } else if (e.altKey && e.key.toLowerCase() === 'r') {
+            e.preventDefault();
+            resetStateBtn.click();
+        } else if (e.key === ' ') {
+            e.preventDefault();
+            if (isPlaying) stopPlayback();
+            else startPlayback();
+        } else if (e.key === 'Escape') {
+            if (isPlaying) stopPlayback();
+        } else if (isCtrl && e.key === 'Enter') {
+            e.preventDefault();
+            if (!isPlaying) startPlayback();
+        }
+    });
 });

@@ -13,11 +13,22 @@ This directory contains a static web application for viewing, editing, and shari
     - **↺ Reset State**: Re-enable all "Run" buttons and clear success indicators without modifying the scene.
     - **Note**: This editor focuses on *sequencing* and *control*. Please keep Blender open side-by-side to watch the magic happen! 🪄
 - **Command Control**:
+    - **↶ Undo / ↷ Redo**: Revert or repeat your last action in Blender.
     - **Run Individual**: Execute specific tools manually.
     - **Success State**: Commands turn green and show "✓ Done" upon successful execution.
     - **Edit Arguments**: Modify tool parameters directly in the JSON editor cards.
     - **Reorder/Delete**: Rearrange or remove commands to refine the workflow.
 - **Export JSON**: Save your modified session to a new file.
+
+## Keyboard Shortcuts
+
+The Session Editor supports various keyboard shortcuts for faster control:
+
+- **Undo**: `Ctrl + Z`
+- **Redo**: `Ctrl + Y` or `Ctrl + Shift + Z`
+- **Reset State**: `Alt + R`
+- **Play/Stop**: `Space` or `Ctrl + Enter` (when not focusing an input)
+- **Stop Playback**: `Esc`
 
 ## How to Use
 

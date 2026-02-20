@@ -1,0 +1,897 @@
+{
+  "scene_summary": {
+    "name": "Scene",
+    "object_count": 23,
+    "objects": [
+      {
+        "name": "HDB_Unit_Floor",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "HDB_Unit_Walls",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "HDB_Unit_Ceiling",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Bedroom_Right",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Bedroom_Top",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_LivingRoom_Top_Left",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_LivingRoom_Top_Right",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_MainBedroom_Right",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_MainBedroom_Top",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Bath_Middle_Divider",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Bath2_Entry",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Store_Left",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Store_Top",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Chute_Left",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Wall_Chute_Bottom",
+        "type": "MESH",
+        "location": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Lbl_Bedroom",
+        "type": "FONT",
+        "location": [
+          1.5,
+          2.0,
+          0.20000000298023224
+        ]
+      },
+      {
+        "name": "Lbl_Store",
+        "type": "FONT",
+        "location": [
+          5.099999904632568,
+          7.300000190734863,
+          0.20000000298023224
+        ]
+      },
+      {
+        "name": "Lbl_Main",
+        "type": "FONT",
+        "location": [
+          1.2000000476837158,
+          10.0,
+          0.20000000298023224
+        ]
+      },
+      {
+        "name": "Lbl_Kitchen",
+        "type": "FONT",
+        "location": [
+          4.5,
+          12.0,
+          0.20000000298023224
+        ]
+      },
+      {
+        "name": "Lbl_Living",
+        "type": "FONT",
+        "location": [
+          1.5,
+          6.0,
+          0.20000000298023224
+        ]
+      },
+      {
+        "name": "Lbl_Bath2",
+        "type": "FONT",
+        "location": [
+          2.0999999046325684,
+          14.300000190734863,
+          0.20000000298023224
+        ]
+      },
+      {
+        "name": "Lbl_Bath1",
+        "type": "FONT",
+        "location": [
+          2.0999999046325684,
+          12.5,
+          0.20000000298023224
+        ]
+      },
+      {
+        "name": "Lbl_Chute",
+        "type": "FONT",
+        "location": [
+          5.800000190734863,
+          14.699999809265137,
+          0.20000000298023224
+        ]
+      }
+    ],
+    "collections": [
+      "HDB_3Room_Flat"
+    ],
+    "success": true,
+    "message": "[D8F026] Retrieved scene info for 'Scene'. Found 23 objects across 1 collections.",
+    "status": "success"
+  },
+  "detailed_objects": {
+    "HDB_Unit_Floor": {
+      "name": "HDB_Unit_Floor",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        6.0,
+        15.25,
+        0.15000002086162567
+      ],
+      "vertices": 14,
+      "faces": 9,
+      "modifiers": [],
+      "success": true,
+      "message": "[HK2YP7] Retrieved detailed info for object 'HDB_Unit_Floor' (Type: MESH).",
+      "status": "success"
+    },
+    "HDB_Unit_Walls": {
+      "name": "HDB_Unit_Walls",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        6.600000381469727,
+        16.350000381469727,
+        2.799999952316284
+      ],
+      "vertices": 602,
+      "faces": 486,
+      "modifiers": [],
+      "success": true,
+      "message": "[QJFHZG] Retrieved detailed info for object 'HDB_Unit_Walls' (Type: MESH).",
+      "status": "success"
+    },
+    "HDB_Unit_Ceiling": {
+      "name": "HDB_Unit_Ceiling",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        6.0,
+        15.25,
+        0.0
+      ],
+      "vertices": 7,
+      "faces": 1,
+      "modifiers": [],
+      "success": true,
+      "message": "[V6JDRK] Retrieved detailed info for object 'HDB_Unit_Ceiling' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Bedroom_Right": {
+      "name": "Wall_Bedroom_Right",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.15000009536743164,
+        4.0,
+        2.799999952316284
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[NQIWEX] Retrieved detailed info for object 'Wall_Bedroom_Right' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Bedroom_Top": {
+      "name": "Wall_Bedroom_Top",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        3.0,
+        0.15000009536743164,
+        2.799999952316284
+      ],
+      "vertices": 20,
+      "faces": 14,
+      "modifiers": [],
+      "success": true,
+      "message": "[UC2SZI] Retrieved detailed info for object 'Wall_Bedroom_Top' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_LivingRoom_Top_Left": {
+      "name": "Wall_LivingRoom_Top_Left",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.5,
+        0.15000009536743164,
+        2.799999952316284
+      ],
+      "vertices": 20,
+      "faces": 10,
+      "modifiers": [],
+      "success": true,
+      "message": "[1L1X6P] Retrieved detailed info for object 'Wall_LivingRoom_Top_Left' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_LivingRoom_Top_Right": {
+      "name": "Wall_LivingRoom_Top_Right",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.75,
+        0.15000009536743164,
+        2.799999952316284
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[F35RS0] Retrieved detailed info for object 'Wall_LivingRoom_Top_Right' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_MainBedroom_Right": {
+      "name": "Wall_MainBedroom_Right",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.15000009536743164,
+        3.1499996185302734,
+        2.799999952316284
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[TAOM4D] Retrieved detailed info for object 'Wall_MainBedroom_Right' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_MainBedroom_Top": {
+      "name": "Wall_MainBedroom_Top",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.5499999523162842,
+        0.14999961853027344,
+        2.799999952316284
+      ],
+      "vertices": 20,
+      "faces": 14,
+      "modifiers": [],
+      "success": true,
+      "message": "[Z5BG2E] Retrieved detailed info for object 'Wall_MainBedroom_Top' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Bath_Middle_Divider": {
+      "name": "Wall_Bath_Middle_Divider",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.6500000953674316,
+        0.14999961853027344,
+        2.799999952316284
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[213VRC] Retrieved detailed info for object 'Wall_Bath_Middle_Divider' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Bath2_Entry": {
+      "name": "Wall_Bath2_Entry",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.15000009536743164,
+        3.5,
+        2.799999952316284
+      ],
+      "vertices": 20,
+      "faces": 14,
+      "modifiers": [],
+      "success": true,
+      "message": "[BFSZNU] Retrieved detailed info for object 'Wall_Bath2_Entry' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Store_Left": {
+      "name": "Wall_Store_Left",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.15000009536743164,
+        2.560000419616699,
+        2.799999952316284
+      ],
+      "vertices": 20,
+      "faces": 14,
+      "modifiers": [],
+      "success": true,
+      "message": "[KP72FV] Retrieved detailed info for object 'Wall_Store_Left' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Store_Top": {
+      "name": "Wall_Store_Top",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.9000000953674316,
+        0.14999961853027344,
+        2.799999952316284
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[PDK5H1] Retrieved detailed info for object 'Wall_Store_Top' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Chute_Left": {
+      "name": "Wall_Chute_Left",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.19999980926513672,
+        1.3500003814697266,
+        2.799999952316284
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[S8W3ZP] Retrieved detailed info for object 'Wall_Chute_Left' (Type: MESH).",
+      "status": "success"
+    },
+    "Wall_Chute_Bottom": {
+      "name": "Wall_Chute_Bottom",
+      "type": "MESH",
+      "location": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.5,
+        0.39999961853027344,
+        2.799999952316284
+      ],
+      "vertices": 8,
+      "faces": 6,
+      "modifiers": [],
+      "success": true,
+      "message": "[FBA48J] Retrieved detailed info for object 'Wall_Chute_Bottom' (Type: MESH).",
+      "status": "success"
+    },
+    "Lbl_Bedroom": {
+      "name": "Lbl_Bedroom",
+      "type": "FONT",
+      "location": [
+        1.5,
+        2.0,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.64395010471344,
+        0.24500001966953278,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[M43Z8J] Retrieved detailed info for object 'Lbl_Bedroom' (Type: FONT).",
+      "status": "success"
+    },
+    "Lbl_Store": {
+      "name": "Lbl_Store",
+      "type": "FONT",
+      "location": [
+        5.099999904632568,
+        7.300000190734863,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.0220000743865967,
+        0.24500001966953278,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[KRLM2Y] Retrieved detailed info for object 'Lbl_Store' (Type: FONT).",
+      "status": "success"
+    },
+    "Lbl_Main": {
+      "name": "Lbl_Main",
+      "type": "FONT",
+      "location": [
+        1.2000000476837158,
+        10.0,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.64395010471344,
+        0.5932499766349792,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[C3791D] Retrieved detailed info for object 'Lbl_Main' (Type: FONT).",
+      "status": "success"
+    },
+    "Lbl_Kitchen": {
+      "name": "Lbl_Kitchen",
+      "type": "FONT",
+      "location": [
+        4.5,
+        12.0,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        1.6467499732971191,
+        0.5950000286102295,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[96QEWU] Retrieved detailed info for object 'Lbl_Kitchen' (Type: FONT).",
+      "status": "success"
+    },
+    "Lbl_Living": {
+      "name": "Lbl_Living",
+      "type": "FONT",
+      "location": [
+        1.5,
+        6.0,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        2.1972999572753906,
+        0.24500001966953278,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[K4K05S] Retrieved detailed info for object 'Lbl_Living' (Type: FONT).",
+      "status": "success"
+    },
+    "Lbl_Bath2": {
+      "name": "Lbl_Bath2",
+      "type": "FONT",
+      "location": [
+        2.0999999046325684,
+        14.300000190734863,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.8080000877380371,
+        0.17275001108646393,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[BSTWXG] Retrieved detailed info for object 'Lbl_Bath2' (Type: FONT).",
+      "status": "success"
+    },
+    "Lbl_Bath1": {
+      "name": "Lbl_Bath1",
+      "type": "FONT",
+      "location": [
+        2.0999999046325684,
+        12.5,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.7665001153945923,
+        0.17150001227855682,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[DVTZXL] Retrieved detailed info for object 'Lbl_Bath1' (Type: FONT).",
+      "status": "success"
+    },
+    "Lbl_Chute": {
+      "name": "Lbl_Chute",
+      "type": "FONT",
+      "location": [
+        5.800000190734863,
+        14.699999809265137,
+        0.20000000298023224
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        1.5707963705062866
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "dimensions": [
+        0.6344000101089478,
+        0.14000001549720764,
+        0.10000000149011612
+      ],
+      "modifiers": [],
+      "success": true,
+      "message": "[CKROFH] Retrieved detailed info for object 'Lbl_Chute' (Type: FONT).",
+      "status": "success"
+    }
+  }
+}

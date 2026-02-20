@@ -46,7 +46,7 @@ def serve(host, port, record_path, name, model, description, doc_url):
     print("============================================================")
 
     uvicorn.run(
-        server_mod.app, host=host, port=port, log_level="info", access_log=False
+        server_mod.app, host=host, port=port, log_level="warning", access_log=False
     )
 
 

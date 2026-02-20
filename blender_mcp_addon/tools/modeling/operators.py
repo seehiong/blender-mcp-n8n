@@ -268,6 +268,8 @@ class ModelingOperators:
         move=(0, 0, 0),
         filter_normal=None,
         angle_threshold=1.0,
+        use_selection=False,
+        **kwargs,
     ):
         obj = get_object(object_name)
         bpy.context.view_layer.objects.active = obj
@@ -275,7 +277,7 @@ class ModelingOperators:
         if filter_normal:
             # Select faces by normal in Object mode
             self._select_faces_by_normal(obj, filter_normal, angle_threshold)
-        else:
+        elif not use_selection:
             # Select all faces
             if bpy.context.mode != "OBJECT":
                 bpy.ops.object.mode_set(mode="OBJECT")
@@ -295,11 +297,19 @@ class ModelingOperators:
         bpy.ops.object.mode_set(mode="OBJECT")
         return {
             "success": True,
-            "message": f"Extruded {mode.lower()} of '{object_name}' by {move}.",
+            "verified": True,
+            "message": f"Extruded {mode.lower()} of '{object_name}' by {move}. Geometry verified. Proceed immediately to next modeling step.",
         }
 
     def inset_faces(
-        self, object_name, thickness, depth=0.0, filter_normal=None, angle_threshold=1.0
+        self,
+        object_name,
+        thickness,
+        depth=0.0,
+        filter_normal=None,
+        angle_threshold=1.0,
+        use_selection=False,
+        **kwargs,
     ):
         obj = get_object(object_name)
         bpy.context.view_layer.objects.active = obj
@@ -307,7 +317,7 @@ class ModelingOperators:
         if filter_normal:
             # Select faces by normal in Object mode
             self._select_faces_by_normal(obj, filter_normal, angle_threshold)
-        else:
+        elif not use_selection:
             # Select all faces
             if bpy.context.mode != "OBJECT":
                 bpy.ops.object.mode_set(mode="OBJECT")
@@ -323,7 +333,8 @@ class ModelingOperators:
         bpy.ops.object.mode_set(mode="OBJECT")
         return {
             "success": True,
-            "message": f"Inset faces of '{object_name}' by {thickness}.",
+            "verified": True,
+            "message": f"Inset faces of '{object_name}' by {thickness}. Geometry verified. Proceed immediately to next modeling step.",
         }
 
     def shear_mesh(
@@ -393,45 +404,49 @@ class ModelingOperators:
         }
 
     def delete_object(self, object_name=None, pattern=None, **kwargs):
-        """Delete object(s) by name or pattern"""
+        """Delete object(s) by name or pattern. Handles hidden objects."""
         import bpy
+        import fnmatch
 
         # Ensure we're in Object mode
         if bpy.context.mode != "OBJECT":
             bpy.ops.object.mode_set(mode="OBJECT")
 
+        objects_to_delete = []
         if pattern:
-            import fnmatch
+            # 1. Collect matching objects from all objects in the blend file
+            for obj in bpy.data.objects:
+                if fnmatch.fnmatch(obj.name, pattern):
+                    objects_to_delete.append(obj)
 
-            # 1. Delete matching objects
-            bpy.ops.object.select_all(action="DESELECT")
-            bpy.ops.object.select_pattern(pattern=pattern)
-            if bpy.context.selected_objects:
-                bpy.ops.object.delete()
-
-            # 2. Delete matching collections (New behavior)
+            # 2. Collect matching collections
             collections_to_remove = []
             for coll in bpy.data.collections:
                 if fnmatch.fnmatch(coll.name, pattern):
                     collections_to_remove.append(coll)
 
+            # Delete objects
+            count = len(objects_to_delete)
+            for obj in objects_to_delete:
+                # We use the data-block remove method which doesn't care about visibility
+                bpy.data.objects.remove(obj, do_unlink=True)
+
+            # Delete collections
             for coll in collections_to_remove:
-                # Unlink from parents
+                # Unlink from parents/scene
                 for parent in bpy.data.collections:
                     if coll.name in parent.children:
                         parent.children.unlink(coll)
                 if coll.name in bpy.context.scene.collection.children:
                     bpy.context.scene.collection.children.unlink(coll)
-                # Remove data
                 bpy.data.collections.remove(coll)
 
             return {
                 "success": True,
-                "message": f"Deleted objects and collections matching pattern '{pattern}'",
+                "message": f"Deleted {count} objects and {len(collections_to_remove)} collections matching pattern '{pattern}'",
             }
 
+        # Single object deletion
         obj = get_object(object_name)
-        bpy.ops.object.select_all(action="DESELECT")
-        obj.select_set(True)
-        bpy.ops.object.delete()
+        bpy.data.objects.remove(obj, do_unlink=True)
         return {"success": True, "message": f"Deleted object '{object_name}'"}

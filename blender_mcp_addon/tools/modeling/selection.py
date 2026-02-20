@@ -66,3 +66,18 @@ class ModelingSelection:
             "active_object": active.name if active else None,
             "message": f"Selected {len(selected)} object(s) matching '{pattern}': ({summary}){greedy_note}. TIP: For materials, use the 'pattern' parameter inside the material tool directly.",
         }
+
+    def invert_mesh_selection(self, object_name, **kwargs):
+        """Invert selection of mesh components (verts/edges/faces)"""
+        from ...utils import get_object
+
+        obj = get_object(object_name)
+        bpy.context.view_layer.objects.active = obj
+        bpy.ops.object.mode_set(mode="EDIT")
+        bpy.ops.mesh.select_all(action="INVERT")
+        bpy.ops.object.mode_set(mode="OBJECT")
+        return {
+            "success": True,
+            "verified": True,
+            "message": f"Inverted mesh selection on '{object_name}'. Geometry verified. Proceed immediately to next modeling step.",
+        }

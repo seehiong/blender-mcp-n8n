@@ -170,6 +170,16 @@ The server exposes **45+ Blender tools** across several categories:
 | `join_objects` | Join multiple objects into a single mesh. |
 | `random_distribute` | Randomly distribute copies of an object with constraints. |
 
+### Architectural Modeling
+| Tool | Explanation |
+|---|---|
+| `build_room_shell` | Create a 3D building shell (floor, walls, ceiling) from a 2D perimeter with door/window openings. |
+| `build_wall_segment` | Create a solid interior partition wall with a specified thickness. |
+| `build_wall_with_door` | Create an interior wall with a door opening (clean geometry, no booleans). |
+| `build_column` | Create structural columns at specific locations, optionally merged with wall objects. |
+| `toggle_ceiling` | Show or hide ceiling objects to inspect building interiors. |
+| `set_view` | Quickly switch viewport orientation (TOP, ISO, FRONT, SIDE) for precision modeling. |
+
 ### Materials
 | Tool | Explanation |
 |---|---|
@@ -333,6 +343,20 @@ Blender Addon (Main Thread Queue)
       ↓
 Blender Scene (Persistent State)
 ```
+
+## Testing
+
+We use an integrated test suite to verify Blender tools and layout scenarios.
+
+```bash
+# Run the Arch layout test
+python tests/run_integration.py run --scenario arch
+
+# Run the standard functional grid test
+python tests/run_integration.py run --scenario grid
+```
+
+See the [Integration Testing Guide](docs/integration_tests.md) for full details on verification and benchmarking.
 
 ## Troubleshooting
 

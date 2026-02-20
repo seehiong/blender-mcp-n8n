@@ -161,6 +161,11 @@ def get_operator_tools() -> list[types.Tool]:
                         "default": 1.0,
                         "description": "Angle threshold in degrees for normal filtering",
                     },
+                    "use_selection": {
+                        "type": "boolean",
+                        "default": False,
+                        "description": "If True, use current mesh selection instead of filtering or selecting all.",
+                    },
                 },
                 "required": ["object_name"],
             },
@@ -186,6 +191,11 @@ def get_operator_tools() -> list[types.Tool]:
                         "type": "number",
                         "default": 1.0,
                         "description": "Angle threshold in degrees for normal filtering",
+                    },
+                    "use_selection": {
+                        "type": "boolean",
+                        "default": False,
+                        "description": "If True, use current mesh selection instead of filtering or selecting all.",
                     },
                 },
                 "required": ["object_name", "thickness"],

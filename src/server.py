@@ -2,6 +2,8 @@ import json
 import random
 import string
 import os
+import logging
+import contextvars
 from typing import Optional
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
@@ -25,6 +27,13 @@ load_dotenv()
 # Lifecycle / Recording State
 recorder: Optional[SessionRecorder] = None
 
+# Transport tracking
+transport_var = contextvars.ContextVar("transport", default="MCP")
+
+# Suppress noise from SDK and Starlette
+logging.getLogger("mcp").setLevel(logging.WARNING)
+logging.getLogger("starlette").setLevel(logging.WARNING)
+
 # Initialize MCP Server
 app = Server("blender-mcp-n8n")
 
@@ -45,15 +54,15 @@ def resolve_path(args):
         ):
             base_path = os.path.join(ASSETS_DIR, args[key])
             resolved_path = base_path
-            print(f"[DEBUG] Checking base path: {base_path}")
+            # print(f"[DEBUG] Checking base path: {base_path}")
 
             # If the exact file exists, use it
             if os.path.exists(base_path):
-                print(f"[DEBUG] Found exact match: {base_path}")
+                # print(f"[DEBUG] Found exact match: {base_path}")
                 resolved_path = base_path
             else:
                 # Try extensions
-                print("Exact match failed. Trying extensions...")
+                # print("Exact match failed. Trying extensions...")
                 # Split off any existing extension to try others
                 root, _ = os.path.splitext(base_path)
 
@@ -61,13 +70,13 @@ def resolve_path(args):
                     test_path = root + ext
                     # print(f"[DEBUG] Checking Extension: {test_path}")
                     if os.path.exists(test_path):
-                        print(f"[DEBUG] Found match with extension: {test_path}")
+                        # print(f"[DEBUG] Found match with extension: {test_path}")
                         resolved_path = test_path
                         break
 
             # Normalize path for cross-platform compatibility
             args[key] = os.path.normpath(resolved_path).replace("\\", "/")
-            print(f"[DEBUG] Final resolved path: {args[key]}")
+            # print(f"[DEBUG] Final resolved path: {args[key]}")
     return args
 
 
@@ -81,6 +90,7 @@ async def list_tools() -> list[types.Tool]:
 async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
     """Handle tool calls from the AI Agent"""
     rid = "".join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    transport = transport_var.get()
 
     # Strip n8n-specific metadata
     meta = {"sessionId", "action", "chatInput", "toolCallId", "id"}
@@ -89,7 +99,7 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
     # Resolve paths
     clean_args = resolve_path(clean_args)
 
-    logger.info(f"[{rid}] Tool Call: {name} with params: {clean_args}")
+    logger.info(f"[{transport}] [{rid}] Tool Call: {name} with params: {clean_args}")
 
     if recorder:
         recorder.record_command(name, clean_args)
@@ -125,7 +135,7 @@ async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
     if "error" in blender_res:
         log_msg = f"ERROR: {blender_res['error']}"
 
-    logger.info(f"[{rid}] [{log_status}] {log_msg}")
+    logger.info(f"[{transport}] [{rid}] [{log_status}] {log_msg}")
 
     return [types.TextContent(type="text", text=json.dumps(blender_res, indent=2))]
 
@@ -140,20 +150,52 @@ session_manager = StreamableHTTPSessionManager(
 @asynccontextmanager
 async def lifespan(app: Starlette):
     """Manage the lifecycle of the MCP session manager"""
-    print("[DEBUG] Starlette lifespan starting...")
+    # print("[DEBUG] Starlette lifespan starting...")
     async with session_manager.run():
-        print("[DEBUG] MCP Session Manager active.")
+        # print("[DEBUG] MCP Session Manager active.")
         yield
-    print("[DEBUG] Starlette lifespan shutting down...")
+    # print("[DEBUG] Starlette lifespan shutting down...")
 
 
 async def mcp_asgi(scope, receive, send):
     """Raw ASGI bridge to MCP session manager. Handles OPTIONS for CORS preflight."""
-    if scope["type"] == "http" and scope.get("method") == "OPTIONS":
-        # Return 200 for CORS preflight — middleware will add the headers
-        await send({"type": "http.response.start", "status": 200, "headers": []})
-        await send({"type": "http.response.body", "body": b""})
-        return
+    if scope["type"] == "http":
+        if scope.get("method") == "OPTIONS":
+            # Return 200 for CORS preflight — middleware will add the headers
+            await send({"type": "http.response.start", "status": 200, "headers": []})
+            await send({"type": "http.response.body", "body": b""})
+            return
+
+        # Detect transport type
+        path = scope.get("path", "")
+        method = scope.get("method", "POST")
+        headers = scope.get("headers", [])
+        query = scope.get("query_string", b"").decode("utf-8")
+
+        # 1. Check for Explicit Marking
+        explicit_stateless = any(
+            h[0] == b"x-mcp-model" and h[1] == b"stateless" for h in headers
+        )
+        explicit_stateful = "transport=stateful" in query
+
+        # 2. Heuristic fallback
+        is_handshake = method == "GET" and any(
+            h[0] == b"accept" and b"text/event-stream" in h[1] for h in headers
+        )
+        is_stateful_heuristic = is_handshake or "session_id=" in query
+
+        # Final decision
+        if explicit_stateful:
+            res = "Stateful"
+        elif explicit_stateless:
+            res = "Stateless"
+        else:
+            # Fallback to path logic
+            is_root = path in ("/", "", "/mcp", "/mcp/")
+            res = "Stateful" if (is_stateful_heuristic or not is_root) else "Stateless"
+
+        transport_var.set(res)
+
     await session_manager.handle_request(scope, receive, send)
 
 

@@ -8,7 +8,7 @@ import traceback
 class MCPClient:
     def __init__(self, base_url="http://localhost:8000"):
         self.base_url = base_url
-        self.mcp_url = f"{base_url}/mcp"
+        self.mcp_url = f"{base_url}/mcp/"
         self.session_id = "".join(
             random.choices(string.ascii_letters + string.digits, k=8)
         )
@@ -29,12 +29,17 @@ class MCPClient:
 
         headers = {
             "Content-Type": "application/json",
-            "Accept": "application/json, text/event-stream",
+            "Accept": "application/json",
+            "X-MCP-Model": "stateless",
         }
 
         try:
             response = httpx.post(
-                self.mcp_url, json=payload, headers=headers, timeout=60.0
+                self.mcp_url,
+                json=payload,
+                headers=headers,
+                timeout=60.0,
+                follow_redirects=True,
             )
             response.raise_for_status()
             data = response.json()

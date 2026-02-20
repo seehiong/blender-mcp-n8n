@@ -29,8 +29,10 @@ ENV/
 env.bak/
 venv.bak/
 /assets/
+tmp/
 
 # Ignore all JSON files
 *.json
-!tests/benchmarks/expected_scene.json
+!tests/benchmarks/arch_expected.json
+!tests/benchmarks/grid_expected.json
 !community/**/*.json
